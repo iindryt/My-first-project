@@ -144,70 +144,84 @@ int main() {
     srand(time(NULL));
 
     vector<Studentas> Grupe;
+    int veiksmas;
 
     while (true) {
-        Studentas s = ivesk();
-        if (s.vard == "0") break;
-        // Jeigu pazymiu skaicius buvo 0, s.paz bus tuscias, o vardas ne "0",
-        // tad reiktu patikrinti ir toki atveja, kad neprideti klaidingu duomenu
-        if (s.paz.size() == 0) {
-            cout << "Studentas neivestas del netinkamu pazymiu." << endl;
-            continue;
+        cout << "\nPasirinkite veiksma:\n";
+        cout << "1 - Prideti studenta\n";
+        cout << "2 - Rodyti studentu rezultatus\n";
+        cout << "3 - Baigti programa\n";
+        cout << "Jusu pasirinkimas yra: ";
+        cin >> veiksmas;
+
+        if (veiksmas == 1) {
+            Studentas s = ivesk();
+            if (s.vard == "0") {
+                cout << "Studentu ivedimas nutrauktas." << endl;
+                continue;
+            }
+            if (s.paz.size() == 0) {
+                cout << "Studentas neivestas del netinkamu pazymiu." << endl;
+                continue;
+            }
+            Grupe.push_back(s);
         }
-        Grupe.push_back(s);
-    }
+        else if (veiksmas == 2) {
+            if (Grupe.empty()) {
+                cout << "Studentu sarasas tuscias." << endl;
+                continue;
+            } 
 
-    if (Grupe.empty()) {
-        cout << "Studentu sarasas tuscias." << endl;
-        return 0;
-    }
+            int pasirinkimas;
+            cout << "\nPasirinkite galutinio balo skaiciavimo metoda:" << endl;
+            cout << "1 - Vidurkis" << endl;
+            cout << "2 - Mediana" << endl;
+            cout << "3 - Abu" << endl;
+            cout << "Jusu pasirinkimas: ";
+            cin >> pasirinkimas;
 
-    int pasirinkimas;
-    
-    
-    cout << "\nPasirinkite galutinio balo skaiciavimo metoda:" << endl;
-    cout << "1 - Vidurkis" << endl;
-    cout << "2 - Mediana" << endl;
-    cout << "3 - Abu" << endl;
+            cout << endl << left << setw(15) << "Pavarde"
+                 << setw(15) << "Vardas";
 
-    cin>>pasirinkimas;
-
-
-    cout << endl << left << setw(15) << "Pavarde"
-         << setw(15) << "Vardas";
-
-    if (pasirinkimas == 1) {
-        cout << "Galutinis (Vid.)" << endl;
-        cout << "----------------------------------------------" << endl;
-        for (int i = 0; i < Grupe.size(); i++) {
-        cout << left << setw(15) << Grupe[i].pav
-             << setw(15) << Grupe[i].vard
-             << left << setw(20) << fixed << setprecision(2) << Grupe[i].rezVid << endl;
+            if (pasirinkimas == 1) {
+                cout << "Galutinis (Vid.)" << endl;
+                cout << "----------------------------------------------" << endl;
+                for (int i = 0; i < Grupe.size(); i++) {
+                    cout << left << setw(15) << Grupe[i].pav
+                         << setw(15) << Grupe[i].vard
+                         << fixed << setprecision(2) << Grupe[i].rezVid << endl;
+                }
+            } 
+            else if (pasirinkimas == 2) {
+                cout << "Galutinis (Med.)" << endl;
+                cout << "----------------------------------------------" << endl;
+                for (int i = 0; i < Grupe.size(); i++) {
+                    cout << left << setw(15) << Grupe[i].pav
+                         << setw(15) << Grupe[i].vard
+                         << fixed << setprecision(2) << Grupe[i].rezMed << endl;
+                }
+            } 
+            else if (pasirinkimas == 3) {
+                cout << "Galutinis (Vid.) / Galutinis (Med.)" << endl;
+                cout << "---------------------------------------------------------" << endl;
+                for (int i = 0; i < Grupe.size(); i++) {
+                    cout << left << setw(15) << Grupe[i].pav
+                         << setw(15) << Grupe[i].vard
+                         << fixed << setprecision(2) << setw(10) << Grupe[i].rezVid
+                         << fixed << setprecision(2) << setw(10) << Grupe[i].rezMed << endl;
+                }
+            } else {
+                cout << "Klaida: pasirinktas netinkamas simbolis. Iveskite 1, 2 arba 3." << endl;
+            }
         }
-    } else if (pasirinkimas == 2) {
-        cout << "Galutinis (Med.)" << endl;
-        cout << "----------------------------------------------" << endl;
-        for (int i = 0; i < Grupe.size(); i++){
-         cout << left << setw(15) << Grupe[i].pav
-             << setw(15) << Grupe[i].vard
-             << left << setw(20) << fixed << setprecision(2) << Grupe[i].rezMed << endl;
+        else if (veiksmas == 3) {
+            cout << "Programa baigiama." << endl;
+            break;
         }
-
-    } else if (pasirinkimas == 3) {
-        cout << "Galutinis (Vid.) / Galutinis (Med.)" << endl;
-        cout << "---------------------------------------------------------" << endl;
-        for (int i = 0; i < Grupe.size(); i++){
-         cout << left << setw(15) << Grupe[i].pav
-             << setw(15) << Grupe[i].vard
-             << left << setw(20) << fixed << setprecision(2) << Grupe[i].rezVid
-             << left << setw(20) << fixed << setprecision(2) << Grupe[i].rezMed << endl;
+        else {
+            cout << "Klaidingas pasirinkimas, bandykite dar kartą." << endl;
         }
-
-    } else {
-        cout << "Klaida: pasirinktas netinkamas simbolis. Iveskite 1, 2 arba 3." << endl;
     }
 
     return 0;
 }
-
-
