@@ -3,6 +3,8 @@
 #include <vector>
 #include <iomanip>
 #include <algorithm>
+#include <cstdlib>
+#include <ctime>
 
 using std::cout;
 using std::cin;
@@ -22,6 +24,9 @@ struct Studentas {
     float rezVid;
     float rezMed;
 };
+int random(int min, int max) {
+    return min + rand() % (max - min + 1);
+}
 float Mediana(vector<int> &pazymiai) {
     sort(pazymiai.begin(), pazymiai.end());  
     size_t n = pazymiai.size();
@@ -43,40 +48,101 @@ Studentas ivesk() {
     cout << "Iveskite pavarde: ";
     cin >> Laik.pav;
 
-    cout << "Iveskite namu darbu pazymius po viena. Norint baigti, iveskite ne skaiciu (pvz., raide)." << endl;
+    char pasirinkimas;
+    cout << "Ar norite generuoti atsitiktinius namu darbu pazymius? (t/n): ";
+    cin >> pasirinkimas;
 
-    while (true) {
-        cout << "Iveskite namu darba nr. " << pazymiuSkaicius + 1 << ": ";
-        if (!(cin >> m)) { // Jeigu ivedama ne skaicius, baigiam
-            cin.clear(); // istrinam klaidos busena
-            string neSkaicius;
-            cin >> neSkaicius; // nuskaityti tai, kas ivesta (pvz raide)
+    if (pasirinkimas == 't' || pasirinkimas == 'T') {
+        cout << "Iveskite kiek namu darbu generuoti: ";
+        cin >> pazymiuSkaicius;
+
+        for (int i = 0; i < pazymiuSkaicius; i++) {
+            m = random(1, 10);
+            cout << "Sugeneruotas namu darbo nr. " << i + 1 << " pazymys: " << m << endl;
+            Laik.paz.push_back(m);
+            sum += m;
+        }
+
+        // Pridedame klausimą apie egzamino pažymio generavimą
+        char genEgz;
+        cout << "Ar norite generuoti egzamino pazymi? (t/n): ";
+        cin >> genEgz;
+
+        if (genEgz == 't' || genEgz == 'T') {
+            Laik.egzas = random(1, 10);
+            cout << "Sugeneruotas egzamino pazymys: " << Laik.egzas << endl;
+        } else {
+            while (true) {
+                cout << "Iveskite egzamino pazymi (1-10): ";
+                if (!(cin >> Laik.egzas)) {
+                    cin.clear();
+                    cin.ignore(1000, '\n');
+                    cout << "Klaida: iveskite skaiciu nuo 1 iki 10." << endl;
+                    continue;
+                }
+                if (Laik.egzas < 1 || Laik.egzas > 10) {
+                    cout << "Egzamino pazymys turi buti tarp 1 ir 10." << endl;
+                    continue;
+                }
+                break;
+            }
+        }
+
+    } else {
+        // Rankinis namų darbų įvedimas
+        cout << "Iveskite namu darbu pazymius po viena. Norint baigti, iveskite ne skaiciu (pvz., raide)." << endl;
+
+        while (true) {
+            cout << "Iveskite namu darba nr. " << pazymiuSkaicius + 1 << ": ";
+            if (!(cin >> m)) {
+                cin.clear();
+                cin.ignore(1000, '\n');
+                break;
+            }
+            if (m < 1 || m > 10) {
+                cout << "Klaida: pazymys turi buti tarp 1 ir 10." << endl;
+                continue;
+            }
+            Laik.paz.push_back(m);
+            sum += m;
+            pazymiuSkaicius++;
+        }
+
+        if (pazymiuSkaicius == 0) {
+            cout << "Nepavyko ivesti nei vieno pazymio." << endl;
+            return Laik;
+        }
+
+        while (true) {
+            cout << "Iveskite egzamino pazymi (1-10): ";
+            if (!(cin >> Laik.egzas)) {
+                cin.clear();
+                cin.ignore(1000, '\n');
+                cout << "Klaida: iveskite skaiciu nuo 1 iki 10." << endl;
+                continue;
+            }
+            if (Laik.egzas < 1 || Laik.egzas > 10) {
+                cout << "Egzamino pazymys turi buti tarp 1 ir 10." << endl;
+                continue;
+            }
             break;
         }
-        if (m < 0 || m > 10) {
-            cout << "Klaida: pazymys turi buti tarp 0 ir 10." << endl;
-            continue;
-        }
-        Laik.paz.push_back(m);
-        sum += m;
-        pazymiuSkaicius++;
     }
 
-    if (pazymiuSkaicius == 0) {
-        cout << "Nepavyko ivesti nei vieno pazymio." << endl;
-        return Laik;
-    }
-    cout << "Iveskite egzamina: ";
-    cin >> Laik.egzas;
     float vidurkis = (float)sum / pazymiuSkaicius;
     float mediana = Mediana(Laik.paz);
 
     Laik.rezVid = Laik.egzas * 0.6 + vidurkis * 0.4;
     Laik.rezMed = Laik.egzas * 0.6 + mediana * 0.4;
+
     return Laik;
 }
 
+
+
 int main() {
+    srand(time(NULL));
+
     vector<Studentas> Grupe;
 
     while (true) {
