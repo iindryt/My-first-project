@@ -1,12 +1,15 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <iomanip>
 
 using std::cout;
 using std::cin;
 using std::endl;
 using std::string;
 using std::vector;
+using std::fixed;
+using std::setprecision;
 
 struct Studentas {
     string vard;
@@ -41,6 +44,11 @@ int main (){
 
     Laik.rez = Laik.egzas * 0.6 + double(sum) / double(Laik.paz.size()) * 0.4;
 
-    cout << Laik.vard << " | " << Laik.pav << " | " << Laik.rez << endl;
+    cout << endl << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << "Galutinis (vid.)" << endl
+         << "----------------------------------------" << endl
+         << left << setw(15) << Laik.pav << setw(15) << Laik.vard << fixed << setprecision(2) << Laik.rez << endl;
+
+    return 0;
+    
 }
 
