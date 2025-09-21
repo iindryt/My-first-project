@@ -157,7 +157,7 @@ vector<Studentas> nuskaitytiIsFailo(const string &failoVardas) {
 
         std::istringstream ss(eilute);
         string vard, pav;
-        ss >> vard >> pav;
+        ss >> pav >> vard;
 
         Studentas s;
         s.vard = vard;
