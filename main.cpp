@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
+#include <sstream>
+#include <fstream>
 
 using std::cout;
 using std::cin;
@@ -137,6 +139,57 @@ Studentas ivesk() {
 
     return Laik;
 }
+vector<Studentas> nuskaitytiIsFailo(const string &failoVardas) {
+    vector<Studentas> studentai;
+    std::ifstream in(failoVardas);
+
+    if (!in) {
+        cout << "Klaida: nepavyko atidaryti failo: " << failoVardas << endl;
+        return studentai;
+    }
+
+    string eilute;
+    // Pirmą eilutę (galbūt antraštę) praleidžiame
+    getline(in, eilute);
+
+    while (getline(in, eilute)) {
+        if (eilute.empty()) continue;
+
+        std::istringstream ss(eilute);
+        string vard, pav;
+        ss >> vard >> pav;
+
+        Studentas s;
+        s.vard = vard;
+        s.pav = pav;
+
+        vector<int> laikPaz;
+        int paz;
+
+        while (ss >> paz) {
+            laikPaz.push_back(paz);
+        }
+
+        if (laikPaz.size() < 1) continue;
+
+        s.egzas = laikPaz.back();
+        laikPaz.pop_back();
+        s.paz = laikPaz;
+
+        float suma = 0;
+        for (auto& x : s.paz) suma += x;
+        float vidurkis = suma / s.paz.size();
+        float mediana = Mediana(s.paz);
+
+        s.rezVid = s.egzas * 0.6 + vidurkis * 0.4;
+        s.rezMed = s.egzas * 0.6 + mediana * 0.4;
+
+        studentai.push_back(s);
+    }
+
+    return studentai;
+}
+
 int main() {
     srand(time(NULL));
     vector<Studentas> Grupe;
