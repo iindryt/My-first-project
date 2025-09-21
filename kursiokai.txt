@@ -1,0 +1,8 @@
+Pavarde Vardas ND1 ND2 ND3 ND4 ND5 Egzas
+Kestutaitis Jonas 8 9 10 7 6 9
+Petrauskiene Ona 10 10 10 9 10 10
+Javtokas Petras 5 6 7 4 6 5
+Ivanauskaite Ieva 9 8 9 10 9 10
+Karalius Domas 7 6 8 7 6 7
+Papugiene Rasa 10 10 10 10 10 9
+Tomilinas Tomas 4 5 6 5 5 6
