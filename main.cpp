@@ -157,7 +157,7 @@ vector<Studentas> nuskaitytiIsFailo(const string &failoVardas) {
 
         std::istringstream ss(eilute);
         string vard, pav;
-        ss >> pav >> vard;
+        ss >> vard >> pav;
 
         Studentas s;
         s.vard = vard;
@@ -229,6 +229,10 @@ int main() {
                 cout << "Studentu sarasas tuscias." << endl;
                 continue;
             }
+            //Rūšiavimas pagal vardus
+            sort(Grupe.begin(), Grupe.end(), [](const Studentas &a, const Studentas &b) {
+                return a.vard < b.vard;
+            });
 
             int pasirinkimas;
             cout << "\nPasirinkite galutinio balo skaiciavimo metoda:\n";
@@ -260,13 +264,13 @@ int main() {
                 }
             } 
             else if (pasirinkimas == 3) {
-                cout << "Galutinis (Vid.) / Galutinis (Med.)" << endl;
-                cout << "---------------------------------------------------------" << endl;
+                cout << "Galutinis (Vid.)    Galutinis (Med.)" << endl;
+                cout <<  "-----------------------------------------------------------------"  << endl;
                 for (int i = 0; i < Grupe.size(); i++) {
                     cout << left << setw(15) << Grupe[i].pav
                          << setw(15) << Grupe[i].vard
-                         << fixed << setprecision(2) << setw(10) << Grupe[i].rezVid
-                         << fixed << setprecision(2) << setw(10) << Grupe[i].rezMed << endl;
+                         << fixed << setprecision(2) << setw(20) << Grupe[i].rezVid
+                         << fixed << setprecision(2) << setw(20) << Grupe[i].rezMed << endl;
                 }
             } else {
                 cout << "Klaida: pasirinktas netinkamas simbolis. Iveskite 1, 2 arba 3." << endl;
