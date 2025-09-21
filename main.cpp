@@ -137,21 +137,18 @@ Studentas ivesk() {
 
     return Laik;
 }
-
-
-
 int main() {
     srand(time(NULL));
-
     vector<Studentas> Grupe;
     int veiksmas;
 
     while (true) {
         cout << "\nPasirinkite veiksma:\n";
-        cout << "1 - Prideti studenta\n";
-        cout << "2 - Rodyti studentu rezultatus\n";
-        cout << "3 - Baigti programa\n";
-        cout << "Jusu pasirinkimas yra: ";
+        cout << "1 - Prideti studenta rankiniu budu\n";
+        cout << "2 - Nuskaityti studentus is failo\n";
+        cout << "3 - Rodyti studentu rezultatus\n";
+        cout << "4 - Baigti programa\n";
+        cout << "Jusu pasirinkimas: ";
         cin >> veiksmas;
 
         if (veiksmas == 1) {
@@ -167,16 +164,24 @@ int main() {
             Grupe.push_back(s);
         }
         else if (veiksmas == 2) {
+            string failas;
+            cout << "Iveskite failo pavadinima: ";
+            cin >> failas;
+            vector<Studentas> isFailo = nuskaitytiIsFailo(failas);
+            Grupe.insert(Grupe.end(), isFailo.begin(), isFailo.end());
+            cout << "Is failo nuskaityta " << isFailo.size() << " studentu." << endl;
+        }
+        else if (veiksmas == 3) {
             if (Grupe.empty()) {
                 cout << "Studentu sarasas tuscias." << endl;
                 continue;
-            } 
+            }
 
             int pasirinkimas;
-            cout << "\nPasirinkite galutinio balo skaiciavimo metoda:" << endl;
-            cout << "1 - Vidurkis" << endl;
-            cout << "2 - Mediana" << endl;
-            cout << "3 - Abu" << endl;
+            cout << "\nPasirinkite galutinio balo skaiciavimo metoda:\n";
+            cout << "1 - Vidurkis\n";
+            cout << "2 - Mediana\n";
+            cout << "3 - Abu\n";
             cout << "Jusu pasirinkimas: ";
             cin >> pasirinkimas;
 
@@ -214,7 +219,7 @@ int main() {
                 cout << "Klaida: pasirinktas netinkamas simbolis. Iveskite 1, 2 arba 3." << endl;
             }
         }
-        else if (veiksmas == 3) {
+        else if (veiksmas == 4) {
             cout << "Programa baigiama." << endl;
             break;
         }
@@ -225,3 +230,6 @@ int main() {
 
     return 0;
 }
+
+
+
