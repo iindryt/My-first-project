@@ -29,16 +29,28 @@ struct Studentas {
 int random(int min, int max) {
     return min + rand() % (max - min + 1);
 }
-float Mediana(vector<int> &pazymiai) {
-    sort(pazymiai.begin(), pazymiai.end());  
-    size_t n = pazymiai.size();
-    if (n == 0) return 0;
+float Mediana(const vector<int> &pazymiai) {
+    if (pazymiai.empty()) 
+        return 0.0;
+    vector<int> kopija = pazymiai;
+    sort(kopija.begin(), kopija.end());
+    
+    size_t n = kopija.size();
     if (n % 2 == 1) {
-        return pazymiai[n / 2];
+        return kopija[n / 2];
     } else {
-        return (pazymiai[n/2 - 1] + pazymiai[n/2]) / 2.0;
+        return (kopija[n/2 - 1] + kopija[n/2]) / 2.0;
     }
 }
+float Vidurkis(const vector<int>& pazymiai) {
+    if (pazymiai.empty()) return 0.0;
+    int suma = 0;
+    for (int paz : pazymiai) {
+        suma += paz;
+    }
+    return (float)suma / pazymiai.size();
+}
+
 Studentas ivesk() {
     Studentas Laik;
     int sum = 0, m, pazymiuSkaicius = 0;
@@ -131,7 +143,7 @@ Studentas ivesk() {
         }
     }
 
-    float vidurkis = (float)sum / pazymiuSkaicius;
+    float vidurkis = Vidurkis(Laik.paz);
     float mediana = Mediana(Laik.paz);
 
     Laik.rezVid = Laik.egzas * 0.6 + vidurkis * 0.4;
@@ -178,7 +190,7 @@ vector<Studentas> nuskaitytiIsFailo(const string &failoVardas) {
 
         float suma = 0;
         for (auto& x : s.paz) suma += x;
-        float vidurkis = suma / s.paz.size();
+        float vidurkis = Vidurkis(s.paz);
         float mediana = Mediana(s.paz);
 
         s.rezVid = s.egzas * 0.6 + vidurkis * 0.4;
