@@ -60,12 +60,12 @@ Studentas ivesk() {
 
         for (int i = 0; i < pazymiuSkaicius; i++) {
             m = random(1, 10);
-            cout << "Sugeneruotas namu darbo nr. " << i + 1 << " pazymys: " << m << endl;
+            cout << "Sugeneruoto namu darbo nr. " << i + 1 << " pazymys: " << m << endl;
             Laik.paz.push_back(m);
             sum += m;
         }
 
-        // Pridedame klausimą apie egzamino pažymio generavimą
+        //Pridedamas klausimas apie egzamino pazymio generavima
         char genEgz;
         cout << "Ar norite generuoti egzamino pazymi? (t/n): ";
         cin >> genEgz;
@@ -91,7 +91,7 @@ Studentas ivesk() {
         }
 
     } else {
-        // Rankinis namų darbų įvedimas
+        //Rankinis namu darbu ivedimas
         cout << "Iveskite namu darbu pazymius po viena. Norint baigti, iveskite ne skaiciu (pvz., raide)." << endl;
 
         while (true) {
@@ -149,7 +149,7 @@ vector<Studentas> nuskaitytiIsFailo(const string &failoVardas) {
     }
 
     string eilute;
-    // Pirmą eilutę (galbūt antraštę) praleidžiame
+    //Pirma eilute (header) praleidziam
     getline(in, eilute);
 
     while (getline(in, eilute)) {
@@ -201,7 +201,7 @@ int main() {
         cout << "2 - Nuskaityti studentus is failo\n";
         cout << "3 - Rodyti studentu rezultatus\n";
         cout << "4 - Baigti programa\n";
-        cout << "Jusu pasirinkimas: ";
+        cout << "Jusu pasirinkimas yra: ";
         cin >> veiksmas;
 
         if (veiksmas == 1) {
@@ -222,14 +222,14 @@ int main() {
             cin >> failas;
             vector<Studentas> isFailo = nuskaitytiIsFailo(failas);
             Grupe.insert(Grupe.end(), isFailo.begin(), isFailo.end());
-            cout << "Is failo nuskaityta " << isFailo.size() << " studentu." << endl;
+            cout << "Is failo yra nuskaityta " << isFailo.size() << " studentu." << endl;
         }
         else if (veiksmas == 3) {
             if (Grupe.empty()) {
                 cout << "Studentu sarasas tuscias." << endl;
                 continue;
             }
-            //Rūšiavimas pagal vardus
+            //Rusiavimas pagal vardus
             sort(Grupe.begin(), Grupe.end(), [](const Studentas &a, const Studentas &b) {
                 return a.vard < b.vard;
             });
@@ -238,7 +238,7 @@ int main() {
             cout << "\nPasirinkite galutinio balo skaiciavimo metoda:\n";
             cout << "1 - Vidurkis\n";
             cout << "2 - Mediana\n";
-            cout << "3 - Abu\n";
+            cout << "3 - Abu (vidurkis ir mediana)\n";
             cout << "Jusu pasirinkimas: ";
             cin >> pasirinkimas;
 
@@ -281,7 +281,7 @@ int main() {
             break;
         }
         else {
-            cout << "Klaidingas pasirinkimas, bandykite dar kartą." << endl;
+            cout << "Klaidingas pasirinkimas, bandykite dar karta." << endl;
         }
     }
 
