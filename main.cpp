@@ -168,14 +168,15 @@ vector<Studentas> nuskaitytiIsFailo(const string &failoVardas) {
             laikPaz.push_back(paz);
         }
 
-        if (laikPaz.size() < 1) continue;
+        if (laikPaz.size() < 2) {
+            cerr << "Klaida: per mazai pazymiu eiluteje: " << eilute << endl;
+            continue;
+        }
 
         s.egzas = laikPaz.back();
         laikPaz.pop_back();
         s.paz = laikPaz;
 
-        float suma = 0;
-        for (auto& x : s.paz) suma += x;
         float vidurkis = Vidurkis(s.paz);
         float mediana = Mediana(s.paz);
 
