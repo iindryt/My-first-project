@@ -238,7 +238,7 @@ int main() {
                     cout << "Klaida: nepavyko sukurti rezultatu failo." << endl;
                     continue;
                 }
-            cout << "Studentu yra daugiau nei 10 000, rezultatai bus issaugoti faile 'rezultatai.txt'." << endl;
+                cout << "Studentu yra daugiau nei 10 000, rezultatai bus issaugoti faile 'rezultatai.txt'." << endl;
             }
             //Rusiavimas pagal vardus
             sort(Grupe.begin(), Grupe.end(), [](const Studentas &a, const Studentas &b) {
@@ -259,8 +259,8 @@ int main() {
                     out << "----------------------------------------------" << endl;
                     for (int i = 0; i < Grupe.size(); i++) {
                         out << left << setw(15) << Grupe[i].pav
-                        << setw(15) << Grupe[i].vard
-                        << fixed << setprecision(2) << Grupe[i].rezVid << endl;
+                            << setw(15) << Grupe[i].vard
+                            << fixed << setprecision(2) << Grupe[i].rezVid << endl;
                     }
                     out.close();
                     cout << "Rezultatai issaugoti faile 'rezultatai.txt'" << endl;
@@ -269,18 +269,18 @@ int main() {
                     cout << "----------------------------------------------" << endl;
                     for (int i = 0; i < Grupe.size(); i++) {
                         cout << left << setw(15) << Grupe[i].pav
-                         << setw(15) << Grupe[i].vard
-                         << fixed << setprecision(2) << Grupe[i].rezVid << endl;
+                             << setw(15) << Grupe[i].vard
+                             << fixed << setprecision(2) << Grupe[i].rezVid << endl;
                     }
-                } 
-            }else if (pasirinkimas == 2) {
-                 if (iFaila) {
-                    out << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << "Galutinis (Med.)" <<endl; 
+                }
+            } else if (pasirinkimas == 2) {
+                if (iFaila) {
+                    out << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << "Galutinis (Med.)" << endl;
                     out << "----------------------------------------------" << endl;
                     for (int i = 0; i < Grupe.size(); i++) {
                         out << left << setw(15) << Grupe[i].pav
-                        << setw(15) << Grupe[i].vard
-                        << fixed << setprecision(2) << Grupe[i].rezMed << endl;
+                            << setw(15) << Grupe[i].vard
+                            << fixed << setprecision(2) << Grupe[i].rezMed << endl;
                     }
                     out.close();
                     cout << "Rezultatai issaugoti faile 'rezultatai.txt'" << endl;
@@ -289,12 +289,11 @@ int main() {
                     cout << "----------------------------------------------" << endl;
                     for (int i = 0; i < Grupe.size(); i++) {
                         cout << left << setw(15) << Grupe[i].pav
-                         << setw(15) << Grupe[i].vard
-                         << fixed << setprecision(2) << Grupe[i].rezMed << endl;
+                             << setw(15) << Grupe[i].vard
+                             << fixed << setprecision(2) << Grupe[i].rezMed << endl;
                     }
-                } 
-        
-            }else if (pasirinkimas == 3) {
+                }
+            } else if (pasirinkimas == 3) {
                 if (iFaila) {
                     out << left << setw(15) << "Pavarde"
                         << setw(15) << "Vardas"
@@ -312,7 +311,7 @@ int main() {
                     out.close();
                     cout << "Rezultatai issaugoti faile 'rezultatai.txt'" << endl;
 
-                } else  {
+                } else {
                     cout << left << setw(15) << "Pavarde"
                          << setw(15) << "Vardas"
                          << setw(20) << "Galutinis (Vid.)"
@@ -326,23 +325,18 @@ int main() {
                              << setw(20) << fixed << setprecision(2) << Grupe[i].rezMed << endl;
                     }
                 }
-            }
-
-            }     else {
+            } else {
                 cout << "Klaida: pasirinktas netinkamas simbolis. Iveskite 1, 2 arba 3." << endl;
             }
         }
-             else if (veiksmas == 4) {
+        else if (veiksmas == 4) {
             cout << "Programa baigiama." << endl;
             break;
         }
         else {
             cout << "Klaidingas pasirinkimas, bandykite dar karta." << endl;
         }
-    }
+    } 
 
     return 0;
 }
-
-
-
