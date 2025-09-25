@@ -229,21 +229,15 @@ int main() {
                 cout << "Studentu sarasas tuscias." << endl;
                 continue;
             }
-            bool iFaila = Grupe.size() > 10000;
-            std::ofstream out;
-
-            if (iFaila) {
-                out.open("rezultatai.txt");
-                if (!out) {
-                    cout << "Klaida: nepavyko sukurti rezultatu failo." << endl;
-                    continue;
-                }
-                cout << "Studentu yra daugiau nei 10 000, rezultatai bus issaugoti faile 'rezultatai.txt'." << endl;
+             std::ofstream fout("rezultatai.txt"); // PAKEISTA
+            if (!fout) {
+                cout << "Klaida: nepavyko sukurti rezultatu failo." << endl;
+                continue;
             }
-            //Rusiavimas pagal vardus
-            sort(Grupe.begin(), Grupe.end(), [](const Studentas &a, const Studentas &b) {
+
+            sort(Grupe.begin(), Grupe.end(), [](const Studentas& a, const Studentas& b) {
                 return a.vard < b.vard;
-            });
+                });
 
             int pasirinkimas;
             cout << "\nPasirinkite galutinio balo skaiciavimo metoda:\n";
@@ -254,80 +248,43 @@ int main() {
             cin >> pasirinkimas;
 
             if (pasirinkimas == 1) {
-                if (iFaila) {
-                    out << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << "Galutinis (Vid.)" << endl;
-                    out << "----------------------------------------------" << endl;
-                    for (int i = 0; i < Grupe.size(); i++) {
-                        out << left << setw(15) << Grupe[i].pav
-                            << setw(15) << Grupe[i].vard
-                            << fixed << setprecision(2) << Grupe[i].rezVid << endl;
-                    }
-                    out.close();
-                    cout << "Rezultatai issaugoti faile 'rezultatai.txt'" << endl;
-                } else {
-                    cout << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << "Galutinis (Vid.)" << endl;
-                    cout << "----------------------------------------------" << endl;
-                    for (int i = 0; i < Grupe.size(); i++) {
-                        cout << left << setw(15) << Grupe[i].pav
-                             << setw(15) << Grupe[i].vard
-                             << fixed << setprecision(2) << Grupe[i].rezVid << endl;
-                    }
+                fout << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << "Galutinis (Vid.)" << endl;
+                fout << "----------------------------------------------" << endl;
+                for (int i = 0; i < Grupe.size(); i++) {
+                    fout << left << setw(15) << Grupe[i].pav
+                        << setw(15) << Grupe[i].vard
+                        << fixed << setprecision(2) << Grupe[i].rezVid << endl;
                 }
-            } else if (pasirinkimas == 2) {
-                if (iFaila) {
-                    out << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << "Galutinis (Med.)" << endl;
-                    out << "----------------------------------------------" << endl;
-                    for (int i = 0; i < Grupe.size(); i++) {
-                        out << left << setw(15) << Grupe[i].pav
-                            << setw(15) << Grupe[i].vard
-                            << fixed << setprecision(2) << Grupe[i].rezMed << endl;
-                    }
-                    out.close();
-                    cout << "Rezultatai issaugoti faile 'rezultatai.txt'" << endl;
-                } else {
-                    cout << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << "Galutinis (Med.)" << endl;
-                    cout << "----------------------------------------------" << endl;
-                    for (int i = 0; i < Grupe.size(); i++) {
-                        cout << left << setw(15) << Grupe[i].pav
-                             << setw(15) << Grupe[i].vard
-                             << fixed << setprecision(2) << Grupe[i].rezMed << endl;
-                    }
+            }
+            else if (pasirinkimas == 2) {
+                fout << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << "Galutinis (Med.)" << endl;
+                fout << "----------------------------------------------" << endl;
+                for (int i = 0; i < Grupe.size(); i++) {
+                    fout << left << setw(15) << Grupe[i].pav
+                        << setw(15) << Grupe[i].vard
+                        << fixed << setprecision(2) << Grupe[i].rezMed << endl;
                 }
-            } else if (pasirinkimas == 3) {
-                if (iFaila) {
-                    out << left << setw(15) << "Pavarde"
-                        << setw(15) << "Vardas"
-                        << setw(20) << "Galutinis (Vid.)"
-                        << setw(20) << "Galutinis (Med.)" << endl;
-                    out << string(70, '-') << endl;
+            }
+            else if (pasirinkimas == 3) {
+                fout << left << setw(15) << "Pavarde"
+                    << setw(15) << "Vardas"
+                    << setw(20) << "Galutinis (Vid.)"
+                    << setw(20) << "Galutinis (Med.)" << endl;
+                fout << string(70, '-') << endl;
 
-                    for (int i = 0; i < Grupe.size(); i++) {
-                        out << left << setw(15) << Grupe[i].pav
-                            << setw(15) << Grupe[i].vard
-                            << setw(20) << fixed << setprecision(2) << Grupe[i].rezVid
-                            << setw(20) << fixed << setprecision(2) << Grupe[i].rezMed << endl;
-                    }
-
-                    out.close();
-                    cout << "Rezultatai issaugoti faile 'rezultatai.txt'" << endl;
-
-                } else {
-                    cout << left << setw(15) << "Pavarde"
-                         << setw(15) << "Vardas"
-                         << setw(20) << "Galutinis (Vid.)"
-                         << setw(20) << "Galutinis (Med.)" << endl;
-                    cout << string(70, '-') << endl;
-
-                    for (int i = 0; i < Grupe.size(); i++) {
-                        cout << left << setw(15) << Grupe[i].pav
-                             << setw(15) << Grupe[i].vard
-                             << setw(20) << fixed << setprecision(2) << Grupe[i].rezVid
-                             << setw(20) << fixed << setprecision(2) << Grupe[i].rezMed << endl;
-                    }
+                for (int i = 0; i < Grupe.size(); i++) {
+                    fout << left << setw(15) << Grupe[i].pav
+                        << setw(15) << Grupe[i].vard
+                        << setw(20) << fixed << setprecision(2) << Grupe[i].rezVid
+                        << setw(20) << fixed << setprecision(2) << Grupe[i].rezMed << endl;
                 }
-            } else {
+            }
+            else {
                 cout << "Klaida: pasirinktas netinkamas simbolis. Iveskite 1, 2 arba 3." << endl;
             }
+
+            fout.close();
+            cout << "Rezultatai issaugoti faile 'rezultatai.txt'" << endl; // PAKEISTA
         }
         else if (veiksmas == 4) {
             cout << "Programa baigiama." << endl;
@@ -336,7 +293,7 @@ int main() {
         else {
             cout << "Klaidingas pasirinkimas, bandykite dar karta." << endl;
         }
-    } 
+    }
 
     return 0;
 }
