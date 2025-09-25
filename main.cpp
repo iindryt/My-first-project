@@ -17,6 +17,7 @@ using std::fixed;
 using std::setprecision;
 using std::left;
 using std::setw;
+using std::cerr;
 
 struct Studentas {
     string vard;
@@ -71,7 +72,7 @@ int ivestiEgzamina() {
 
 Studentas ivesk() {
     Studentas Laik;
-    int sum = 0, m, pazymiuSkaicius = 0;
+    int  m, pazymiuSkaicius = 0;
 
     cout << "Iveskite varda (arba 0 jei norite baigti): ";
     cin >> Laik.vard;
@@ -228,6 +229,17 @@ int main() {
                 cout << "Studentu sarasas tuscias." << endl;
                 continue;
             }
+            bool iFaila = Grupe.size() > 10000;
+            std::ofstream out;
+
+            if (iFaila) {
+                out.open("rezultatai.txt");
+                if (!out) {
+                    cout << "Klaida: nepavyko sukurti rezultatu failo." << endl;
+                    continue;
+                }
+            cout << "Studentu yra daugiau nei 10 000, rezultatai bus issaugoti faile 'rezultatai.txt'." << endl;
+            }
             //Rusiavimas pagal vardus
             sort(Grupe.begin(), Grupe.end(), [](const Studentas &a, const Studentas &b) {
                 return a.vard < b.vard;
@@ -241,41 +253,86 @@ int main() {
             cout << "Jusu pasirinkimas: ";
             cin >> pasirinkimas;
 
-            cout << endl << left << setw(15) << "Pavarde"
-                 << setw(15) << "Vardas";
-
             if (pasirinkimas == 1) {
-                cout << "Galutinis (Vid.)" << endl;
-                cout << "----------------------------------------------" << endl;
-                for (int i = 0; i < Grupe.size(); i++) {
-                    cout << left << setw(15) << Grupe[i].pav
+                if (iFaila) {
+                    out << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << "Galutinis (Vid.)" << endl;
+                    out << "----------------------------------------------" << endl;
+                    for (int i = 0; i < Grupe.size(); i++) {
+                        out << left << setw(15) << Grupe[i].pav
+                        << setw(15) << Grupe[i].vard
+                        << fixed << setprecision(2) << Grupe[i].rezVid << endl;
+                    }
+                    out.close();
+                    cout << "Rezultatai issaugoti faile 'rezultatai.txt'" << endl;
+                } else {
+                    cout << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << "Galutinis (Vid.)" << endl;
+                    cout << "----------------------------------------------" << endl;
+                    for (int i = 0; i < Grupe.size(); i++) {
+                        cout << left << setw(15) << Grupe[i].pav
                          << setw(15) << Grupe[i].vard
                          << fixed << setprecision(2) << Grupe[i].rezVid << endl;
-                }
-            } 
-            else if (pasirinkimas == 2) {
-                cout << "Galutinis (Med.)" << endl;
-                cout << "----------------------------------------------" << endl;
-                for (int i = 0; i < Grupe.size(); i++) {
-                    cout << left << setw(15) << Grupe[i].pav
+                    }
+                } 
+            }else if (pasirinkimas == 2) {
+                 if (iFaila) {
+                    out << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << "Galutinis (Med.)" <<endl; 
+                    out << "----------------------------------------------" << endl;
+                    for (int i = 0; i < Grupe.size(); i++) {
+                        out << left << setw(15) << Grupe[i].pav
+                        << setw(15) << Grupe[i].vard
+                        << fixed << setprecision(2) << Grupe[i].rezMed << endl;
+                    }
+                    out.close();
+                    cout << "Rezultatai issaugoti faile 'rezultatai.txt'" << endl;
+                } else {
+                    cout << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << "Galutinis (Med.)" << endl;
+                    cout << "----------------------------------------------" << endl;
+                    for (int i = 0; i < Grupe.size(); i++) {
+                        cout << left << setw(15) << Grupe[i].pav
                          << setw(15) << Grupe[i].vard
                          << fixed << setprecision(2) << Grupe[i].rezMed << endl;
+                    }
+                } 
+        
+            }else if (pasirinkimas == 3) {
+                if (iFaila) {
+                    out << left << setw(15) << "Pavarde"
+                        << setw(15) << "Vardas"
+                        << setw(20) << "Galutinis (Vid.)"
+                        << setw(20) << "Galutinis (Med.)" << endl;
+                    out << string(70, '-') << endl;
+
+                    for (int i = 0; i < Grupe.size(); i++) {
+                        out << left << setw(15) << Grupe[i].pav
+                            << setw(15) << Grupe[i].vard
+                            << setw(20) << fixed << setprecision(2) << Grupe[i].rezVid
+                            << setw(20) << fixed << setprecision(2) << Grupe[i].rezMed << endl;
+                    }
+
+                    out.close();
+                    cout << "Rezultatai issaugoti faile 'rezultatai.txt'" << endl;
+
+                } else  {
+                    cout << left << setw(15) << "Pavarde"
+                         << setw(15) << "Vardas"
+                         << setw(20) << "Galutinis (Vid.)"
+                         << setw(20) << "Galutinis (Med.)" << endl;
+                    cout << string(70, '-') << endl;
+
+                    for (int i = 0; i < Grupe.size(); i++) {
+                        cout << left << setw(15) << Grupe[i].pav
+                             << setw(15) << Grupe[i].vard
+                             << setw(20) << fixed << setprecision(2) << Grupe[i].rezVid
+                             << setw(20) << fixed << setprecision(2) << Grupe[i].rezMed << endl;
+                    }
                 }
-            } 
-            else if (pasirinkimas == 3) {
-                cout << "Galutinis (Vid.)    Galutinis (Med.)" << endl;
-                cout <<  "-----------------------------------------------------------------"  << endl;
-                for (int i = 0; i < Grupe.size(); i++) {
-                    cout << left << setw(15) << Grupe[i].pav
-                         << setw(15) << Grupe[i].vard
-                         << fixed << setprecision(2) << setw(20) << Grupe[i].rezVid
-                         << fixed << setprecision(2) << setw(20) << Grupe[i].rezMed << endl;
-                }
-            } else {
+            }
+
+            }     else {
                 cout << "Klaida: pasirinktas netinkamas simbolis. Iveskite 1, 2 arba 3." << endl;
             }
         }
-        else if (veiksmas == 4) {
+             else if (veiksmas == 4) {
             cout << "Programa baigiama." << endl;
             break;
         }
