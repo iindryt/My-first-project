@@ -309,7 +309,57 @@ int main() {
             }
 
             fout.close();
-            cout << "Rezultatai issaugoti faile 'rezultatai.txt'" << endl; // PAKEISTA
+            cout << "Rezultatai issaugoti faile 'rezultatai.txt'" << endl; 
+            int rusiuotPasirinkimas;
+            cout << "\nPagal ka norite surusiuoti studentus i dvi kategorijas (kietiakiai / vargsiukai)?\n";
+            cout << "1 - Pagal galutini bala (vidurkis)\n";
+            cout << "2 - Pagal galutini bala (mediana)\n";
+            cout << "Jusu pasirinkimas: ";
+            cin >> rusiuotPasirinkimas;
+
+            vector<Studentas> kietiakiai;
+            vector<Studentas> vargsiukai;
+
+            for (const auto& s : Grupe) {
+                float galutinis = (rusiuotPasirinkimas == 1) ? s.rezVid : s.rezMed;
+                if (galutinis >= 5.0f)
+                    kietiakiai.push_back(s);
+            else
+                vargsiukai.push_back(s);
+            }
+
+            std::ofstream outKiet("kietiakiai.txt");
+            std::ofstream outVarg("vargsiukai.txt");
+
+            if (!outKiet || !outVarg) {
+                cout << "Klaida: nepavyko sukurti failu." << endl;
+                continue;
+            }
+
+            auto spausdinti = [](std::ofstream& fout, const vector<Studentas>& sarasas, bool pagalVidurki) {
+                fout << left << setw(15) << "Pavarde"
+                    << setw(15) << "Vardas"
+                    << "Galutinis balas" << endl;
+                fout << string(45, '-') << endl;
+
+                for (const auto& s : sarasas) {
+                    float balas = (pagalVidurki) ? s.rezVid : s.rezMed;
+                    fout << left << setw(15) << s.pav
+                        << setw(15) << s.vard
+                        << fixed << setprecision(2)
+                        << balas << endl;
+                }
+                };
+
+            spausdinti(outKiet, kietiakiai, rusiuotPasirinkimas == 1);
+            spausdinti(outVarg, vargsiukai, rusiuotPasirinkimas == 1);
+
+            outKiet.close();
+            outVarg.close();
+
+            cout << "Studentai surusiuoti ir issaugoti:\n";
+            cout << " - kietiakiai.txt: " << kietiakiai.size() << " studentu\n";
+            cout << " - vargsiukai.txt: " << vargsiukai.size() << " studentu\n";
         }
         else if (veiksmas == 4) {
             cout << "Programa baigiama." << endl;
