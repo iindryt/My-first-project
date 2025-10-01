@@ -189,6 +189,30 @@ vector<Studentas> nuskaitytiIsFailo(const string &failoVardas) {
 
     return studentai;
 }
+void generuotiFaila(int kiekis, const string& failoVardas, int ndKiekis = 5) {
+    std::ofstream out(failoVardas);
+    if (!out) {
+        cerr << "Nepavyko sukurti failo: " << failoVardas << endl;
+        return;
+    }
+
+    out << "Vardas Pavarde";
+    for (int i = 1; i <= ndKiekis; i++) {
+        out << " ND" << i;
+    }
+    out << " Egzaminas" << endl;
+
+    for (int i = 1; i <= kiekis; ++i) {
+        out << "Vardas" << i << " Pavarde" << i;
+        for (int j = 0; j < ndKiekis; ++j) {
+            out << " " << random(1, 10);
+        }
+        out << " " << random(1, 10) << endl;
+    }
+
+    out.close();
+    cout << "Failas '" << failoVardas << "' sukurtas su " << kiekis << " irasu." << endl;
+}
 
 int main() {
     srand(time(NULL));
@@ -201,6 +225,7 @@ int main() {
         cout << "2 - Nuskaityti studentus is failo\n";
         cout << "3 - Rodyti studentu rezultatus\n";
         cout << "4 - Baigti programa\n";
+        cout << "5 - Generuoti studentu failus (1k - 10mln)\n";
         cout << "Jusu pasirinkimas yra: ";
         cin >> veiksmas;
 
@@ -289,6 +314,16 @@ int main() {
         else if (veiksmas == 4) {
             cout << "Programa baigiama." << endl;
             break;
+        }
+        
+        else if (veiksmas == 5) {
+        cout << "\nGeneruojami failai su studentais...\n";
+        generuotiFaila(1000, "studentai_1000.txt");
+        generuotiFaila(10000, "studentai_10000.txt");
+        generuotiFaila(100000, "studentai_100000.txt");
+        generuotiFaila(1000000, "studentai_1000000.txt");
+        generuotiFaila(10000000, "studentai_10000000.txt");
+        cout << "Failu generavimas baigtas.\n";
         }
         else {
             cout << "Klaidingas pasirinkimas, bandykite dar karta." << endl;
