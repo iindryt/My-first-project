@@ -1,9 +1,9 @@
 #ifndef DUOMENYS_H
 #define DUOMENYS_H
 
-#include "studentas.h"
-#include <vector>
 #include <string>
+#include <vector>
+#include "studentas.h"
 
 std::vector<Studentas> nuskaitytiIsFailo(const std::string& failoVardas);
 void generuotiFaila(int kiekis, const std::string& failoVardas, int ndKiekis = 5);
