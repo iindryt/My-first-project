@@ -1,5 +1,5 @@
 #include <iostream>
-#include <iomanip>      // dėl std::setw, std::fixed, std::setprecision
+#include <iomanip>     
 #include <vector>
 #include <ctime>
 
@@ -53,9 +53,9 @@ int main() {
             std::cout << "\nGeneruojami failai su studentais...\n";
             generuotiFaila(1000, "studentai_1000.txt");
             generuotiFaila(10000, "studentai_10000.txt");
-            generuotiFaila(100000, "studentai_100000.txt");
-            generuotiFaila(1000000, "studentai_1000000.txt");
-            generuotiFaila(10000000, "studentai_10000000.txt");
+            //generuotiFaila(100000, "studentai_100000.txt");
+            //generuotiFaila(1000000, "studentai_1000000.txt");
+            //generuotiFaila(10000000, "studentai_10000000.txt");
             std::cout << "Failu generavimas baigtas.\n";
         }
         else {
