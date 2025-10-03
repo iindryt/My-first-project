@@ -128,23 +128,23 @@ Studentas ivesk() {
     return Laik;
 }
 
+
 void spausdintiRezultatusIrRusiavima(const vector<Studentas>& Grupe) {
     if (Grupe.empty()) {
         cout << "Studentu sarasas tuscias." << endl;
         return;
     }
 
-    ofstream fout("rezultatai.txt");
-    if (!fout) {
-        cout << "Klaida: nepavyko sukurti rezultatu failo." << endl;
-        return;
-    }
-
+    // Rūšiavimas pagal vardą
+    Laikmatis laikRusiavimui;
     vector<Studentas> surikiuoti = Grupe;
+
     std::sort(surikiuoti.begin(), surikiuoti.end(), [](const Studentas& a, const Studentas& b) {
         return a.vard < b.vard;
         });
+    double rusiavimoLaikas = laikRusiavimui.praejes_laikas();
 
+    // Pasirinkimas kaip skaičiuoti galutinį balą
     int pasirinkimas;
     cout << "\nPasirinkite galutinio balo skaiciavimo metoda:\n";
     cout << "1 - Vidurkis\n";
@@ -152,6 +152,13 @@ void spausdintiRezultatusIrRusiavima(const vector<Studentas>& Grupe) {
     cout << "3 - Abu (vidurkis ir mediana)\n";
     cout << "Jusu pasirinkimas: ";
     cin >> pasirinkimas;
+
+    Laikmatis laikIrasymui;
+    ofstream fout("rezultatai.txt");
+    if (!fout) {
+        cout << "Klaida: nepavyko sukurti rezultatu failo." << endl;
+        return;
+    }
 
     if (pasirinkimas == 1) {
         fout << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << "Galutinis (Vid.)" << endl;
@@ -185,15 +192,14 @@ void spausdintiRezultatusIrRusiavima(const vector<Studentas>& Grupe) {
                 << setw(20) << fixed << setprecision(2) << s.rezMed << endl;
         }
     }
-    else {
-        cout << "Klaida: pasirinktas netinkamas simbolis. Iveskite 1, 2 arba 3." << endl;
-        return;
-    }
-
     fout.close();
-    cout << "Rezultatai issaugoti faile 'rezultatai.txt'" << endl;
+    double isvedimoLaikas = laikIrasymui.praejes_laikas();
 
-    // Rūšiavimas į kietiakius ir vargšiukus
+    cout << "Rezultatai issaugoti faile 'rezultatai.txt'\n";
+    cout << "Rusiavimas truko: " << rusiavimoLaikas << " sek.\n";
+    cout << "Isvedimas i 'rezultatai.txt' truko: " << isvedimoLaikas << " sek.\n";
+
+    // --- Skirstymas į kietiakus / vargšiukus ---
     int rusiuotPasirinkimas;
     cout << "\nPagal ka norite surusiuoti studentus i dvi kategorijas (kietiakiai / vargsiukai)?\n";
     cout << "1 - Pagal galutini bala (vidurkis)\n";
@@ -201,6 +207,7 @@ void spausdintiRezultatusIrRusiavima(const vector<Studentas>& Grupe) {
     cout << "Jusu pasirinkimas: ";
     cin >> rusiuotPasirinkimas;
 
+    Laikmatis laikRusiavimui2;
     vector<Studentas> kietiakiai, vargsiukai;
     for (const auto& s : Grupe) {
         float galutinis = (rusiuotPasirinkimas == 1) ? s.rezVid : s.rezMed;
@@ -209,7 +216,10 @@ void spausdintiRezultatusIrRusiavima(const vector<Studentas>& Grupe) {
         else
             vargsiukai.push_back(s);
     }
+    double rusiavimasIKategorijas = laikRusiavimui2.praejes_laikas();
 
+    // Išvedimas į failus
+    Laikmatis laikIrasymui2;
     ofstream outKiet("kietiakiai.txt");
     ofstream outVarg("vargsiukai.txt");
 
@@ -238,7 +248,12 @@ void spausdintiRezultatusIrRusiavima(const vector<Studentas>& Grupe) {
     outKiet.close();
     outVarg.close();
 
+    double isvedimasIKategorijas = laikIrasymui2.praejes_laikas();
+
     cout << "Studentai surusiuoti ir issaugoti:\n";
     cout << " - kietiakiai.txt: " << kietiakiai.size() << " studentu\n";
     cout << " - vargsiukai.txt: " << vargsiukai.size() << " studentu\n";
+
+    cout << "Rusiavimas i kietiakus/vargsiukus truko: " << rusiavimasIKategorijas << " sek.\n";
+    cout << "Isvedimas i kietiakiai/vargsiukai failus truko: " << isvedimasIKategorijas << " sek.\n";
 }
