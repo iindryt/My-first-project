@@ -5,7 +5,7 @@
 
 #include "studentas.h"
 #include "funkcijos.h"
-#include "duomenys.h"
+#include "duomenys.h"  
 
 int main() {
     std::srand(std::time(nullptr));
@@ -18,7 +18,7 @@ int main() {
         std::cout << "2 - Nuskaityti studentus is failo\n";
         std::cout << "3 - Rodyti studentu rezultatus\n";
         std::cout << "4 - Baigti programa\n";
-        std::cout << "5 - Generuoti studentu failus (1k - 10mln)\n";
+        std::cout << "5 - Generuoti studentu failus (1k – 10mln)\n";
         std::cout << "Jusu pasirinkimas yra: ";
         std::cin >> veiksmas;
 
