@@ -135,7 +135,7 @@ void spausdintiRezultatusIrRusiavima(const vector<Studentas>& Grupe) {
         return;
     }
 
-    // Rūšiavimas pagal vardą
+    // --- Rūšiavimas pagal vardą ---
     Laikmatis laikRusiavimui;
     vector<Studentas> surikiuoti = Grupe;
 
@@ -144,7 +144,7 @@ void spausdintiRezultatusIrRusiavima(const vector<Studentas>& Grupe) {
         });
     double rusiavimoLaikas = laikRusiavimui.praejes_laikas();
 
-    // Pasirinkimas kaip skaičiuoti galutinį balą
+    // --- Pasirinkimas kaip skaičiuoti galutinį balą ---
     int pasirinkimas;
     cout << "\nPasirinkite galutinio balo skaiciavimo metoda:\n";
     cout << "1 - Vidurkis\n";
@@ -218,7 +218,7 @@ void spausdintiRezultatusIrRusiavima(const vector<Studentas>& Grupe) {
     }
     double rusiavimasIKategorijas = laikRusiavimui2.praejes_laikas();
 
-    // Išvedimas į failus
+    // --- Išvedimas į failus (pataisyta dalis) ---
     Laikmatis laikIrasymui2;
     ofstream outKiet("kietiakiai.txt");
     ofstream outVarg("vargsiukai.txt");
@@ -229,9 +229,12 @@ void spausdintiRezultatusIrRusiavima(const vector<Studentas>& Grupe) {
     }
 
     auto spausdinti = [](ofstream& fout, const vector<Studentas>& sarasas, bool pagalVidurki) {
+        // Dinamiška antraštė pagal pasirinkimą
+        string antraste = pagalVidurki ? "Galutinis (Vid.)" : "Galutinis (Med.)";
+
         fout << left << setw(15) << "Pavarde"
             << setw(15) << "Vardas"
-            << "Galutinis balas" << endl;
+            << antraste << endl;
         fout << string(45, '-') << endl;
 
         for (const auto& s : sarasas) {
