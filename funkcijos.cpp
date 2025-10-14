@@ -218,6 +218,44 @@ void spausdintiRezultatusIrRusiavima(const vector<Studentas>& Grupe) {
     }
     double rusiavimasIKategorijas = laikRusiavimui2.praejes_laikas();
 
+     //pasirinkimas kaip rikiuoti kietiakus/vargšiukus ---
+ int rikiavimoPasirinkimas;
+ cout << "\nKaip norite, kad butu surikiuoti 'kietiakiai' ir 'vargsiukai'?\n";
+ cout << "1 - Pagal varda\n";
+ cout << "2 - Pagal pavarde\n";
+ cout << "3 - Pagal galutini bala\n";
+ cout << "Jusu pasirinkimas: ";
+ cin >> rikiavimoPasirinkimas;
+
+ auto rikiuotiPagal = [&](vector<Studentas>& sarasas) {
+     switch (rikiavimoPasirinkimas) {
+     case 1:
+         std::sort(sarasas.begin(), sarasas.end(), [](const Studentas& a, const Studentas& b) {
+             return a.vard < b.vard;
+             });
+         break;
+     case 2:
+         std::sort(sarasas.begin(), sarasas.end(), [](const Studentas& a, const Studentas& b) {
+             return a.pav < b.pav;
+             });
+         break;
+     case 3:
+         std::sort(sarasas.begin(), sarasas.end(), [&](const Studentas& a, const Studentas& b) {
+             float ga = (rusiuotPasirinkimas == 1) ? a.rezVid : a.rezMed;
+             float gb = (rusiuotPasirinkimas == 1) ? b.rezVid : b.rezMed;
+             return ga > gb; // didesnis balas pirmiau
+             });
+         break;
+     default:
+         cout << "Neteisingas pasirinkimas, paliekama be papildomo rikiavimo.\n";
+         break;
+     }
+     };
+
+ rikiuotiPagal(kietiakiai);
+ rikiuotiPagal(vargsiukai);
+
+
     // --- Išvedimas į failus (pataisyta dalis) ---
     Laikmatis laikIrasymui2;
     ofstream outKiet("kietiakiai.txt");
