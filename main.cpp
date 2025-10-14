@@ -7,6 +7,8 @@
 #include "studentas.h"
 #include "funkcijos.h"
 #include "duomenys.h"  
+#include "testavimas.h"
+
 
 int main() {
     std::srand(std::time(nullptr));
@@ -20,6 +22,7 @@ int main() {
         std::cout << "3 - Rodyti studentu rezultatus\n";
         std::cout << "4 - Baigti programa\n";
         std::cout << "5 - Generuoti studentu failus (1k–10mln)\n";
+        std::cout << "6 - Testuoti konteinerius (vector vs list)\n";
         std::cout << "Jusu pasirinkimas yra: ";
         std::cin >> veiksmas;
 
@@ -59,6 +62,17 @@ int main() {
             //generuotiFaila(10000000, "studentai_10000000.txt");
             std::cout << "Failu generavimas baigtas.\n";
         }
+        else if (veiksmas == 6) {
+            std::string testFailas;
+            std::cout << "Iveskite failo pavadinima konteineriu testavimui: ";
+            std::cin >> testFailas;
+
+            std::cout << "\nTestuojamas std::vector...\n";
+            testuotiKonteineri<std::vector<Studentas>>(testFailas, "std::vector");
+
+            std::cout << "\nTestuojamas std::list...\n";
+            testuotiKonteineri<std::list<Studentas>>(testFailas, "std::list");
+        }
         else {
             std::cout << "Klaidingas pasirinkimas, bandykite dar karta." << std::endl;
         }
@@ -66,4 +80,6 @@ int main() {
 
     return 0;
 }
+
+
 
