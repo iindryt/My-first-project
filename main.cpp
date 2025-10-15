@@ -53,14 +53,29 @@ int main() {
             }
         }
         
-        else if (veiksmas == 2) {
-            std::string failas;
-            std::cout << "Iveskite failo pavadinima: ";
-            std::cin >> failas;
-            std::vector<Studentas> isFailo = nuskaitytiIsFailo(failas);
-            Grupe.insert(Grupe.end(), isFailo.begin(), isFailo.end());
-            std::cout << "Is failo yra nuskaityta " << isFailo.size() << " studentu." << std::endl;
-        }
+    else if (veiksmas == 2) {
+     std::string failas;
+     std::cout << "Iveskite failo pavadinima: ";
+     std::cin >> failas;
+
+     char tipas;
+     std::cout << "Naudoti konteineri: vector (v) ar list (l)? ";
+     std::cin >> tipas;
+
+     if (tipas == 'v') {
+         auto isFailo = nuskaitytiIsFailoTemplate<std::vector<Studentas>>(failas);
+         GrupeVector.insert(GrupeVector.end(), isFailo.begin(), isFailo.end());
+         std::cout << "Is failo nuskaityta " << isFailo.size() << " studentu (vector)\n";
+     }
+     else if (tipas == 'l') {
+         auto isFailo = nuskaitytiIsFailoTemplate<std::list<Studentas>>(failas);
+         GrupeList.insert(GrupeList.end(), isFailo.begin(), isFailo.end());
+         std::cout << "Is failo nuskaityta " << isFailo.size() << " studentu (list)\n";
+     }
+     else {
+         std::cout << "Neteisingas pasirinkimas. Nuskaitymas nutrauktas.\n";
+     }
+ }
         else if (veiksmas == 3) {
             spausdintiRezultatusIrRusiavima(Grupe); // iš funkcijos.cpp
         }
