@@ -12,7 +12,8 @@
 
 int main() {
     std::srand(std::time(nullptr));
-    std::vector<Studentas> Grupe;
+    std::vector<Studentas> GrupeVector;
+    std::list<Studentas> GrupeList;
     int veiksmas;
 
     while (true) {
@@ -25,19 +26,33 @@ int main() {
         std::cout << "6 - Testuoti konteinerius (vector vs list)\n";
         std::cout << "Jusu pasirinkimas yra: ";
         std::cin >> veiksmas;
-
         if (veiksmas == 1) {
+            char tipas;
+            std::cout << "Naudoti konteinerį: vector (v) ar list (l)? ";
+            std::cin >> tipas;
+            bool naudotiVector = (tipas == 'v');
+
             Studentas s = ivesk();
             if (s.vard == "0") {
                 std::cout << "Studentu ivedimas nutrauktas." << std::endl;
-                continue;
             }
-            if (s.paz.size() == 0) {
+            else if (s.paz.empty()) {
                 std::cout << "Studentas neivestas del netinkamu pazymiu." << std::endl;
-                continue;
             }
-            Grupe.push_back(s);
+            else {
+                if (naudotiVector) {
+                    GrupeVector.push_back(s);
+                    const Studentas& ref = GrupeVector.back();
+                    std::cout << "Studento obj. saugomas adresu " << &ref << " (vector)" << std::endl;
+                }
+                else {
+                    GrupeList.push_back(s);
+                    const Studentas& ref = GrupeList.back();
+                    std::cout << "Studento obj. saugomas adresu " << &ref << " (list)" << std::endl;
+                }
+            }
         }
+        
         else if (veiksmas == 2) {
             std::string failas;
             std::cout << "Iveskite failo pavadinima: ";
