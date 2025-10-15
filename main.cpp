@@ -97,10 +97,7 @@ int main() {
             std::cout << "Iveskite failo pavadinima konteineriu testavimui: ";
             std::cin >> testFailas;
 
-            std::cout << "\nTestuojamas std::vector...\n";
             testuotiKonteineri<std::vector<Studentas>>(testFailas, "std::vector");
-
-            std::cout << "\nTestuojamas std::list...\n";
             testuotiKonteineri<std::list<Studentas>>(testFailas, "std::list");
         }
         else {
