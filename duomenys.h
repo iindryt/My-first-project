@@ -3,47 +3,80 @@
 
 #include <string>
 #include <vector>
-#include "studentas.h"
+#include <list>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
-std::vector<Studentas> nuskaitytiIsFailo(const std::string& failoVardas);
+#include "studentas.h"
+#include "laikmatis.h"
+#include "funkcijos.h"
+
+// Failo generavimas
 void generuotiFaila(int kiekis, const std::string& failoVardas, int ndKiekis = 5);
 
-//Sablonine funkcija
+// Paprasta funkcija su std::vector
+std::vector<Studentas> nuskaitytiIsFailo(const std::string& failoVardas);
+
+// Šabloninė funkcija konteineriams
 template <typename Container>
-Container nuskaitytiIsFailoTemplate(const std::string& failoVardas) {
-    Laikmatis laikmatis;
+Container nuskaitytiIsFailoTemplate(const std::string& failoVardas, bool spausdinti = true) {
+    Laikmatis tNuskaitymui;
     Container studentai;
+
     std::ifstream in(failoVardas);
     if (!in) {
-        std::cerr << "Klaida: nepavyko atidaryti failo.\n";
+        std::cerr << "Nepavyko atidaryti failo: " << failoVardas << "\n";
         return studentai;
     }
 
     std::string eilute;
-    getline(in, eilute); // antra?t?
+    std::getline(in, eilute); // praleidžiam pirmą eilutę (antraštę, jei yra)
 
-    while (getline(in, eilute)) {
+    while (std::getline(in, eilute)) {
         if (eilute.empty()) continue;
-        std::istringstream ss(eilute);
 
+        std::istringstream iss(eilute);
         Studentas s;
-        ss >> s.vard >> s.pav;
-        int paz;
-        while (ss >> paz) s.paz.push_back(paz);
+        iss >> s.vard >> s.pav;
 
-        if (s.paz.size() < 2) continue;
-        s.egzas = s.paz.back();
-        s.paz.pop_back();
-        s.rezVid = s.egzas * 0.6 + Vidurkis(s.paz) * 0.4;
-        s.rezMed = s.egzas * 0.6 + Mediana(s.paz) * 0.4;
+        std::vector<int> laikiniPaz;
+        int pazymys;
+
+        // skaitome visus pažymius
+        while (iss >> pazymys) {
+            if (pazymys < 1) pazymys = 1;
+            if (pazymys > 10) pazymys = 10;
+            laikiniPaz.push_back(pazymys);
+        }
+
+        // paskutinis pažymys yra egzaminas
+        if (!laikiniPaz.empty()) {
+            s.egzas = laikiniPaz.back();
+            laikiniPaz.pop_back();
+        }
+        else {
+            s.egzas = 1;
+        }
+
+        s.paz = laikiniPaz;
+
+        // galutiniai balai
+        float vid = Vidurkis(s.paz);
+        float med = Mediana(s.paz);
+        s.rezVid = 0.4f * vid + 0.6f * s.egzas;
+        s.rezMed = 0.4f * med + 0.6f * s.egzas;
+
         studentai.push_back(s);
     }
 
-    std::cout << "Failas nuskaitytas per " << laikmatis.praejes_laikas() << " s.\n";
+    in.close();
+
+    if (spausdinti) {
+        std::cout << "Failas nuskaitytas per " << tNuskaitymui.praejes_laikas() << " s.\n";
+    }
+
     return studentai;
 }
 
 #endif // DUOMENYS_H
-
-
-
