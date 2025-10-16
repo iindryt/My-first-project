@@ -27,7 +27,7 @@ Testuojami du C++ standartiniai konteineriai:
 
 Matavimai atliekami trimis pagrindinėmis operacijomis:
 1. **Nuskaitymas** – duomenų nuskaitymas iš failo į konteinerį.  
-2. **Rūšiavimas** – duomenų rūšiavimas konteineryje.  
+2. **Rūšiavimas** – vargšiukai/kietiakiai skirstymas konteineryje.  
 3. **Įrašymas** – duomenų įrašymas atgal į failą.  
 
 Laikas matuojamas **sekundėmis** su tikslumu iki šešių skaičių po kablelio.
