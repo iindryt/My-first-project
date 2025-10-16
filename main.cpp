@@ -4,6 +4,7 @@
 #include <list>
 #include <ctime>
 #include <string>
+#include <fstream>
 
 #include "studentas.h"
 #include "funkcijos.h"
@@ -26,6 +27,7 @@ int main() {
         std::cout << "4 - Baigti programa\n";
         std::cout << "5 - Generuoti studentu failus (1k - 10mln)\n";
         std::cout << "6 - Testuoti konteinerius (vector vs list)\n";
+        std::cout << "7 - Automatinis testavimas su visais failais\n";
         std::cout << "Jusu pasirinkimas yra: ";
         std::cin >> veiksmas;
 
@@ -112,20 +114,55 @@ int main() {
             generuotiFaila(10000000, "studentai_10000000.txt");
             std::cout << "Failu generavimas baigtas.\n";
         }
+
+        // --- Testavimas rankiniu budu ---
         else if (veiksmas == 6) {
             std::string testFailas;
             std::cout << "Iveskite failo pavadinima konteineriu testavimui: ";
             std::cin >> testFailas;
 
-            // Testuojame vector
             testuotiKonteineri<std::vector<Studentas>>(testFailas, "std::vector");
-
-            // Testuojame list
             testuotiKonteineri<std::list<Studentas>>(testFailas, "std::list");
         }
 
+        // --- Automatinis testavimas su visais failais ---
+        else if (veiksmas == 7) {
+            std::vector<std::string> failai = {
+                "studentai_1000.txt",
+                "studentai_10000.txt",
+                "studentai_100000.txt",
+                "studentai_1000000.txt",
+                "studentai_10000000.txt"
+            };
 
+            std::ofstream out("test_rez.txt");
+            if (!out.is_open()) {
+                std::cerr << "Klaida: nepavyko sukurti test_rez.txt failo!\n";
+                continue;
+            }
 
+            out << "AUTOMATINIS KONTEINERIU TESTAVIMAS\n";
+            out << "-----------------------------------\n\n";
+
+            for (const auto& failas : failai) {
+                out << "Failas: " << failas << "\n";
+
+                // Laikinai peradresuojame cout į failą
+                std::streambuf* originalCout = std::cout.rdbuf();
+                std::cout.rdbuf(out.rdbuf());
+
+                testuotiKonteineri<std::vector<Studentas>>(failas, "std::vector");
+                testuotiKonteineri<std::list<Studentas>>(failas, "std::list");
+
+                std::cout.rdbuf(originalCout); // atstatome cout
+
+                out << "-------------------------------------------\n\n";
+                std::cout << "Atliktas testas su failu: " << failas << std::endl;
+            }
+
+            out.close();
+            std::cout << "Automatinis testavimas baigtas. Rezultatai issaugoti faile test_rez.txt.\n";
+        }
 
         else {
             std::cout << "Klaidingas pasirinkimas, bandykite dar karta." << std::endl;
