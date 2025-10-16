@@ -20,6 +20,13 @@ void testuotiKonteineri(const std::string& failoVardas, const std::string& pavad
     // --- Nuskaitymas ---
     Laikmatis tNuskaitymui;
     Container studentai = nuskaitytiIsFailoTemplate<Container>(failoVardas, false); // nespauzdinti viduje
+
+    // Patikrinam, ar konteineris ne tuščias
+    if (studentai.empty()) {
+        std::cout << "Failas nerastas arba tuscias. Testavimas nutrauktas.\n";
+        return;
+    }
+
     std::cout << "Failas nuskaitytas per " << tNuskaitymui.praejes_laikas() << " s.\n";
 
     // --- Skirstymas i kietakius / vargsiukus ---
@@ -38,17 +45,13 @@ void testuotiKonteineri(const std::string& failoVardas, const std::string& pavad
     Laikmatis tFailams;
     {
         std::ofstream outKiet("kietiakiai.txt");
-        if (!outKiet)
-            std::cerr << "Klaida: nepavyko sukurti 'kietiakiai.txt'.\n";
-        else {
+        if (outKiet) {
             for (auto& s : kietiakiai)
                 outKiet << s.vard << " " << s.pav << " " << s.rezVid << "\n";
         }
 
         std::ofstream outVarg("vargsiukai.txt");
-        if (!outVarg)
-            std::cerr << "Klaida: nepavyko sukurti 'vargsiukai.txt'.\n";
-        else {
+        if (outVarg) {
             for (auto& s : vargsiukai)
                 outVarg << s.vard << " " << s.pav << " " << s.rezVid << "\n";
         }
