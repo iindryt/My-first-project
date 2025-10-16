@@ -1,19 +1,21 @@
 #include <iostream>
-#include <iomanip>     
+#include <iomanip>
 #include <vector>
+#include <list>
 #include <ctime>
-
+#include <string>
 
 #include "studentas.h"
 #include "funkcijos.h"
-#include "duomenys.h"  
+#include "duomenys.h"
 #include "testavimas.h"
 
-
 int main() {
-    std::srand(std::time(nullptr));
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
+
     std::vector<Studentas> GrupeVector;
     std::list<Studentas> GrupeList;
+
     int veiksmas;
 
     while (true) {
@@ -22,10 +24,12 @@ int main() {
         std::cout << "2 - Nuskaityti studentus is failo\n";
         std::cout << "3 - Rodyti studentu rezultatus\n";
         std::cout << "4 - Baigti programa\n";
-        std::cout << "5 - Generuoti studentu failus (1k–10mln)\n";
+        std::cout << "5 - Generuoti studentu failus (1k - 10mln)\n";
         std::cout << "6 - Testuoti konteinerius (vector vs list)\n";
         std::cout << "Jusu pasirinkimas yra: ";
         std::cin >> veiksmas;
+
+        // --- Rankinis studento ivedimas ---
         if (veiksmas == 1) {
             char tipas;
             std::cout << "Naudoti konteinerį: vector (v) ar list (l)? ";
@@ -52,44 +56,60 @@ int main() {
                 }
             }
         }
-        
-    else if (veiksmas == 2) {
-     std::string failas;
-     std::cout << "Iveskite failo pavadinima: ";
-     std::cin >> failas;
 
-     char tipas;
-     std::cout << "Naudoti konteineri: vector (v) ar list (l)? ";
-     std::cin >> tipas;
+        // --- Nuskaitymas is failo ---
+        else if (veiksmas == 2) {
+            std::string failas;
+            std::cout << "Iveskite failo pavadinima: ";
+            std::cin >> failas;
 
-     if (tipas == 'v') {
-         auto isFailo = nuskaitytiIsFailoTemplate<std::vector<Studentas>>(failas);
-         GrupeVector.insert(GrupeVector.end(), isFailo.begin(), isFailo.end());
-         std::cout << "Is failo nuskaityta " << isFailo.size() << " studentu (vector)\n";
-     }
-     else if (tipas == 'l') {
-         auto isFailo = nuskaitytiIsFailoTemplate<std::list<Studentas>>(failas);
-         GrupeList.insert(GrupeList.end(), isFailo.begin(), isFailo.end());
-         std::cout << "Is failo nuskaityta " << isFailo.size() << " studentu (list)\n";
-     }
-     else {
-         std::cout << "Neteisingas pasirinkimas. Nuskaitymas nutrauktas.\n";
-     }
- }
-        else if (veiksmas == 3) {
-            spausdintiRezultatusIrRusiavima(Grupe); // iš funkcijos.cpp
+            char tipas;
+            std::cout << "Naudoti konteineri: vector (v) ar list (l)? ";
+            std::cin >> tipas;
+
+            if (tipas == 'v') {
+                auto isFailo = nuskaitytiIsFailoTemplate<std::vector<Studentas>>(failas);
+                GrupeVector.insert(GrupeVector.end(), isFailo.begin(), isFailo.end());
+                std::cout << "Is failo nuskaityta " << isFailo.size() << " studentu (vector)\n";
+            }
+            else if (tipas == 'l') {
+                auto isFailo = nuskaitytiIsFailoTemplate<std::list<Studentas>>(failas);
+                GrupeList.insert(GrupeList.end(), isFailo.begin(), isFailo.end());
+                std::cout << "Is failo nuskaityta " << isFailo.size() << " studentu (list)\n";
+            }
+            else {
+                std::cout << "Neteisingas pasirinkimas. Nuskaitymas nutrauktas.\n";
+            }
         }
+
+        // --- Rodyti rezultatus ---
+        else if (veiksmas == 3) {
+            if (!GrupeVector.empty()) {
+                spausdintiRezultatusIrRusiavima(GrupeVector);
+            }
+            else if (!GrupeList.empty()) {
+                std::vector<Studentas> laikinas(GrupeList.begin(), GrupeList.end());
+                spausdintiRezultatusIrRusiavima(laikinas);
+            }
+            else {
+                std::cout << "Nera duomenu rodyti." << std::endl;
+            }
+        }
+
+        // --- Baigti programa ---
         else if (veiksmas == 4) {
             std::cout << "Programa baigiama." << std::endl;
             break;
         }
+
+        // --- Generuoti failus ---
         else if (veiksmas == 5) {
             std::cout << "\nGeneruojami failai su studentais...\n";
             generuotiFaila(1000, "studentai_1000.txt");
             generuotiFaila(10000, "studentai_10000.txt");
-            //generuotiFaila(100000, "studentai_100000.txt");
-            //generuotiFaila(1000000, "studentai_1000000.txt");
-            //generuotiFaila(10000000, "studentai_10000000.txt");
+            generuotiFaila(100000, "studentai_100000.txt");
+            generuotiFaila(1000000, "studentai_1000000.txt");
+            generuotiFaila(10000000, "studentai_10000000.txt");
             std::cout << "Failu generavimas baigtas.\n";
         }
         else if (veiksmas == 6) {
@@ -97,9 +117,16 @@ int main() {
             std::cout << "Iveskite failo pavadinima konteineriu testavimui: ";
             std::cin >> testFailas;
 
+            // Testuojame vector
             testuotiKonteineri<std::vector<Studentas>>(testFailas, "std::vector");
+
+            // Testuojame list
             testuotiKonteineri<std::list<Studentas>>(testFailas, "std::list");
         }
+
+
+
+
         else {
             std::cout << "Klaidingas pasirinkimas, bandykite dar karta." << std::endl;
         }
@@ -107,6 +134,3 @@ int main() {
 
     return 0;
 }
-
-
-
