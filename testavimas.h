@@ -36,6 +36,18 @@ void testuotiKonteineri(const std::string& failoVardas, const std::string& pavad
     std::cout << "Jusu pasirinkimas: ";
     std::cin >> strategija;
 
+       // --- Automatinis pasirinkimas ---
+   if (strategija == 3) {
+       if constexpr (std::is_same_v<Container, std::vector<Studentas>>) {
+           std::cout << "Pasirinkta strategija 1 (dvi kopijos) - vektoriui efektyviau.\n";
+           strategija = 1;
+       }
+       else {
+           std::cout << "Pasirinkta strategija 2 (viena kopija + trynimas) - listui efektyviau.\n";
+           strategija = 2;
+       }
+   }
+
 
       // --- Skirstymas i kietiakius / varg?iukus ---
     Laikmatis tSkirstymui;
