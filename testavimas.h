@@ -110,10 +110,6 @@ void testuotiKonteineri(const std::string& failoVardas, const std::string& pavad
     }
     std::cout << "Irasymas i failus truko: " << tFailams.praejes_laikas() << " s.\n";
 
-    // --- Bendras laikas ---
-    std::cout << "Visas testas (" << pavadinimas << ") truko: "
-        << tViso.praejes_laikas() << " s.\n";
-}
         // --- Atminties sanaudos ---
     auto skaiciuotiAtminti = [](size_t kiekis, bool yraList) {
         size_t dydis = sizeof(Studentas);
