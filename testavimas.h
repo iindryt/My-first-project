@@ -114,5 +114,21 @@ void testuotiKonteineri(const std::string& failoVardas, const std::string& pavad
     std::cout << "Visas testas (" << pavadinimas << ") truko: "
         << tViso.praejes_laikas() << " s.\n";
 }
+        // --- Atminties sanaudos ---
+    auto skaiciuotiAtminti = [](size_t kiekis, bool yraList) {
+        size_t dydis = sizeof(Studentas);
+        if (yraList) dydis += 2 * sizeof(void*);
+        return kiekis * dydis;
+        };
+    bool arList = std::is_same_v<Container, std::list<Studentas>>;
+
+    std::cout << "\nAtminties sanaudos (apytiksliai):\n";
+    std::cout << " - Bendras studentu konteineris: " << skaiciuotiAtminti(studentai.size(), arList) << " baitu\n";
+    std::cout << " - Kietiakiai:                   " << skaiciuotiAtminti(kietiakiai.size(), arList) << " baitu\n";
+    std::cout << " - Vargsiukai:                   " << skaiciuotiAtminti(vargsiukai.size(), arList) << " baitu\n";
+    std::cout << " - Viso (apytiksliai):           " << skaiciuotiAtminti(studentai.size() + vargsiukai.size(), arList) << " baitu\n";
+
+    std::cout << "\nVisas testas (" << pavadinimas << ") truko: " << tViso.praejes_laikas() << " s.\n";
+}
 
 #endif // TESTAVIMAS_H
