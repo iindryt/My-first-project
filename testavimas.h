@@ -37,17 +37,49 @@ void testuotiKonteineri(const std::string& failoVardas, const std::string& pavad
     std::cin >> strategija;
 
 
-    // --- Skirstymas i kietakius / vargsiukus ---
+      // --- Skirstymas i kietiakius / varg?iukus ---
     Laikmatis tSkirstymui;
     Container kietiakiai, vargsiukai;
-    for (auto& s : studentai) {
-        if (s.rezVid >= 5.0f)
-            kietiakiai.push_back(s);
-        else
-            vargsiukai.push_back(s);
+
+    if (strategija == 1) {
+        // --- 1 strategija: dvi kopijos ---
+        if constexpr (std::is_same_v<Container, std::vector<Studentas>>) {
+            kietiakiai.reserve(studentai.size());
+            vargsiukai.reserve(studentai.size());
+        }
+        for (const auto& s : studentai) {
+            if (s.rezVid >= 5.0f) kietiakiai.push_back(s);
+            else vargsiukai.push_back(s);
+        }
     }
+    else if (strategija == 2) {
+        // --- 2 strategija: viena kopija su trynimu ---
+        Container tmpVargsiukai;
+        for (auto it = studentai.begin(); it != studentai.end(); ) {
+            if (it->rezVid < 5.0f) {
+                tmpVargsiukai.push_back(*it);
+                it = studentai.erase(it);
+            }
+            else ++it;
+        }
+        kietiakiai = studentai;
+        vargsiukai = tmpVargsiukai;
+    }
+    else {
+        std::cout << "Neteisinga strategija. Naudojama 1 strategija.\n";
+        if constexpr (std::is_same_v<Container, std::vector<Studentas>>) {
+            kietiakiai.reserve(studentai.size());
+            vargsiukai.reserve(studentai.size());
+        }
+        for (const auto& s : studentai) {
+            if (s.rezVid >= 5.0f) kietiakiai.push_back(s);
+            else vargsiukai.push_back(s);
+        }
+    }
+
     std::cout << std::fixed << std::setprecision(6);
     std::cout << "Skirstymas truko: " << tSkirstymui.praejes_laikas() << " s.\n";
+
 
     // --- Irasymas i failus ---
     Laikmatis tFailams;
