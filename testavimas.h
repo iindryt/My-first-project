@@ -20,14 +20,22 @@ void testuotiKonteineri(const std::string& failoVardas, const std::string& pavad
     // --- Nuskaitymas ---
     Laikmatis tNuskaitymui;
     Container studentai = nuskaitytiIsFailoTemplate<Container>(failoVardas, false); // nespauzdinti viduje
+    std::cout << "Failas nuskaitytas per " << tNuskaitymui.praejes_laikas() << " s.\n";
 
     // Patikrinam, ar konteineris ne tuščias
     if (studentai.empty()) {
         std::cout << "Failas nerastas arba tuscias. Testavimas nutrauktas.\n";
         return;
     }
+    //pasirenkame strategija
+    int strategija;
+    std::cout << "Pasirinkite skirstymo strategija:\n";
+    std::cout << "1 - dvi kopijos (kietiakiai + vargsiukai)\n";
+    std::cout << "2 - viena kopija su trynimu (vargsiukai, studentai = kietiakiai)\n";
+    std::cout << "3 - automatinis grei?iausios strategijos pasirinkimas\n";
+    std::cout << "Jusu pasirinkimas: ";
+    std::cin >> strategija;
 
-    std::cout << "Failas nuskaitytas per " << tNuskaitymui.praejes_laikas() << " s.\n";
 
     // --- Skirstymas i kietakius / vargsiukus ---
     Laikmatis tSkirstymui;
