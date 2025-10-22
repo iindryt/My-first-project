@@ -63,6 +63,74 @@ Programa skaičiuoja ir išsaugo studentų galutinius balus faile `rezultatai.tx
 - Studentai rūšiuojami pagal vardą, kad rezultatai būtų tvarkingi ir lengvai skaitomi.
 - Rezultatai išsaugomi faile `rezultatai.txt` tame pačiame kataloge, kuriame paleista programa.
 
+# Studentų pažymių valdymo programa – Versija v.02
+
+Ši dokumentacija tęsia ankstesnės versijos (v.01) aprašymą ir aptaria naujoves bei patobulinimus, įdiegtus versijoje Nr. 2.
+
+---
+
+## Naujos funkcijos ir patobulinimai v.02
+
+1. **Studentų rūšiavimas pagal vardą**
+   - Visi studentai dabar rūšiuojami pagal vardą prieš išvedant rezultatus.
+   - Tai pagerina rezultatų tvarkingumą ir palengvina peržiūrą didesnėse grupėse.
+
+2. **Galutinių balų pasirinkimas**
+   - Vartotojas gali pasirinkti, kaip skaičiuoti galutinį balą:
+     - Vidurkis (`Galutinis (Vid.)`)
+     - Mediana (`Galutinis (Med.)`)
+     - Abu variantai vienu metu
+   - Šis patobulinimas suteikia daugiau lankstumo vertinant studentus.
+
+3. **Studentų skirstymas į kategorijas**
+   - Įdiegta funkcija automatiškai skirstyti studentus į dvi kategorijas:
+     - **Kietiakiai** – galutinis balas ≥ 5
+     - **Vargsiukai** – galutinis balas < 5
+   - Rezultatai išsaugomi atskiruose failuose:
+     - `kietiakiai.txt`
+     - `vargsiukai.txt`
+
+4. **Failų generavimas**
+   - Pridėta galimybė generuoti studentų failus su atsitiktiniais duomenimis dideliam kiekiui studentų (nuo 1 tūkst. iki 10 mln.).
+   - Naudinga testuojant programą su dideliais duomenų rinkiniais.
+
+5. **Laikmatio matavimas**
+   - Matuojamas laiką, reikalingą:
+     - studentų rūšiavimui
+     - rezultatų išvedimui į failą
+     - skirstymui į kietiakiai/vargsiukai
+   - Tai leidžia stebėti operacijų efektyvumą didelėse grupėse.
+
+6. **Modulinė struktūra**
+   - Programa padalinta į atskirus modulius:
+     - `main.cpp` – pagrindinis meniu
+     - `funkcijos.cpp/h` – studentų įvedimas, skaičiavimai, rezultatų spausdinimas
+     - `duomenys.cpp/h` – failų nuskaitymas ir generavimas
+     - `studentas.h` – studento struktūra
+     - `laikmatis.h` – operacijų laiko matavimas
+
+---
+
+## Rezultatų aptarimas v.02
+
+- **Galutinis balas pagal vidurkį:** naudoja visų namų darbų vidurkį; egzamino reikšmė – 60%.
+- **Galutinis balas pagal medianą:** atsparus itin žemiems ar aukštiems pažymiams; egzamino reikšmė – 60%.
+- **Skirstymas į kategorijas:** leidžia greitai identifikuoti stipriausius ir silpniausius studentus.
+- **Išsaugomi failai:**
+  - `rezultatai.txt` – visi studentai su galutiniu balu.
+  - `kietiakiai.txt` – studentai su galutiniu balu ≥ 5.
+  - `vargsiukai.txt` – studentai su galutiniu balu < 5.
+- **Papildomas efektyvumo matavimas:** leidžia stebėti programos našumą dideliuose duomenų rinkiniuose.
+
+---
+
+## Pastabos
+
+- Egzamino ir namų darbų pažymiai turi būti tarp 1 ir 10.
+- Atsitiktinių pažymių generavimui naudojamas `rand()` su `srand(time(nullptr))`.
+- Versija 0.02 išlaiko visą ankstesnės versijos funkcionalumą, bet prideda patogesnį rezultatų valdymą, rūšiavimą ir efektyvumo matavimą.
+
+
 
 
 
