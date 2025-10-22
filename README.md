@@ -112,3 +112,44 @@ Laikas matuojamas **sekundėmis** su tikslumu iki šešių skaičių po kablelio
 | studentai_10000000.txt | 3 | vector | 69.492027 | 3.603214 | 23.531784 | 101.105241 | 1040000000 | 610196392 | 429803608 |
 | studentai_10000000.txt | 3 | list   | 69.113822 | 4.561882 | 24.062441 | 100.414295 | 1200000000 | 704072760 | 495927240 |
 
+
+# Studentų konteinerių testavimas (std::vector)
+
+Šiame projekte testuojamas `std::vector` konteineris studentų duomenų nuskaitymui, skirstymui ir įrašymui į failus. Testai atliekami su skirtingais failų dydžiais ir trimis skirstymo strategijomis:
+
+**Skirstymo strategijos:**
+1. Dvi kopijos (kietiakiai + vargsiukai)  
+2. Viena kopija su trynimu (vargsiukai, studentai = kietiakiai)  
+3. Automatinis greičiausios strategijos pasirinkimas  
+
+---
+
+## Testų rezultatai
+
+| Failo pavadinimas         | Strategija | Nuskaitymo laikas (s) | Skirstymo laikas (s) | Įrašymo laikas (s) | Bendras laikas (s) | Bendras atminties kiekis (B) |
+|----------------------------|------------|----------------------|---------------------|-------------------|------------------|-----------------------------|
+| studentai_1000.txt         | 1          | 0.012621             | 0.000212            | 0.003623          | 2.374976         | 146016                      |
+| studentai_1000.txt         | 2          | 0.006690             | 0.000466            | 0.003424          | 2.331519         | 146016                      |
+| studentai_1000.txt         | 3          | 0.0055215            | 0.000205            | 0.003518          | 1.572414         | 146016                      |
+| studentai_10000.txt        | 1          | 0.0506323            | 0.001345            | 0.014548          | 4.788391         | 1465048                     |
+| studentai_10000.txt        | 2          | 0.0469966            | 0.001177            | 0.015930          | 1.913413         | 1465048                     |
+| studentai_10000.txt        | 3          | 0.0422042            | 0.001356            | 0.016032          | 2.324799         | 1465048                     |
+| studentai_100000.txt       | 1          | 0.432306             | 0.012001            | 0.133513          | 2.740498         | 14717560                    |
+| studentai_100000.txt       | 2          | 0.428288             | 0.014004            | 0.138328          | 2.367536         | 14717560                    |
+| studentai_100000.txt       | 3          | 0.429712             | 0.012564            | 0.140886          | 2.080882         | 14717560                    |
+| studentai_1000000.txt      | 1          | 4.31719              | 0.120427            | 1.349626          | 7.603468         | 147052152                   |
+| studentai_1000000.txt      | 2          | 4.34261              | 0.119508            | 1.359096          | 7.345121         | 147052152                   |
+| studentai_1000000.txt      | 3          | 4.36461              | 0.114621            | 1.371857          | 7.900922         | 147052152                   |
+| studentai_10000000.txt     | 1          | 44.3534              | 1.743203            | 14.110885         | 75.563293        | 1469803608                  |
+| studentai_10000000.txt     | 2          | 43.888               | 1.303107            | 14.275346         | 62.486793        | 1469803608                  |
+| studentai_10000000.txt     | 3          | 44.6685              | 1.658356            | 14.108276         | 136.162354       | 1469803608                  |
+
+---
+
+## Išvados
+
+- Strategija 1 (dvi kopijos) dažniausiai buvo efektyvi vektoriui didelių failų atveju.  
+- Strategija 2 (viena kopija su trynimu) mažina bendrą laiko sąnaudą mažesniuose failuose.  
+- Strategija 3 leidžia automatiškai pasirinkti geriausią strategiją pagal failo dydį.  
+- Laikas ir atminties naudojimas auga proporcingai failo dydžiui.  
+
