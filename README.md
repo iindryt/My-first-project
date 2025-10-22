@@ -1,4 +1,47 @@
-# Studentų pažymių valdymo programa v.01
+# Studentų pažymių valdymo programa 
+
+# # Naudojimosi instrukcija
+
+Programa veikia meniu principu ir leidžia valdyti studentų pažymius.
+
+## Paleidimas
+
+- Linux/MacOS: `./studentai`  
+- Windows: `studentai.exe`
+
+## Pagrindinis meniu
+
+Pasirinkite veiksmą:
+
+1. **Pridėti studentą rankiniu būdu**  
+   - Įveskite vardą, pavardę, namų darbų ir egzamino pažymius (arba generuokite atsitiktinius).
+
+2. **Nuskaityti studentus iš failo**  
+   - Failas turi turėti antraštę: `Vardas Pavarde ND1 ND2 ... Egzaminas`.
+
+3. **Rodyti studentų rezultatus**  
+   - Pasirinkite galutinio balo skaičiavimo metodą: Vidurkis / Mediana / Abu.  
+   - Rezultatai išsaugomi `rezultatai.txt`.  
+   - Galima skirstyti studentus į:  
+     - **Kietiakiai** (≥5) – `kietiakiai.txt`  
+     - **Vargsiukai** (<5) – `vargsiukai.txt`
+
+4. **Baigti programą**  
+
+5. **Generuoti studentų failus (1k–10 mln)**  
+   - Sukuria atsitiktinius studentų duomenų failus testavimui.
+
+6. **Testuoti konteinerius (vector vs list)**  
+   - Atliekami našumo testai nuskaitymui, rūšiavimui ir įrašymui.
+
+7. **Automatinis testavimas su visais failais**  
+   - Paleidžia visus testus automatiškai dideliems failams.
+
+**Jūsų pasirinkimas yra:**
+
+
+
+## v.01
 
 Ši programa leidžia valdyti studentų pažymius, skaičiuoti galutinius balus ir išsaugoti rezultatus į failą. Programa suteikia galimybę studentus įvesti rankiniu būdu arba nuskaityti iš failo, generuoti atsitiktinius pažymius, ir skaičiuoti galutinį rezultatą naudojant vidurkį arba medianą.
 
