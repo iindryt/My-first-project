@@ -310,34 +310,38 @@ Taip pat atliktas papildomas testas su **std::vector**, naudojant **STL algoritm
 | studentai_10000000.txt | 3 | list   | 69.113822 | 4.561882 | 24.062441 | 100.414295 | 1200000000 | 704072760 | 495927240 |
 
 
-# Studentų konteinerių testavimas (std::vector) su STL
+# Studentų konteinerių testavimas (std::vector (pridėtas ir std::list, nors parametrai nekeisti) su STL
 
 Šiame projekto etape testuojamas `std::vector` konteineris studentų duomenų nuskaitymui, skirstymui ir įrašymui į failus. Testai atliekami su skirtingais failų dydžiais ir trimis skirstymo strategijomis:
 
 ---
+| Failo dydis | Konteineris | Strategija | Failo nuskaitymas (s) | Skirstymas (s)  | Įrašymas į failus (s) | Bendras studentų konteineris (B) | Kietiakiai (B) | Vargsiukai (B) | Viso (apytiksliai) (B) | Visas testas (s) |
+| ----------- | ----------- | ---------- | --------------------- | --------------- | --------------------- | -------------------------------- | -------------- | -------------- | ---------------------- | ---------------- |
+| 1 000       | vector      | 1          | 0.0198                | 0.00037         | 0.0108                | 72 000                           | 42 912         | 29 088         | 144 000                | 4.308            |
+| 1 000       | list        | 1          | 0.0183                | 0.00086         | 0.0135                | 80 000                           | 47 680         | 32 320         | 160 000                | 1.958            |
+| 1 000       | vector      | 2          | 0.0134                | 0.0067          | 0.0099                | 42 912                           | 42 912         | 29 088         | 114 912                | 3.848            |
+| 1 000       | list        | 2          | 0.0193                | 0.00053         | 0.00778               | 47 680                           | 47 680         | 32 320         | 127 680                | 1.070            |
+| 1 000       | vector      | 3          | 0.0117                | 0.00045/0.00087 | 0.00735               | 72 000                           | 42 912         | 29 088         | 144 000                | 1.404            |
+| 1 000       | list        | 3          | 0.0132                | 0.00068/0.00063 | 0.00846               | 80 000                           | 47 680         | 32 320         | 160 000                | 1.019            |
+| 10 000      | vector      | 1          | 0.115                 | 0.0021          | 0.0343                | 720 000                          | 425 736        | 294 264        | 1 440 000              | 2.105            |
+| 10 000      | list        | 1          | 0.106                 | 0.0048          | 0.0372                | 800 000                          | 473 040        | 326 960        | 1 600 000              | 1.276            |
+| 10 000      | vector      | 2          | 0.107                 | 0.4178          | 0.0415                | 425 736                          | 425 736        | 294 264        | 1 145 736              | 2.596            |
+| 10 000      | list        | 2          | 0.120                 | 0.0077          | 0.0363                | 473 040                          | 473 040        | 326 960        | 1 273 040              | 2.063            |
+| 10 000      | vector      | 3          | 0.106                 | 0.0024/0.0040   | 0.0365                | 720 000                          | 425 736        | 294 264        | 1 440 000              | 3.216            |
+| 10 000      | list        | 3          | 0.110                 | 0.0048/0.0066   | 0.0408                | 800 000                          | 473 040        | 326 960        | 1 600 000              | 3.180            |
+| 100 000     | vector      | 1          | 1.075                 | 0.0199          | 0.3371                | 7 200 000                        | 4 210 920      | 2 989 080      | 14 400 000             | 3.219            |
+| 100 000     | list        | 1          | 1.063                 | 0.0477          | 0.3495                | 8 000 000                        | 4 678 800      | 3 321 200      | 16 000 000             | 2.673            |
+| 100 000     | vector      | 2          | 1.089                 | 46.211          | 0.3149                | 4 210 920                        | 4 210 920      | 2 989 080      | 11 410 920             | 49.474           |
+| 100 000     | list        | 2          | 1.071                 | 0.0623          | 0.3211                | 4 678 800                        | 4 678 800      | 3 321 200      | 12 678 800             | 5.332            |
+| 100 000     | vector      | 3          | 1.114                 | 0.0212/0.0617   | 0.3175                | 7 200 000                        | 4 210 920      | 2 989 080      | 14 400 000             | 4.168            |
+| 100 000     | list        | 3          | 1.093                 | 0.0366/0.0773   | 0.3341                | 8 000 000                        | 4 678 800      | 3 321 200      | 16 000 000             | 4.737            |
+| 1 000 000   | vector      | 1          | 10.85                 | 0.203           | 3.406                 | 72 000 000                       | 42 194 664     | 29 805 336     | 144 000 000            | 33.051           |
+| 1 000 000   | list        | 1          | 11.005                | 0.426           | 3.521                 | 80 000 000                       | 46 882 960     | 33 117 040     | 160 000 000            | 21.441           |
+
 
 ## Testų rezultatai
 
-| Failo pavadinimas         | Strategija | Nuskaitymo laikas (s) | Skirstymo laikas (s) | Įrašymo laikas (s) | Bendras laikas (s) | Bendras atminties kiekis (B) |
-|----------------------------|------------|----------------------|---------------------|-------------------|------------------|-----------------------------|
-| studentai_1000.txt         | 1          | 0.012621             | 0.000212            | 0.003623          | 2.374976         | 146016                      |
-| studentai_1000.txt         | 2          | 0.006690             | 0.000466            | 0.003424          | 2.331519         | 146016                      |
-| studentai_1000.txt         | 3          | 0.0055215            | 0.000205            | 0.003518          | 1.572414         | 146016                      |
-| studentai_10000.txt        | 1          | 0.0506323            | 0.001345            | 0.014548          | 4.788391         | 1465048                     |
-| studentai_10000.txt        | 2          | 0.0469966            | 0.001177            | 0.015930          | 1.913413         | 1465048                     |
-| studentai_10000.txt        | 3          | 0.0422042            | 0.001356            | 0.016032          | 2.324799         | 1465048                     |
-| studentai_100000.txt       | 1          | 0.432306             | 0.012001            | 0.133513          | 2.740498         | 14717560                    |
-| studentai_100000.txt       | 2          | 0.428288             | 0.014004            | 0.138328          | 2.367536         | 14717560                    |
-| studentai_100000.txt       | 3          | 0.429712             | 0.012564            | 0.140886          | 2.080882         | 14717560                    |
-| studentai_1000000.txt      | 1          | 4.31719              | 0.120427            | 1.349626          | 7.603468         | 147052152                   |
-| studentai_1000000.txt      | 2          | 4.34261              | 0.119508            | 1.359096          | 7.345121         | 147052152                   |
-| studentai_1000000.txt      | 3          | 4.36461              | 0.114621            | 1.371857          | 7.900922         | 147052152                   |
-| studentai_10000000.txt     | 1          | 44.3534              | 1.743203            | 14.110885         | 75.563293        | 1469803608                  |
-| studentai_10000000.txt     | 2          | 43.888               | 1.303107            | 14.275346         | 62.486793        | 1469803608                  |
-| studentai_10000000.txt     | 3          | 44.6685              | 1.658356            | 14.108276         | 136.162354       | 1469803608                  |
 
-
----
 
 ## Vector su STL algoritmais
 
@@ -383,6 +387,43 @@ Taip pat atliktas papildomas testas su **std::vector**, naudojant **STL algoritm
 - **List** – geriausias su **2 strategija**, kai reikia daug trynimų arba duomenų mažiau.  
 - **Strategija 2** yra **labai neefektyvi vector konteineriui**, nes trynimai užtrunka ilgai.  
 - **Automatinis režimas (3)** išsprendžia šią problemą, pasirinkdamas greitesnį metodą.
+
+---
+# Studentų pažymių valdymo programa – Įdiegimas
+
+## Reikalavimai
+
+- **CMake** ≥ 3.10  
+- Kompiliatorius: Visual Studio (Windows), GCC / Clang (Linux / Mac)  
+- Projekto failai: `main.cpp`, `funkcijos.cpp/h`, `duomenys.cpp/h`, `studentas.h`, `laikmatis.h`  
+- `CMakeLists.txt` projekte
+
+---
+
+## Projekto įdiegimas
+
+1. Atidarykite terminalą ir eikite į projekto katalogą:
+```bash
+cd /path/to/project
+2. Sukurkite katalogą build ir pereikite į jį:
+mkdir build
+cd build
+3. Generuokite projektą pagal savo OS/kompiliatorių:
+Windows/Visual Studio
+cmake .. -G "Visual Studio 17 2022"
+Sugeneruotas .sln failas leis atidaryti projektą Visual Studio.
+Projekto kompiliavimas ir paleidimas atliekamas tiesiai iš Visual Studio.
+Linux / Mac
+cmake ..
+make
+Sukuriamas vykdomasis failas studentai.
+
+Paleidimas
+Windows (Visual Studio): atidarykite .sln ir paleiskite projektą.
+
+Linux / Mac: terminale:
+./studentai
+
 
 
  
