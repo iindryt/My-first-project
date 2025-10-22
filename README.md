@@ -347,7 +347,7 @@ Taip pat atliktas papildomas testas su **std::vector**, naudojant **STL algoritm
 
 - **Strategija 1 (dvi kopijos)** – dažniausiai greičiausia.  
 - **Strategija 2 (viena kopija su trynimu)** – efektyvi tik su mažais failais.  
-- **Strategija 3 (automatinė)** – paprastai pasirenka 1 strategiją.  
+- **Strategija 3 (automatinė)** – paprastai pasirenka skirtingas strategijas.  
 - Atminties naudojimas auga proporcingai failo dydžiui.  
 - Naudojant **STL algoritmus**, programa veikia greitai, bet sunaudoja šiek tiek daugiau atminties dėl laikinų kopijų.
 
