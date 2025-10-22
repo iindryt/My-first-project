@@ -76,8 +76,25 @@ Laikas matuojamas **sekundėmis** su tikslumu iki šešių skaičių po kablelio
 - Labai dideliuose duomenų kiekiuose (10 000 000 įrašų) skirtumai išryškėja.
 
 ---
-
+# v.1.0
 # Testų rezultatai: vector vs list
+
+
+# Studentų konteinerių testavimas
+
+Šioje projekto dalyje testuojamas **std::vector** ir **std::list** konteinerių našumas skirtingais atvejais: nuskaitymas, skirstymas ir įrašymas į failus.  
+Taip pat atliktas papildomas testas su **std::vector**, naudojant **STL algoritmus**.
+
+---
+
+## Skirstymo strategijos
+
+1. **Dvi kopijos** – sukuriami atskiri konteineriai *kietiakiams* ir *vargšiukams*.  
+2. **Viena kopija su trynimu** – duomenys skirstomi vietoje, ištrinant nereikalingus.  
+3. **Automatinis pasirinkimas** – parenkama greičiausia strategija pagal konteinerį.
+
+---
+
 
 | Failas | Strategija | Konteineris | Nuskaitymas (s) | Skirstymas (s) | Įrašymas (s) | Visas testas (s) | Studentai (baitai) | Kietiakiai (baitai) | Vargsiukai (baitai) |
 |--------|-----------|-------------|----------------|----------------|---------------|-----------------|-------------------|-------------------|-------------------|
@@ -113,14 +130,9 @@ Laikas matuojamas **sekundėmis** su tikslumu iki šešių skaičių po kablelio
 | studentai_10000000.txt | 3 | list   | 69.113822 | 4.561882 | 24.062441 | 100.414295 | 1200000000 | 704072760 | 495927240 |
 
 
-# Studentų konteinerių testavimas (std::vector)
+# Studentų konteinerių testavimas (std::vector) su STL
 
-Šiame projekte testuojamas `std::vector` konteineris studentų duomenų nuskaitymui, skirstymui ir įrašymui į failus. Testai atliekami su skirtingais failų dydžiais ir trimis skirstymo strategijomis:
-
-**Skirstymo strategijos:**
-1. Dvi kopijos (kietiakiai + vargsiukai)  
-2. Viena kopija su trynimu (vargsiukai, studentai = kietiakiai)  
-3. Automatinis greičiausios strategijos pasirinkimas  
+Šiame projekto etape testuojamas `std::vector` konteineris studentų duomenų nuskaitymui, skirstymui ir įrašymui į failus. Testai atliekami su skirtingais failų dydžiais ir trimis skirstymo strategijomis:
 
 ---
 
@@ -144,12 +156,54 @@ Laikas matuojamas **sekundėmis** su tikslumu iki šešių skaičių po kablelio
 | studentai_10000000.txt     | 2          | 43.888               | 1.303107            | 14.275346         | 62.486793        | 1469803608                  |
 | studentai_10000000.txt     | 3          | 44.6685              | 1.658356            | 14.108276         | 136.162354       | 1469803608                  |
 
+
 ---
 
-## Išvados
+## Vector su STL algoritmais
 
-- Strategija 1 (dvi kopijos) dažniausiai buvo efektyvi vektoriui didelių failų atveju.  
-- Strategija 2 (viena kopija su trynimu) mažina bendrą laiko sąnaudą mažesniuose failuose.  
-- Strategija 3 leidžia automatiškai pasirinkti geriausią strategiją pagal failo dydį.  
-- Laikas ir atminties naudojimas auga proporcingai failo dydžiui.  
+- **Strategija 1 (dvi kopijos)** – dažniausiai greičiausia.  
+- **Strategija 2 (viena kopija su trynimu)** – efektyvi tik su mažais failais.  
+- **Strategija 3 (automatinė)** – paprastai pasirenka 1 strategiją.  
+- Atminties naudojimas auga proporcingai failo dydžiui.  
+- Naudojant **STL algoritmus**, programa veikia greitai, bet sunaudoja šiek tiek daugiau atminties dėl laikinų kopijų.
+
+---
+
+## Bendros išvados
+# Vector ir List palyginimas pagal strategijas
+
+## Strategija 1 – Dvi kopijos (kietiakiai + vargšiukai)
+
+- **Vector**: labai greitas ir stabilus, nes duomenys saugomi nuosekliai atmintyje.  
+- **List**: šiek tiek lėtesnis dėl rodyklių ir išskaidytos atminties.  
+- **Išvada:** ši strategija **labiausiai tinka vector**, ypač dideliems failams.
+
+---
+
+## Strategija 2 – Viena kopija su trynimu
+
+- **Vector**: labai **lėtas**, nes kiekvieno elemento trynimas perstumia kitus (ypač kai duomenų daug).  
+- **List**: **greitas**, nes elementų trynimas tik pakeičia rodykles, be papildomų kopijų.  
+- **Išvada:** ši strategija tinkama tik **list** konteineriui.  
+  Naudojant ją su **vector**, laikas stipriai išauga (iki šimtų sekundžių su dideliais failais).
+
+---
+
+## Strategija 3 – Automatinis pasirinkimas
+
+- **Vector** automatiškai pasirenka **1 strategiją**, nes ji greičiausia jam.  
+- **List** pasirenka **2 strategiją**, kuri efektyviausia jam.  
+- **Išvada:** ši strategija užtikrina optimalų pasirinkimą pagal konteinerį.
+
+---
+
+## Bendros išvados
+
+- **Vector** – geriausias pasirinkimas su **1 strategija** ir dideliais duomenimis.  
+- **List** – geriausias su **2 strategija**, kai reikia daug trynimų arba duomenų mažiau.  
+- **Strategija 2** yra **labai neefektyvi vector konteineriui**, nes trynimai užtrunka ilgai.  
+- **Automatinis režimas (3)** išsprendžia šią problemą, pasirinkdamas greitesnį metodą.
+
+
+ 
 
