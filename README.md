@@ -1,3 +1,72 @@
+# Studentų pažymių valdymo programa v.01
+
+Ši programa leidžia valdyti studentų pažymius, skaičiuoti galutinius balus ir išsaugoti rezultatus į failą. Programa suteikia galimybę studentus įvesti rankiniu būdu arba nuskaityti iš failo, generuoti atsitiktinius pažymius, ir skaičiuoti galutinį rezultatą naudojant vidurkį arba medianą.
+
+---
+
+## Funkcionalumas
+
+1. **Studentų įvedimas rankiniu būdu**
+   - Įvedamas vardas ir pavardė.
+   - Galima įvesti namų darbų pažymius rankiniu būdu arba sugeneruoti atsitiktinius.
+   - Egzamino pažymį galima įvesti rankiniu būdu arba sugeneruoti atsitiktinį.
+   - Galutinis balas skaičiuojamas pagal vidurkį ir medianą:
+     - `Galutinis (Vid.) = 0.4 * namų darbų vidurkis + 0.6 * egzamino pažymys`
+     - `Galutinis (Med.) = 0.4 * namų darbų mediana + 0.6 * egzamino pažymys`
+
+2. **Studentų nuskaitymas iš failo**
+   - Failas turi būti tekstinis, su pirmąja eilute kaip header, pvz.:
+     ```
+     Vardas Pavarde ND1 ND2 ND3 ... Egzaminas
+     ```
+   - Programa perskaito studentus, patikrina, ar įvesti bent du pažymiai (namų darbai + egzaminas).
+
+3. **Rezultatų atvaizdavimas ir išsaugojimas**
+   - Rezultatai gali būti skaičiuojami pagal:
+     - Vidurkį
+     - Medianą
+     - Abu (vidurkis ir mediana)
+   - Rezultatai išsaugomi faile `rezultatai.txt`.
+
+4. **Programa veikia meniu principu**
+   - Galimi veiksmai:
+     1. Pridėti studentą rankiniu būdu
+     2. Nuskaityti studentus iš failo
+     3. Rodyti studentų rezultatus
+     4. Baigti programą
+## Rezultatai
+
+Programa skaičiuoja ir išsaugo studentų galutinius balus faile `rezultatai.txt`. Galutinis balas gali būti apskaičiuotas naudojant:
+
+1. **Vidurkį (Galutinis (Vid.))**  
+   - Skaičiuojamas taip:
+     ```
+     Galutinis (Vid.) = 0.4 * namų darbų vidurkis + 0.6 * egzamino pažymys
+     ```
+   - Šis metodas pabrėžia egzamino reikšmę (60% galutinio balo) ir naudoja visų namų darbų vidurkį kaip 40% galutinio balo dalį.
+   - Tinka, kai norima, kad visų pažymių suma būtų atspindima vienu vidurkiu.
+
+2. **Medianą (Galutinis (Med.))**  
+   - Skaičiuojama taip:
+     ```
+     Galutinis (Med.) = 0.4 * namų darbų mediana + 0.6 * egzamino pažymys
+     ```
+   - Naudojama namų darbų mediana vietoje vidurkio, todėl vienas itin žemas arba aukštas pažymys mažiau įtakoja galutinį rezultatą.
+   - Šis metodas suteikia stabilesnį galutinį balą, kai namų darbų pažymiai yra nevienodi.
+
+3. **Abi (Vidurkis ir Mediana)**  
+   - Programa gali išsaugoti tiek `Galutinis (Vid.)`, tiek `Galutinis (Med.)` stulpelius.
+   - Tai leidžia palyginti, kaip skirtingi skaičiavimo metodai veikia studentų galutinius rezultatus.
+
+**Pastaba:**  
+- Visi rezultatai yra suformatuoti su dviem skaitmenimis po kablelio.
+- Studentai rūšiuojami pagal vardą, kad rezultatai būtų tvarkingi ir lengvai skaitomi.
+- Rezultatai išsaugomi faile `rezultatai.txt` tame pačiame kataloge, kuriame paleista programa.
+
+
+
+
+
 # Programos Testavimo Rezultatai v0.3 ir v1.0 (žemiau)
 
 Šioje projekto dalyje atliekamas dviejų C++ konteinerių našumo testavimas, skirtas studentų duomenų nuskaitymui, rūšiavimui ir įrašymui.  
