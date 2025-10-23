@@ -47,11 +47,10 @@ void testuotiKonteineri(const std::string& failoVardas, const std::string& pavad
             if constexpr (std::is_same_v<Container, std::vector<Studentas>>) {
                 k1.reserve(studentai.size());
                 v1.reserve(studentai.size());
-                // std::copy_if pakeista paprastu ciklu
-                for (const auto& s : studentai) {
-                    if (s.rezVid >= 5.0f) k1.push_back(s);
-                    else v1.push_back(s);
-                }
+                std::copy_if(studentai.begin(), studentai.end(), std::back_inserter(k1),
+                    [](const Studentas& s) { return s.rezVid >= 5.0f; });
+                std::copy_if(studentai.begin(), studentai.end(), std::back_inserter(v1),
+                    [](const Studentas& s) { return s.rezVid < 5.0f; });
             }
             else { // list
                 for (const auto& s : studentai) {
@@ -67,14 +66,10 @@ void testuotiKonteineri(const std::string& failoVardas, const std::string& pavad
             Laikmatis t;
             Container tmp = studentai;
             if constexpr (std::is_same_v<Container, std::vector<Studentas>>) {
-                // std::partition pakeista paprastu ciklu
-                Container tempKiet, tempVarg;
-                for (const auto& s : tmp) {
-                    if (s.rezVid >= 5.0f) tempKiet.push_back(s);
-                    else tempVarg.push_back(s);
-                }
-                k2 = tempKiet;
-                v2 = tempVarg;
+                auto it = std::partition(tmp.begin(), tmp.end(),
+                    [](const Studentas& s) { return s.rezVid >= 5.0f; });
+                k2.assign(tmp.begin(), it);
+                v2.assign(it, tmp.end());
             }
             else { // list
                 for (auto it = tmp.begin(); it != tmp.end();) {
@@ -112,11 +107,10 @@ void testuotiKonteineri(const std::string& failoVardas, const std::string& pavad
             if constexpr (std::is_same_v<Container, std::vector<Studentas>>) {
                 kietiakiai.reserve(studentai.size());
                 vargsiukai.reserve(studentai.size());
-                // std::copy_if pakeista paprastu ciklu
-                for (const auto& s : studentai) {
-                    if (s.rezVid >= 5.0f) kietiakiai.push_back(s);
-                    else vargsiukai.push_back(s);
-                }
+                std::copy_if(studentai.begin(), studentai.end(), std::back_inserter(kietiakiai),
+                    [](const Studentas& s) { return s.rezVid >= 5.0f; });
+                std::copy_if(studentai.begin(), studentai.end(), std::back_inserter(vargsiukai),
+                    [](const Studentas& s) { return s.rezVid < 5.0f; });
             }
             else {
                 for (const auto& s : studentai) {
@@ -159,7 +153,7 @@ void testuotiKonteineri(const std::string& failoVardas, const std::string& pavad
         size_t dydis = sizeof(Studentas);
         if (yraList) dydis += 2 * sizeof(void*);
         return kiekis * dydis;
-    };
+        };
     bool arList = std::is_same_v<Container, std::list<Studentas>>;
 
     std::cout << " - Bendras studentu konteineris: " << skaiciuotiAtminti(studentai.size(), arList) << " baitu\n";
