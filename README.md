@@ -393,7 +393,17 @@ Atminties testavimas tiek pagal vidurkį, tiek pagal medianą
 | studentai_1mln | list       | Vidurkis | 3          | 80 000 000        | 47 680 000 | 32 320 000 | 160 000 000       |
 | studentai_10mln| vector     | Vidurkis | 1          | 720 000 000       | 429 120 000| 290 880 000| 1 440 000 000     |
 | studentai_10mln| vector     | Vidurkis | 2          | 720 000 000       | 429 120 000| 290 880 000| 1 440 000 000     |
-| studentai_10mln| vector     | Vidurkis | 3          | 720 000 000       | 429 120 000| 290
+| studentai_10mln| vector     | Vidurkis | 3          | 720 000 000       | 429 120 000| 290 880 000| 1 440 000 000     |
+| studentai_10mln| list       | Vidurkis | 1          | 800 000 000       | 476 800 000| 323 200 000| 1 600 000 000     |
+| studentai_10mln| list       | Vidurkis | 2          | 800 000 000       | 476 800 000| 323 200 000| 1 600 000 000     |
+| studentai_10mln| list       | Vidurkis | 3          | 800 000 000       | 476 800 000| 323 200 000| 1 600 000 000     |
+| studentai_10mln| vector     | Mediana  | 1          | 720 000 000       | 429 120 000| 290 880 000| 1 440 000 000     |
+| studentai_10mln| vector     | Mediana  | 2          | 720 000 000       | 429 120 000| 290 880 000| 1 440 000 000     |
+| studentai_10mln| vector     | Mediana  | 3          | 720 000 000       | 429 120 000| 290 880 000| 1 440 000 000     |
+| studentai_10mln| list       | Mediana  | 1          | 800 000 000       | 476 800 000| 323 200 000| 1 600 000 000     |
+| studentai_10mln| list       | Mediana  | 2          | 800 000 000       | 476 800 000| 323 200 000| 1 600 000 000     |
+| studentai_10mln| list       | Mediana  | 3          | 800 000 000       | 476 800 000| 323 200 000| 1 600 000 000     |
+
 
 
 
