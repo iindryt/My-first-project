@@ -345,61 +345,55 @@ Pagal medianą
 | studentai_10mln | std::list   | 10 000 000      | 3.41             | 4.08             | 3.25                       | 53.1            | 10.9         | 88.2            |
 
 
-Failas	Konteineris	Balas	Strategija	Bendras konteineris	Kietiakiai	Vargsiukai	Viso (apytiksliai)
-studentai_1k	vector	Vidurkis	1	72000	42912	29088	144000
-studentai_1k	vector	Vidurkis	2	72000	42912	29088	144000
-studentai_1k	vector	Vidurkis	3	72000	42912	29088	144000
-studentai_1k	list	Vidurkis	1	80000	47680	32320	160000
-studentai_1k	list	Vidurkis	2	80000	47680	32320	160000
-studentai_1k	list	Vidurkis	3	80000	47680	32320	160000
-studentai_1k	vector	Mediana	1	72000	42912	29088	144000
-studentai_1k	vector	Mediana	2	72000	42912	29088	144000
-studentai_1k	vector	Mediana	3	72000	42912	29088	144000
-studentai_1k	list	Mediana	1	80000	47680	32320	160000
-studentai_1k	list	Mediana	2	80000	47680	32320	160000
-studentai_1k	list	Mediana	3	80000	47680	32320	160000
-studentai_10k	vector	Vidurkis	1	720000	429120	290880	1440000
-studentai_10k	vector	Vidurkis	2	720000	429120	290880	1440000
-studentai_10k	vector	Vidurkis	3	720000	429120	290880	1440000
-studentai_10k	list	Vidurkis	1	800000	476800	323200	1600000
-studentai_10k	list	Vidurkis	2	800000	476800	323200	1600000
-studentai_10k	list	Vidurkis	3	800000	476800	323200	1600000
-studentai_10k	vector	Mediana	1	720000	429120	290880	1440000
-studentai_10k	vector	Mediana	2	720000	429120	290880	1440000
-studentai_10k	vector	Mediana	3	720000	429120	290880	1440000
-studentai_10k	list	Mediana	1	800000	476800	323200	1600000
-studentai_10k	list	Mediana	2	800000	476800	323200	1600000
-studentai_10k	list	Mediana	3	800000	476800	323200	1600000
-studentai_100k	vector	Vidurkis	1	7200000	4291200	2908800	14400000
-studentai_100k	vector	Vidurkis	2	7200000	4291200	2908800	14400000
-studentai_100k	vector	Vidurkis	3	7200000	4291200	2908800	14400000
-studentai_100k	list	Vidurkis	1	8000000	4768000	3232000	16000000
-studentai_100k	list	Vidurkis	2	8000000	4768000	3232000	16000000
-studentai_100k	list	Vidurkis	3	8000000	4768000	3232000	16000000
-studentai_100k	vector	Mediana	1	7200000	4291200	2908800	14400000
-studentai_100k	vector	Mediana	2	7200000	4291200	2908800	14400000
-studentai_100k	vector	Mediana	3	7200000	4291200	2908800	14400000
-studentai_100k	list	Mediana	1	8000000	4768000	3232000	16000000
-studentai_100k	list	Mediana	2	8000000	4768000	3232000	16000000
-studentai_100k	list	Mediana	3	8000000	4768000	3232000	16000000
-studentai_1mln	vector	Vidurkis	1	72000000	42912000	29088000	144000000
-studentai_1mln	vector	Vidurkis	2	72000000	42912000	29088000	144000000
-studentai_1mln	vector	Vidurkis	3	72000000	42912000	29088000	144000000
-studentai_1mln	list	Vidurkis	1	80000000	47680000	32320000	160000000
-studentai_1mln	list	Vidurkis	2	80000000	47680000	32320000	160000000
-studentai_1mln	list	Vidurkis	3	80000000	47680000	32320000	160000000
-studentai_10mln	vector	Vidurkis	1	720000000	429120000	290880000	1440000000
-studentai_10mln	vector	Vidurkis	2	720000000	429120000	290880000	1440000000
-studentai_10mln	vector	Vidurkis	3	720000000	429120000	290880000	1440000000
-studentai_10mln	list	Vidurkis	1	800000000	476800000	323200000	1600000000
-studentai_10mln	list	Vidurkis	2	800000000	476800000	323200000	1600000000
-studentai_10mln	list	Vidurkis	3	800000000	476800000	323200000	1600000000
-studentai_10mln	vector	Mediana	1	720000000	429120000	290880000	1440000000
-studentai_10mln	vector	Mediana	2	720000000	429120000	290880000	1440000000
-studentai_10mln	vector	Mediana	3	720000000	429120000	290880000	1440000000
-studentai_10mln	list	Mediana	1	800000000	476800000	323200000	1600000000
-studentai_10mln	list	Mediana	2	800000000	476800000	323200000	1600000000
-studentai_10mln	list	Mediana	3	800000000	476800000	323200000	1600000000
+Atminties testavimas tiek pagal vidurkį, tiek pagal medianą
+
+| Failas         | Konteineris | Balas    | Strategija | Bendras konteineris | Kietiakiai | Vargsiukai | Viso (apytiksliai) |
+|----------------|------------|---------|------------|-------------------|------------|------------|-------------------|
+| studentai_1k   | vector     | Vidurkis | 1          | 72 000            | 42 912     | 29 088     | 144 000           |
+| studentai_1k   | vector     | Vidurkis | 2          | 72 000            | 42 912     | 29 088     | 144 000           |
+| studentai_1k   | vector     | Vidurkis | 3          | 72 000            | 42 912     | 29 088     | 144 000           |
+| studentai_1k   | list       | Vidurkis | 1          | 80 000            | 47 680     | 32 320     | 160 000           |
+| studentai_1k   | list       | Vidurkis | 2          | 80 000            | 47 680     | 32 320     | 160 000           |
+| studentai_1k   | list       | Vidurkis | 3          | 80 000            | 47 680     | 32 320     | 160 000           |
+| studentai_1k   | vector     | Mediana  | 1          | 72 000            | 42 912     | 29 088     | 144 000           |
+| studentai_1k   | vector     | Mediana  | 2          | 72 000            | 42 912     | 29 088     | 144 000           |
+| studentai_1k   | vector     | Mediana  | 3          | 72 000            | 42 912     | 29 088     | 144 000           |
+| studentai_1k   | list       | Mediana  | 1          | 80 000            | 47 680     | 32 320     | 160 000           |
+| studentai_1k   | list       | Mediana  | 2          | 80 000            | 47 680     | 32 320     | 160 000           |
+| studentai_1k   | list       | Mediana  | 3          | 80 000            | 47 680     | 32 320     | 160 000           |
+| studentai_10k  | vector     | Vidurkis | 1          | 720 000           | 429 120    | 290 880    | 1 440 000         |
+| studentai_10k  | vector     | Vidurkis | 2          | 720 000           | 429 120    | 290 880    | 1 440 000         |
+| studentai_10k  | vector     | Vidurkis | 3          | 720 000           | 429 120    | 290 880    | 1 440 000         |
+| studentai_10k  | list       | Vidurkis | 1          | 800 000           | 476 800    | 323 200    | 1 600 000         |
+| studentai_10k  | list       | Vidurkis | 2          | 800 000           | 476 800    | 323 200    | 1 600 000         |
+| studentai_10k  | list       | Vidurkis | 3          | 800 000           | 476 800    | 323 200    | 1 600 000         |
+| studentai_10k  | vector     | Mediana  | 1          | 720 000           | 429 120    | 290 880    | 1 440 000         |
+| studentai_10k  | vector     | Mediana  | 2          | 720 000           | 429 120    | 290 880    | 1 440 000         |
+| studentai_10k  | vector     | Mediana  | 3          | 720 000           | 429 120    | 290 880    | 1 440 000         |
+| studentai_10k  | list       | Mediana  | 1          | 800 000           | 476 800    | 323 200    | 1 600 000         |
+| studentai_10k  | list       | Mediana  | 2          | 800 000           | 476 800    | 323 200    | 1 600 000         |
+| studentai_10k  | list       | Mediana  | 3          | 800 000           | 476 800    | 323 200    | 1 600 000         |
+| studentai_100k | vector     | Vidurkis | 1          | 7 200 000         | 4 291 200  | 2 908 800  | 14 400 000        |
+| studentai_100k | vector     | Vidurkis | 2          | 7 200 000         | 4 291 200  | 2 908 800  | 14 400 000        |
+| studentai_100k | vector     | Vidurkis | 3          | 7 200 000         | 4 291 200  | 2 908 800  | 14 400 000        |
+| studentai_100k | list       | Vidurkis | 1          | 8 000 000         | 4 768 000  | 3 232 000  | 16 000 000        |
+| studentai_100k | list       | Vidurkis | 2          | 8 000 000         | 4 768 000  | 3 232 000  | 16 000 000        |
+| studentai_100k | list       | Vidurkis | 3          | 8 000 000         | 4 768 000  | 3 232 000  | 16 000 000        |
+| studentai_100k | vector     | Mediana  | 1          | 7 200 000         | 4 291 200  | 2 908 800  | 14 400 000        |
+| studentai_100k | vector     | Mediana  | 2          | 7 200 000         | 4 291 200  | 2 908 800  | 14 400 000        |
+| studentai_100k | vector     | Mediana  | 3          | 7 200 000         | 4 291 200  | 2 908 800  | 14 400 000        |
+| studentai_100k | list       | Mediana  | 1          | 8 000 000         | 4 768 000  | 3 232 000  | 16 000 000        |
+| studentai_100k | list       | Mediana  | 2          | 8 000 000         | 4 768 000  | 3 232 000  | 16 000 000        |
+| studentai_100k | list       | Mediana  | 3          | 8 000 000         | 4 768 000  | 3 232 000  | 16 000 000        |
+| studentai_1mln | vector     | Vidurkis | 1          | 72 000 000        | 42 912 000 | 29 088 000 | 144 000 000       |
+| studentai_1mln | vector     | Vidurkis | 2          | 72 000 000        | 42 912 000 | 29 088 000 | 144 000 000       |
+| studentai_1mln | vector     | Vidurkis | 3          | 72 000 000        | 42 912 000 | 29 088 000 | 144 000 000       |
+| studentai_1mln | list       | Vidurkis | 1          | 80 000 000        | 47 680 000 | 32 320 000 | 160 000 000       |
+| studentai_1mln | list       | Vidurkis | 2          | 80 000 000        | 47 680 000 | 32 320 000 | 160 000 000       |
+| studentai_1mln | list       | Vidurkis | 3          | 80 000 000        | 47 680 000 | 32 320 000 | 160 000 000       |
+| studentai_10mln| vector     | Vidurkis | 1          | 720 000 000       | 429 120 000| 290 880 000| 1 440 000 000     |
+| studentai_10mln| vector     | Vidurkis | 2          | 720 000 000       | 429 120 000| 290 880 000| 1 440 000 000     |
+| studentai_10mln| vector     | Vidurkis | 3          | 720 000 000       | 429 120 000| 290
 
 
 
