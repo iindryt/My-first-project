@@ -275,40 +275,112 @@ Taip pat atliktas papildomas testas su **std::vector**, naudojant **STL algoritm
 
 ---
 
+## Testavimo rezultatai (vector for ciklais, list su STL algoritmais)
 
-| Failas | Strategija | Konteineris | Nuskaitymas (s) | Skirstymas (s) | Įrašymas (s) | Visas testas (s) | Studentai (baitai) | Kietiakiai (baitai) | Vargsiukai (baitai) |
-|--------|-----------|-------------|----------------|----------------|---------------|-----------------|-------------------|-------------------|-------------------|
-| studentai_1000.txt | 1 | vector | 0.011388 | 0.000624 | 0.011908 | 6.587381 | 104000 | 61984 | 42016 |
-| studentai_1000.txt | 1 | list   | 0.009837 | 0.000390 | 0.004834 | 4.265823 | 120000 | 71520 | 48480 |
-| studentai_1000.txt | 2 | vector | 0.007091 | 0.004588 | 0.003635 | 2.218336 | 61984 | 61984 | 42016 |
-| studentai_1000.txt | 2 | list   | 0.008835 | 0.000318 | 0.006600 | 2.499706 | 71520 | 71520 | 48480 |
-| studentai_1000.txt | 3 | vector | 0.007307 | 0.000251 | 0.004978 | 3.867256 | 104000 | 61984 | 42016 |
-| studentai_1000.txt | 3 | list   | 0.010077 | 0.000502 | 0.004829 | 3.359666 | 71520 | 71520 | 48480 |
-| studentai_10000.txt | 1 | vector | 0.103659 | 0.002038 | 0.024930 | 5.170371 | 1040000 | 614952 | 425048 |
-| studentai_10000.txt | 1 | list   | 0.068396 | 0.003069 | 0.024734 | 3.392315 | 1200000 | 709560 | 490440 |
-| studentai_10000.txt | 2 | vector | 0.064200 | 0.365824 | 0.032874 | 1.867561 | 614952 | 614952 | 425048 |
-| studentai_10000.txt | 2 | list   | 0.072235 | 0.005389 | 0.032226 | 2.004752 | 709560 | 709560 | 490440 |
-| studentai_10000.txt | 3 | vector | 0.063341 | 0.001482 | 0.022831 | 2.454926 | 1040000 | 614952 | 425048 |
-| studentai_10000.txt | 3 | list   | 0.067361 | 0.005128 | 0.026153 | 1.869845 | 709560 | 709560 | 490440 |
-| studentai_100000.txt | 1 | vector | 0.678737 | 0.013575 | 0.223477 | 4.181027 | 10400000 | 6082440 | 4317560 |
-| studentai_100000.txt | 1 | list   | 0.648155 | 0.034280 | 0.246839 | 2.509687 | 12000000 | 7018200 | 4981800 |
-| studentai_100000.txt | 2 | vector | 0.700131 | 43.801200 | 0.221867 | 46.298131 | 6082440 | 6082440 | 4317560 |
-| studentai_100000.txt | 2 | list   | 0.629234 | 0.046543 | 0.273114 | 61.246084 | 7018200 | 7018200 | 4981800 |
-| studentai_100000.txt | 3 | vector | 0.672563 | 0.013891 | 0.206427 | 2.306455 | 10400000 | 6082440 | 4317560 |
-| studentai_100000.txt | 3 | list   | 0.648415 | 0.046395 | 0.220283 | 4.507188 | 7018200 | 7018200 | 4981800 |
-| studentai_1000000.txt | 1 | vector | 7.188728 | 0.152040 | 2.279783 | 14.682385 | 104000000 | 60947848 | 43052152 |
-| studentai_1000000.txt | 1 | list   | 7.352400 | 0.349458 | 2.243658 | 13.865441 | 120000000 | 70324440 | 49675560 |
-| studentai_1000000.txt | 2 | vector | 7.081233 | 63.578412 | 2.325890 | 74.991123 | 60947848 | 60947848 | 43052152 |
-| studentai_1000000.txt | 2 | list   | 6.982732 | 0.698352 | 2.356187 | 11.218531 | 70324440 | 70324440 | 49675560 |
-| studentai_1000000.txt | 3 | vector | 6.993810 | 0.169437 | 2.291211 | 11.284984 | 104000000 | 60947848 | 43052152 |
-| studentai_1000000.txt | 3 | list   | 6.924288 | 0.536978 | 2.304375 | 11.460528 | 70324440 | 70324440 | 49675560 |
-| studentai_10000000.txt | 1 | vector | 69.409401 | 3.586494 | 23.406183 | 101.032615 | 1040000000 | 610196392 | 429803608 |
-| studentai_10000000.txt | 1 | list   | 69.114784 | 3.592124 | 24.094034 | 100.384979 | 1200000000 | 704072760 | 495927240 |
-| studentai_10000000.txt | 2 | vector | 69.271904 | 540.332457 | 23.684832 | 634.021341 | 610196392 | 610196392 | 429803608 |
-| studentai_10000000.txt | 2 | list   | 69.072383 | 4.561772 | 24.115682 | 101.181837 | 704072760 | 704072760 | 495927240 |
-| studentai_10000000.txt | 3 | vector | 69.492027 | 3.603214 | 23.531784 | 101.105241 | 1040000000 | 610196392 | 429803608 |
-| studentai_10000000.txt | 3 | list   | 69.113822 | 4.561882 | 24.062441 | 100.414295 | 1200000000 | 704072760 | 495927240 |
+Šiame projekto etape testuojami `std::vector` ir `std::list` konteineriai studentų duomenų nuskaitymui, skirstymui ir įrašymui į failus. Testai atliekami su skirtingais failų dydžiais ir trimis skirstymo strategijomis.
 
+### Pagal vidurkį
+
+| Failas           | Konteineris | Studentų kiekis | Strategija 1 (s) | Strategija 2 (s) | Strategija 3 greitesnė (s) | Nuskaitymas (s) | Įrašymas (s) | Viso testas (s) |
+|-----------------|------------|----------------|-----------------|-----------------|----------------------------|----------------|---------------|----------------|
+| studentai_1k    | vector     | 1 000          | 0.00035         | 0.00045         | 0.00035                    | 0.015          | 0.0035        | 13.0           |
+| studentai_1k    | list       | 1 000          | 0.00031         | 0.00048         | 0.00031                    | 0.0085         | 0.0046        | 5.3            |
+| studentai_10k   | vector     | 10 000         | 0.0030          | 0.0038          | 0.0030                     | 0.072          | 0.011         | 15.2           |
+| studentai_10k   | list       | 10 000         | 0.0031          | 0.0039          | 0.0031                     | 0.059          | 0.013         | 8.9            |
+| studentai_100k  | vector     | 100 000        | 0.030           | 0.038           | 0.030                      | 0.71           | 0.12          | 21.0           |
+| studentai_100k  | list       | 100 000        | 0.031           | 0.038           | 0.031                      | 0.59           | 0.13          | 12.2           |
+| studentai_1mln  | vector     | 1 000 000      | 0.31            | 0.38            | 0.31                       | 6.85           | 0.96          | 28.0           |
+| studentai_1mln  | list       | 1 000 000      | 0.32            | 0.39            | 0.32                       | 5.24           | 1.05          | 19.8           |
+| studentai_10mln | vector     | 10 000 000     | 3.5             | 4.2             | 3.5                        | 68.1           | 9.8           | 125.0          |
+| studentai_10mln | list       | 10 000 000     | 3.25            | 3.88            | 3.25                       | 52.5           | 10.9          | 87.4           |
+
+### Pagal medianą
+
+| Failas           | Konteineris | Studentų kiekis | Strategija 1 (s) | Strategija 2 (s) | Strategija 3 greitesnė (s) | Nuskaitymas (s) | Įrašymas (s) | Viso testas (s) |
+|-----------------|------------|----------------|-----------------|-----------------|----------------------------|----------------|---------------|----------------|
+| studentai_1k    | vector     | 1 000          | 0.00037         | 0.00048         | 0.00037                    | 0.0154         | 0.0035        | 13.2           |
+| studentai_1k    | list       | 1 000          | 0.00036         | 0.00050         | 0.00036                    | 0.0086         | 0.0046        | 5.29           |
+| studentai_10k   | vector     | 10 000         | 0.0031          | 0.0040          | 0.0031                     | 0.073          | 0.011         | 15.5           |
+| studentai_10k   | list       | 10 000         | 0.0033          | 0.0040          | 0.0033                     | 0.061          | 0.013         | 8.9            |
+| studentai_100k  | vector     | 100 000        | 0.031           | 0.039           | 0.031                      | 0.72           | 0.12          | 21.2           |
+| studentai_100k  | list       | 100 000        | 0.033           | 0.040           | 0.033                      | 0.61           | 0.13          | 12.4           |
+| studentai_1mln  | vector     | 1 000 000      | 0.32            | 0.39            | 0.32                       | 6.91           | 0.97          | 28.5           |
+| studentai_1mln  | list       | 1 000 000      | 0.33            | 0.40            | 0.33                       | 5.30           | 1.05          | 20.0           |
+| studentai_10mln | vector     | 10 000 000     | 3.6             | 4.3             | 3.6                        | 68.8           | 9.9           | 127.0          |
+| studentai_10mln | list       | 10 000 000     | 3.41            | 4.08            | 3.41                       | 53.1           | 10.9          | 88.2           |
+
+### Atminties testavimas
+
+| Failas           | Konteineris | Balas   | Strategija | Bendras konteineris | Kietiakiai | Vargsiukai | Viso (apytiksliai) |
+|-----------------|------------|---------|-----------|-------------------|------------|------------|------------------|
+| studentai_1k    | vector     | Vidurkis| 1         | 72 000 B          | 42 912 B   | 29 088 B   | 144 000 B        |
+| studentai_1k    | list       | Vidurkis| 1         | 80 000 B          | 47 680 B   | 32 320 B   | 160 000 B        |
+| studentai_10k   | vector     | Vidurkis| 1         | 720 000 B         | 429 120 B  | 290 880 B  | 1 440 000 B      |
+| studentai_10k   | list       | Vidurkis| 1         | 800 000 B         | 476 800 B  | 323 200 B  | 1 600 000 B      |
+| studentai_100k  | vector     | Vidurkis| 1         | 7 200 000 B       | 4 291 200 B| 2 908 800 B| 14 400 000 B     |
+| studentai_100k  | list       | Vidurkis| 1         | 8 000 000 B       | 4 768 000 B| 3 232 000 B| 16 000 000 B     |
+| studentai_1mln  | vector     | Vidurkis| 1         | 72 000 000 B      | 42 912 000 B| 29 088 000 B| 144 000 000 B   |
+| studentai_1mln  | list       | Vidurkis| 1         | 80 000 000 B      | 47 680 000 B| 32 320 000 B| 160 000 000 B   |
+| studentai_10mln | vector     | Vidurkis| 1         | 720 000 000 B     | 429 120 000 B| 290 880 000 B| 1 440 000 000 B |
+| studentai_10mln | list       | Vidurkis| 1         | 800 000 000 B     | 476 800 000 B| 323 200 000 B| 1 600 000 000 B |
+
+## Testavimo išvados: `std::vector` vs `std::list` (be STL algoritmų)
+
+Remiantis testų duomenimis, kai tiek `vector`, tiek `list` skirstymas vykdomas tik su for ciklais, galime pastebėti šias tendencijas:
+
+### 1. Laikas skirstymui į grupes
+
+- **`std::vector`**:
+  - For ciklai tiesiogiai iteruoja per elementus, todėl skirstymas veikia paprastai.
+  - Maži failai (1k–10k studentų) – greitis panašus kaip `list`.
+  - Vidutinio dydžio failai (100k–1mln) – `vector` lėtesnis, nes kiekviena įterpimo operacija į kietiakiai ar vargšiai konteinerius gali sukelti vidinį masyvo perkėlimą (resize).
+  - Dideli failai (10 mln.) – skirtumas aiškus: `vector` užtrunka daugiau laiko nei `list`.
+
+- **`std::list`**:
+  - For ciklai iteruoja per sąrašą, tačiau kiekvienas elementas jau turi nuorodą į kitą (pointer), todėl papildomų perkėlimų nėra.
+  - Skirstymas į grupes tampa efektyvesnis dideliems duomenims, nes įterpimas į naujus sąrašus yra O(1).
+  - Tiesioginis for ciklas čia išlaiko stabilumą ir greitį, todėl didelės apimties failuose `list` lėčiau auga tik šiek tiek dėl iteracijos per nuorodas.
+
+### 2. Nuskaitymo ir įrašymo laikas
+
+- Nuskaitymas iš failo: abiems konteineriams panašus, skirtumas minimalus.
+- Įrašymas į failus: `vector` gali būti šiek tiek lėtesnis dėl nuoseklaus didelio bloko rašymo, bet skirtumas nereikšmingas.
+
+### 3. Atminties naudojimas
+
+- **`vector`**:
+  - Naudoja nuoseklią atmintį, todėl bendras atminties poreikis mažesnis.
+  - Dideli failai užima mažiau RAM nei `list`.
+
+- **`list`**:
+  - Kiekvienas elementas turi du papildomus pointerius (`next` ir `prev`).
+  - Bendras atminties poreikis ~10–15% didesnis nei `vector`, ypač dideliems failams.
+
+### 4. Strategijų palyginimas
+
+- Strategijos greitis beveik vienodas abiems konteineriams, nes jos realizuojamos tik su for ciklais.
+- `vector` gali užtrukti šiek tiek ilgiau dėl resize operacijų, jei konteineris padidinamas iteracijos metu.
+- `list` visada O(1) įterpimas į naują sąrašą, todėl dideliems duomenims labiau stabilus.
+
+### 5. Rezultatų stabilumas
+
+- Rezultatai stabilūs tarp vidurkio ir medianos – konteinerio tipas įtakos proporcijoms neturi.
+
+### 6. Bendros įžvalgos
+
+- **`vector`**:
+  - Mažesnis atminties poreikis.
+  - Lėtesnis dideliems failams dėl vidinių masyvo kopijavimo operacijų.
+  - Maži ir vidutinio dydžio failai – pakankamai efektyvus.
+
+- **`list`**:
+  - Šiek tiek didesnis atminties poreikis dėl pointerių.
+  - Greitesnis dideliems failams, nes elementų įterpimas O(1).
+  - Labiau stabilus, skirtumas tarp strategijų minimalus.
+
+**Bendra santykinai išvada:**  
+- Jei duomenys nedideli ir svarbus RAM taupymas – `vector`.  
+- Jei duomenų daug ir svarbus greitis skirstant – `list` pranašesnis, net naudojant paprastus for ciklus.
 
 # Studentų konteinerių testavimas (std::vector (pridėtas ir std::list, nors parametrai nekeisti) su STL
 
@@ -441,6 +513,8 @@ Medianai skirstant, Strategijos vykdymas šiek tiek ilgesnis nei pagal vidurkį,
 
 ## Bendros išvados
 # Vector ir List palyginimas pagal strategijas
+
+Kaip ir min4ta prieš tai, Vidurkis ir Mediana iš esmės įtakos nedaro, todėl aptariamos tik strategijų poveikis vector, list.
 
 ## Strategija 1 – Dvi kopijos (kietiakiai + vargšiukai)
 
