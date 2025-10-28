@@ -427,6 +427,18 @@ Atminties testavimas tiek pagal vidurkį, tiek pagal medianą
 
 ---
 
+## Balo pasirinkimas: vidurkis vs mediana
+
+Laiko skirtumai tarp vidurkio ir medianos yra minimalūs, dažniausiai tik keli procentai, todėl abiejų metodų skirstymas yra panašiai efektyvus.
+
+Medianai skirstant, Strategijos vykdymas šiek tiek ilgesnis nei pagal vidurkį, bet skirtumas nėra reikšmingas.
+
+## Atmintis
+- Atminties naudojimas auga tiesiškai su studentų skaičiumi.
+- `vector` konteineris yra efektyvus atminties požiūriu, nes nenaudoja papildomų rodyklių kaip `list`.
+- Kietiakiai sudaro apie ~60% bendro studentų kiekio, o vargsiukai – apie 40%, nepriklausomai nuo failo dydžio ar balo pasirinkimo.
+- Skirstymo pagal vidurkį ar medianą pasirinkimas praktiškai neturi įtakos atminties sąnaudoms.
+
 ## Bendros išvados
 # Vector ir List palyginimas pagal strategijas
 
