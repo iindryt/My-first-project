@@ -21,7 +21,41 @@
    ```powershell
    cmake --version
 
-# # Naudojimosi instrukcija
+# CMake projekto paleidimas Windows PowerShell
+---
+
+## 1. Atidarykite PowerShell
+
+- Atidarykite **Windows PowerShell**.
+- Eikite į savo projekto katalogą, pavyzdžiui:
+
+```powershell
+cd C:\Users\aiste\Desktop\cmaketest
+
+-Paleiskite komandą:
+cmake .\CMakeLists.txt
+
+-Vykdykite komandą:
+cmake --build .
+
+Pereikite į Debug katalogą
+cd Debug
+
+-Įvykdykite .\Studentu_programa.exe
+Terminale matysite programos meniu:
+Pasirinkite veiksma:
+1 - Prideti studenta rankiniu budu
+2 - Nuskaityti studentus is failo
+3 - Rodyti studentu rezultatus
+4 - Baigti programa
+5 - Generuoti studentu failus (1k - 10mln)
+6 - Testuoti konteinerius (vector vs list)
+7 - Automatinis testavimas su visais failais
+Jusu pasirinkimas yra:
+
+
+---
+## Naudojimosi instrukcija
 
 Programa veikia meniu principu ir leidžia valdyti studentų pažymius.
 
