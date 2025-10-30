@@ -6,172 +6,134 @@
 #include <list>
 #include <type_traits>
 #include <fstream>
-#include <algorithm>
 #include "studentas.h"
 #include "duomenys.h"
 #include "laikmatis.h"
+#include "funkcijos.h"
 
 template <typename Container>
 void testuotiKonteineri(const std::string& failoVardas, const std::string& pavadinimas) {
     std::cout << "\n=== Testuojamas konteineris: " << pavadinimas << " ===\n";
-
     Laikmatis tViso;
 
-    // --- Nuskaitymas ---
+    // -----------------------------
+    // 1. Nuskaitymas is failo
+    // -----------------------------
     Laikmatis tNuskaitymui;
     Container studentai = nuskaitytiIsFailoTemplate<Container>(failoVardas, false);
-    std::cout << "Failas nuskaitytas per " << tNuskaitymui.praejes_laikas() << " s.\n";
+    double laikasNuskaitymas = tNuskaitymui.praejes_laikas();
 
     if (studentai.empty()) {
-        std::cout << "Failas nerastas arba tuscias. Testavimas nutrauktas.\n";
+        std::cout << "Failas tuscias.\n";
         return;
     }
 
-    int strategija;
-    std::cout << "Pasirinkite skirstymo strategija:\n";
-    std::cout << "1 - dvi kopijos (kietiakiai + vargsiukai)\n";
-    std::cout << "2 - viena kopija su trynimu (vargsiukai, studentai = kietiakiai)\n";
-    std::cout << "3 - automatinis greiciausios strategijos pasirinkimas\n";
-    std::cout << "Jusu pasirinkimas: ";
-    std::cin >> strategija;
+    // -----------------------------
+    // Strategijos pasirinkimas
+    // -----------------------------
+    int strategija = 0;
+    while (strategija < 1 || strategija > 3) {
+        std::cout << "Pasirinkite strategija:\n";
+        std::cout << "1 - Dvi kopijos (studentai -> kietiakiai + vargsiukai)\n";
+        std::cout << "2 - Viena kopija su trynimu (studentai = kietiakiai)\n";
+        std::cout << "3 - Automatinis palyginimas ir greitesn?s pasirinkimas\n";
+        std::cout << "Jusu pasirinkimas: ";
+        std::cin >> strategija;
+        if (strategija < 1 || strategija > 3)
+            std::cout << "Neteisingas pasirinkimas, bandykite dar karta.\n";
+    }
+
+    // -----------------------------
+    // Pasirinkimas pagal ka skirstyti
+    // -----------------------------
+    int baloPasirinkimas = 0;
+    while (baloPasirinkimas < 1 || baloPasirinkimas > 2) {
+        std::cout << "Pasirinkite pagal ka skirstyti studentus:\n";
+        std::cout << "1 - Vidurkis\n2 - Mediana\n";
+        std::cout << "Jusu pasirinkimas: ";
+        std::cin >> baloPasirinkimas;
+        if (baloPasirinkimas < 1 || baloPasirinkimas > 2)
+            std::cout << "Neteisingas pasirinkimas, bandykite dar karta.\n";
+    }
+    Balas pasirinktasBalsas = (baloPasirinkimas == 1) ? Balas::Vidurkis : Balas::Mediana;
 
     Container kietiakiai, vargsiukai;
+    double laikasStrategija = 0;
+    int pasirinktaTikra = strategija; // faktin? strategija, bus nustatyta 3 strategijoje
 
-    if (strategija == 3) {
-        Container k1, v1, k2, v2;
-        double laikas1 = 0.0, laikas2 = 0.0;
-
-        // Strategija 1 (dvi kopijos)
-        {
-            Laikmatis t;
-            if constexpr (std::is_same_v<Container, std::vector<Studentas>>) {
-                k1.reserve(studentai.size());
-                v1.reserve(studentai.size());
-                std::copy_if(studentai.begin(), studentai.end(), std::back_inserter(k1),
-                    [](const Studentas& s) { return s.rezVid >= 5.0f; });
-                std::copy_if(studentai.begin(), studentai.end(), std::back_inserter(v1),
-                    [](const Studentas& s) { return s.rezVid < 5.0f; });
-            }
-            else { // list
-                for (const auto& s : studentai) {
-                    if (s.rezVid >= 5.0f) k1.push_back(s);
-                    else v1.push_back(s);
-                }
-            }
-            laikas1 = t.praejes_laikas();
-        }
-
-        // Strategija 2 (viena kopija su trynimu)
-        {
-            Laikmatis t;
-            Container tmp = studentai;
-            if constexpr (std::is_same_v<Container, std::vector<Studentas>>) {
-                auto it = std::partition(tmp.begin(), tmp.end(),
-                    [](const Studentas& s) { return s.rezVid >= 5.0f; });
-                k2.assign(tmp.begin(), it);
-                v2.assign(it, tmp.end());
-            }
-            else { // list
-                for (auto it = tmp.begin(); it != tmp.end();) {
-                    if (it->rezVid < 5.0f) {
-                        v2.push_back(*it);
-                        it = tmp.erase(it);
-                    }
-                    else ++it;
-                }
-                k2 = tmp;
-            }
-            laikas2 = t.praejes_laikas();
-        }
-
-        std::cout << "Strategijos 1 skirstymas truko: " << laikas1 << " s\n";
-        std::cout << "Strategijos 2 skirstymas truko: " << laikas2 << " s\n";
-
-        if (laikas1 <= laikas2) {
-            strategija = 1;
-            kietiakiai = k1;
-            vargsiukai = v1;
-        }
-        else {
-            strategija = 2;
-            kietiakiai = k2;
-            vargsiukai = v2;
-        }
-
-        std::cout << "Pasirinkta strategija: " << strategija << "\n";
+    // -----------------------------
+    // 2. Skirstymas i grupes
+    // -----------------------------
+    if (strategija == 1) {
+        Laikmatis tStrategijai;
+        strategija1(studentai, kietiakiai, vargsiukai, pasirinktasBalsas);
+        laikasStrategija = tStrategijai.praejes_laikas();
     }
-    else {
-        Laikmatis tSkirstymui;
-
-        if (strategija == 1) {
-            if constexpr (std::is_same_v<Container, std::vector<Studentas>>) {
-                kietiakiai.reserve(studentai.size());
-                vargsiukai.reserve(studentai.size());
-                std::copy_if(studentai.begin(), studentai.end(), std::back_inserter(kietiakiai),
-                    [](const Studentas& s) { return s.rezVid >= 5.0f; });
-                std::copy_if(studentai.begin(), studentai.end(), std::back_inserter(vargsiukai),
-                    [](const Studentas& s) { return s.rezVid < 5.0f; });
-            }
-            else {
-                for (const auto& s : studentai) {
-                    if (s.rezVid >= 5.0f) kietiakiai.push_back(s);
-                    else vargsiukai.push_back(s);
-                }
-            }
-        }
-        else if (strategija == 2) {
-            Container tmpVargsiukai;
-            for (auto it = studentai.begin(); it != studentai.end();) {
-                if (it->rezVid < 5.0f) {
-                    tmpVargsiukai.push_back(*it);
-                    it = studentai.erase(it);
-                }
-                else ++it;
-            }
-            kietiakiai = studentai;
-            vargsiukai = tmpVargsiukai;
-        }
-
-        std::cout << "Skirstymas truko: " << tSkirstymui.praejes_laikas() << " s\n";
+    else if (strategija == 2) {
+        Laikmatis tStrategijai;
+        strategija2(studentai, kietiakiai, vargsiukai, pasirinktasBalsas);
+        laikasStrategija = tStrategijai.praejes_laikas();
+    }
+    else if (strategija == 3) {
+        strategija3(studentai, kietiakiai, vargsiukai, pasirinktasBalsas, pasirinktaTikra);
+        // laikasStrategija = tStrategijai.praejes_laikas();  ? neteisinga vieta
+        // vietoj to matuok tik pasirinkt? strategij?:
+        Laikmatis tStrategijai;
+        if (pasirinktaTikra == 1)
+            strategija1(studentai, kietiakiai, vargsiukai, pasirinktasBalsas);
+        else
+            strategija2(studentai, kietiakiai, vargsiukai, pasirinktasBalsas);
+        laikasStrategija = tStrategijai.praejes_laikas();
     }
 
-    // --- Irasymas i failus ---
-    Laikmatis tFailams;
-    {
-        std::ofstream outKiet("kietiakiai.txt");
-        for (const auto& s : kietiakiai)
-            outKiet << s.vard << " " << s.pav << " " << s.rezVid << "\n";
 
-        std::ofstream outVarg("vargsiukai.txt");
-        for (const auto& s : vargsiukai)
-            outVarg << s.vard << " " << s.pav << " " << s.rezVid << "\n";
+    // -----------------------------
+    // 3. Atminties skai?iavimas
+    // -----------------------------
+    std::cout << "\n--- Atminties sunaudojimas ---\n";
+
+    size_t atmStudentai = skaiciuotiAtminti(studentai);
+    size_t atmKietiakiai = skaiciuotiAtminti(kietiakiai);
+    size_t atmVargsiukai = skaiciuotiAtminti(vargsiukai);
+
+    std::cout << " - Bendras studentu konteineris: " << atmStudentai << " baitu\n";
+    std::cout << " - Kietiakiai:                   " << atmKietiakiai << " baitu\n";
+    std::cout << " - Vargsiukai:                   " << atmVargsiukai << " baitu\n";
+
+    size_t atmViso = 0;
+
+    // -----------------------------
+    // Taisyklingas bendros atminties skai?iavimas
+    // -----------------------------
+    if (strategija == 1 || (strategija == 3 && pasirinktaTikra == 1)) {
+        // Strategija 1: studentai konteineryje lieka, kietiakiai ir vargsiukai papildomi
+        atmViso = atmStudentai + atmKietiakiai + atmVargsiukai;
     }
-    std::cout << "Irasymas i failus truko: " << tFailams.praejes_laikas() << " s.\n";
-
-    // --- Atminties skaiciavimas ---
-    auto skaiciuotiAtminti = [](size_t kiekis, bool yraList) {
-        size_t dydis = sizeof(Studentas);
-        if (yraList) dydis += 2 * sizeof(void*);
-        return kiekis * dydis;
-        };
-    bool arList = std::is_same_v<Container, std::list<Studentas>>;
-
-    std::cout << " - Bendras studentu konteineris: " << skaiciuotiAtminti(studentai.size(), arList) << " baitu\n";
-    std::cout << " - Kietiakiai:                   " << skaiciuotiAtminti(kietiakiai.size(), arList) << " baitu\n";
-    std::cout << " - Vargsiukai:                   " << skaiciuotiAtminti(vargsiukai.size(), arList) << " baitu\n";
-
-    size_t viso = 0;
-    if (strategija == 2) {
-        viso = skaiciuotiAtminti(kietiakiai.size(), arList) + skaiciuotiAtminti(vargsiukai.size(), arList);
+    else if (strategija == 2 || (strategija == 3 && pasirinktaTikra == 2)) {
+        // Strategija 2: studentai konteineryje jau tik kietiakiai, vargsiukai papildomai
+        atmViso = atmKietiakiai + atmVargsiukai;
     }
-    else {
-        viso = skaiciuotiAtminti(studentai.size(), arList) +
-            skaiciuotiAtminti(kietiakiai.size(), arList) +
-            skaiciuotiAtminti(vargsiukai.size(), arList);
-    }
-    std::cout << " - Viso (apytiksliai):           " << viso << " baitu\n";
 
-    std::cout << "\nVisas testas (" << pavadinimas << ") truko: " << tViso.praejes_laikas() << " s.\n";
+    std::cout << " - Viso (apytiksliai):           " << atmViso << " baitu\n";
+
+    // -----------------------------
+    // 4. I?vedimas ? failus
+    // -----------------------------
+    Laikmatis tIrasymui;
+    irasytiIFailus(kietiakiai, vargsiukai, pasirinktasBalsas);
+    double laikasIrasymas = tIrasymui.praejes_laikas();
+
+    // -----------------------------
+    // 5. Spausdinimas
+    // -----------------------------
+    std::cout << "Failo nuskaitymas truko: " << laikasNuskaitymas << " s\n";
+    if (strategija == 3)
+        std::cout << "Strategijos (3 - automatinis) vykdymo laikas: " << laikasStrategija << " s\n";
+    else
+        std::cout << "Strategijos (" << strategija << ") vykdymo laikas: " << laikasStrategija << " s\n";
+
+    std::cout << "Failo irasymas truko: " << laikasIrasymas << " s\n";
+    std::cout << "Visas testas truko: " << tViso.praejes_laikas() << " s\n";
 }
 
 #endif // TESTAVIMAS_H
