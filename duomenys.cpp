@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <iomanip>
 
 std::vector<Studentas> nuskaitytiIsFailo(const std::string& failoVardas) {
     std::vector<Studentas> studentai;
@@ -14,7 +15,7 @@ std::vector<Studentas> nuskaitytiIsFailo(const std::string& failoVardas) {
     }
 
     std::string eilute;
-    getline(in, eilute); // praleidžiame antraštę
+    getline(in, eilute); // praleid?iame antra?t?
 
     while (getline(in, eilute)) {
         if (eilute.empty()) continue;
