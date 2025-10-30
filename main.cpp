@@ -1,15 +1,16 @@
 #include <iostream>
-#include <iomanip>
 #include <vector>
 #include <list>
-#include <ctime>
 #include <string>
 #include <fstream>
+#include <ctime>
+#include <iomanip>
 
 #include "studentas.h"
 #include "funkcijos.h"
 #include "duomenys.h"
 #include "testavimas.h"
+#include "laikmatis.h"
 
 int main() {
     std::srand(static_cast<unsigned>(std::time(nullptr)));
@@ -31,35 +32,22 @@ int main() {
         std::cout << "Jusu pasirinkimas yra: ";
         std::cin >> veiksmas;
 
-        // --- Rankinis studento ivedimas ---
         if (veiksmas == 1) {
             char tipas;
-            std::cout << "Naudoti konteinerį: vector (v) ar list (l)? ";
+            std::cout << "Naudoti konteiner?: vector (v) ar list (l)? ";
             std::cin >> tipas;
-            bool naudotiVector = (tipas == 'v');
+
+            if (tipas != 'v' && tipas != 'l') {
+                std::cerr << "Klaida: netinkamas konteinerio pasirinkimas! Turi buti 'v' arba 'l'.\n";
+                continue;
+            }
 
             Studentas s = ivesk();
-            if (s.vard == "0") {
-                std::cout << "Studentu ivedimas nutrauktas." << std::endl;
-            }
-            else if (s.paz.empty()) {
-                std::cout << "Studentas neivestas del netinkamu pazymiu." << std::endl;
-            }
-            else {
-                if (naudotiVector) {
-                    GrupeVector.push_back(s);
-                    const Studentas& ref = GrupeVector.back();
-                    std::cout << "Studento obj. saugomas adresu " << &ref << " (vector)" << std::endl;
-                }
-                else {
-                    GrupeList.push_back(s);
-                    const Studentas& ref = GrupeList.back();
-                    std::cout << "Studento obj. saugomas adresu " << &ref << " (list)" << std::endl;
-                }
-            }
-        }
+            if (s.vard == "0") continue;
 
-        // --- Nuskaitymas is failo ---
+            if (tipas == 'v') GrupeVector.push_back(s);
+            else GrupeList.push_back(s);
+        }
         else if (veiksmas == 2) {
             std::string failas;
             std::cout << "Iveskite failo pavadinima: ";
@@ -69,22 +57,22 @@ int main() {
             std::cout << "Naudoti konteineri: vector (v) ar list (l)? ";
             std::cin >> tipas;
 
+            if (tipas != 'v' && tipas != 'l') {
+                std::cerr << "Klaida: netinkamas konteinerio pasirinkimas! Turi buti 'v' arba 'l'.\n";
+                continue;
+            }
+
             if (tipas == 'v') {
                 auto isFailo = nuskaitytiIsFailoTemplate<std::vector<Studentas>>(failas);
+                if (isFailo.empty()) std::cout << "Tuscias failas. Nera studentu.\n";
                 GrupeVector.insert(GrupeVector.end(), isFailo.begin(), isFailo.end());
-                std::cout << "Is failo nuskaityta " << isFailo.size() << " studentu (vector)\n";
-            }
-            else if (tipas == 'l') {
-                auto isFailo = nuskaitytiIsFailoTemplate<std::list<Studentas>>(failas);
-                GrupeList.insert(GrupeList.end(), isFailo.begin(), isFailo.end());
-                std::cout << "Is failo nuskaityta " << isFailo.size() << " studentu (list)\n";
             }
             else {
-                std::cout << "Neteisingas pasirinkimas. Nuskaitymas nutrauktas.\n";
+                auto isFailo = nuskaitytiIsFailoTemplate<std::list<Studentas>>(failas);
+                if (isFailo.empty()) std::cout << "Tuscias failas. Nera studentu.\n";
+                GrupeList.insert(GrupeList.end(), isFailo.begin(), isFailo.end());
             }
         }
-
-        // --- Rodyti rezultatus ---
         else if (veiksmas == 3) {
             if (!GrupeVector.empty()) {
                 spausdintiRezultatusIrRusiavima(GrupeVector);
@@ -94,38 +82,25 @@ int main() {
                 spausdintiRezultatusIrRusiavima(laikinas);
             }
             else {
-                std::cout << "Nera duomenu rodyti." << std::endl;
+                std::cout << "Tuscias sarasas. Nera studentu.\n";
             }
         }
-
-        // --- Baigti programa ---
-        else if (veiksmas == 4) {
-            std::cout << "Programa baigiama." << std::endl;
-            break;
-        }
-
-        // --- Generuoti failus ---
+        else if (veiksmas == 4) break;
         else if (veiksmas == 5) {
-            std::cout << "\nGeneruojami failai su studentais...\n";
             generuotiFaila(1000, "studentai_1000.txt");
             generuotiFaila(10000, "studentai_10000.txt");
             generuotiFaila(100000, "studentai_100000.txt");
             generuotiFaila(1000000, "studentai_1000000.txt");
             generuotiFaila(10000000, "studentai_10000000.txt");
-            std::cout << "Failu generavimas baigtas.\n";
         }
-
-        // --- Testavimas rankiniu budu ---
         else if (veiksmas == 6) {
             std::string testFailas;
-            std::cout << "Iveskite failo pavadinima konteineriu testavimui: ";
+            std::cout << "Iveskite failo pavadinima: ";
             std::cin >> testFailas;
 
             testuotiKonteineri<std::vector<Studentas>>(testFailas, "std::vector");
             testuotiKonteineri<std::list<Studentas>>(testFailas, "std::list");
         }
-
-        // --- Automatinis testavimas su visais failais ---
         else if (veiksmas == 7) {
             std::vector<std::string> failai = {
                 "studentai_1000.txt",
@@ -136,36 +111,20 @@ int main() {
             };
 
             std::ofstream out("test_rez.txt");
-            if (!out.is_open()) {
-                std::cerr << "Klaida: nepavyko sukurti test_rez.txt failo!\n";
-                continue;
-            }
+            if (!out.is_open()) continue;
 
-            out << "AUTOMATINIS KONTEINERIU TESTAVIMAS\n";
-            out << "-----------------------------------\n\n";
-
-            for (const auto& failas : failai) {
-                out << "Failas: " << failas << "\n";
-
-                // Laikinai peradresuojame cout į failą
+            for (auto& failas : failai) {
                 std::streambuf* originalCout = std::cout.rdbuf();
                 std::cout.rdbuf(out.rdbuf());
 
                 testuotiKonteineri<std::vector<Studentas>>(failas, "std::vector");
                 testuotiKonteineri<std::list<Studentas>>(failas, "std::list");
 
-                std::cout.rdbuf(originalCout); // atstatome cout
-
-                out << "-------------------------------------------\n\n";
-                std::cout << "Atliktas testas su failu: " << failas << std::endl;
+                std::cout.rdbuf(originalCout);
             }
-
-            out.close();
-            std::cout << "Automatinis testavimas baigtas. Rezultatai issaugoti faile test_rez.txt.\n";
         }
-
         else {
-            std::cout << "Klaidingas pasirinkimas, bandykite dar karta." << std::endl;
+            std::cerr << "Klaida: netinkamas meniu pasirinkimas!\n";
         }
     }
 
