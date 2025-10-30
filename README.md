@@ -585,16 +585,16 @@ Kaip ir min4ta prieš tai, Vidurkis ir Mediana iš esmės įtakos nedaro, todėl
 
 ## Strategija 3 – Automatinis pasirinkimas
 
-- **Vector** automatiškai pasirenka **1 strategiją**, nes ji greičiausia jam.  
-- **List** pasirenka **2 strategiją**, kuri efektyviausia jam.  
+- **Vector** automatiškai pasirenka dažniau  **1 strategiją**, nes ji greičiausia jam.  
+- **List** pasirenka įvairiai, bet **2 strategiją**, kuri dažnai efektyviausia jam.  
 - **Išvada:** ši strategija užtikrina optimalų pasirinkimą pagal konteinerį.
 
 ---
 
 ## Bendros išvados
 
-- **Vector** – geriausias pasirinkimas su **1 strategija** ir dideliais duomenimis.  
-- **List** – geriausias su **2 strategija**, kai reikia daug trynimų arba duomenų mažiau.  
+- **Vector** – geriausias dažnai pasirinkimas su **1 strategija** ir dideliais duomenimis.  
+- **List** – geriausias su **2 strategija**, kai reikia daug trynimų arba duomenų mažiau, nes vector labai ilgai veikia.  
 - **Strategija 2** yra **labai neefektyvi vector konteineriui**, nes trynimai užtrunka ilgai.  
 - **Automatinis režimas (3)** išsprendžia šią problemą, pasirinkdamas greitesnį metodą.
 
