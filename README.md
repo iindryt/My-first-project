@@ -1,5 +1,26 @@
 # Studentų pažymių valdymo programa 
 
+## Įdiegimo instrukcija
+# CMake įdiegimas Windows naudojant `.msi` paketą
+
+## 1. Atsisiuntimas
+1. Eikite į oficialų CMake puslapį: [https://cmake.org/download/](https://cmake.org/download/)
+2. Pasirinkite **Windows x64 Installer (.msi)** versiją.
+   - Pavyzdys: `cmake-3.25.0-windows-x86_64.msi`
+
+## 2. Diegimas
+1. Paleiskite atsisiųstą `.msi` failą.
+2. Spauskite **Next** visuose langeliuose.
+3. Svarbu: pasirinkite **"Add CMake to the system PATH for all users"** arba **"for current user"**.  
+   - Tai leis naudoti `cmake` komandą bet kuriame terminale.
+
+## 3. Baigimas
+1. Spauskite **Finish**, kai diegimas baigtas.
+2. Atidarykite naują **PowerShell** langą.
+3. Patikrinkite diegimą įvedę:
+   ```powershell
+   cmake --version
+
 # # Naudojimosi instrukcija
 
 Programa veikia meniu principu ir leidžia valdyti studentų pažymius.
@@ -311,18 +332,39 @@ Taip pat atliktas papildomas testas su **std::vector**, naudojant **STL algoritm
 
 ### Atminties testavimas
 
-| Failas           | Konteineris | Balas   | Strategija | Bendras konteineris | Kietiakiai | Vargsiukai | Viso (apytiksliai) |
-|-----------------|------------|---------|-----------|-------------------|------------|------------|------------------|
-| studentai_1k    | vector     | Vidurkis| 1         | 72 000 B          | 42 912 B   | 29 088 B   | 144 000 B        |
-| studentai_1k    | list       | Vidurkis| 1         | 80 000 B          | 47 680 B   | 32 320 B   | 160 000 B        |
-| studentai_10k   | vector     | Vidurkis| 1         | 720 000 B         | 429 120 B  | 290 880 B  | 1 440 000 B      |
-| studentai_10k   | list       | Vidurkis| 1         | 800 000 B         | 476 800 B  | 323 200 B  | 1 600 000 B      |
-| studentai_100k  | vector     | Vidurkis| 1         | 7 200 000 B       | 4 291 200 B| 2 908 800 B| 14 400 000 B     |
-| studentai_100k  | list       | Vidurkis| 1         | 8 000 000 B       | 4 768 000 B| 3 232 000 B| 16 000 000 B     |
-| studentai_1mln  | vector     | Vidurkis| 1         | 72 000 000 B      | 42 912 000 B| 29 088 000 B| 144 000 000 B   |
-| studentai_1mln  | list       | Vidurkis| 1         | 80 000 000 B      | 47 680 000 B| 32 320 000 B| 160 000 000 B   |
-| studentai_10mln | vector     | Vidurkis| 1         | 720 000 000 B     | 429 120 000 B| 290 880 000 B| 1 440 000 000 B |
-| studentai_10mln | list       | Vidurkis| 1         | 800 000 000 B     | 476 800 000 B| 323 200 000 B| 1 600 000 000 B |
+| Konteineris | Failas                | Strategija | Pradinis (B) | Kietiakiai (B) | Vargsiukai (B) | Viso (B)      |
+| ----------- | --------------------- | ---------- | ------------ | -------------- | -------------- | ------------- |
+| vector      | studentai1000.txt     | 1          | 72 000       | 42 912         | 29 500         | 144 412       |
+| list        | studentai1000.txt     | 1          | 42 912       | 42 912         | 14 256         | 100 080       |
+| vector      | studentai1000.txt     | 2          | 70 000       | 42 000         | 24 652         | 136 652       |
+| list        | studentai1000.txt     | 2          | 42 000       | 42 000         | 12 556         | 96 556        |
+| vector      | studentai1000.txt     | 3          | 71 000       | 42 500         | 24 124         | 137 624       |
+| list        | studentai1000.txt     | 3          | 42 500       | 42 500         | 16 512         | 101 512       |
+| vector      | studentai10000.txt    | 1          | 720 000      | 429 120        | 290 724        | 1 439 844     |
+| list        | studentai10000.txt    | 1          | 429 120      | 429 120        | 157 056        | 1 015 296     |
+| vector      | studentai10000.txt    | 2          | 720 000      | 429 120        | 250 436        | 1 399 556     |
+| list        | studentai10000.txt    | 2          | 260 000      | 260 000        | 156 316        | 676 316       |
+| vector      | studentai10000.txt    | 3          | 720 000      | 429 120        | 238 332        | 1 387 452     |
+| list        | studentai10000.txt    | 3          | 240 000      | 240 000        | 175 872        | 655 872       |
+| vector      | studentai100000.txt   | 1          | 7 200 000    | 4 291 200      | 2 908 812      | 14 400 012    |
+| list        | studentai100000.txt   | 1          | 4 000 000    | 4 000 000      | 814 204        | 8 814 204     |
+| vector      | studentai100000.txt   | 2          | 7 200 000    | 4 291 200      | 250 772        | 11 742 972    |
+| list        | studentai100000.txt   | 2          | 2 000 000    | 2 000 000      | 1 825 596      | 5 825 596     |
+| vector      | studentai100000.txt   | 3          | 7 200 000    | 4 291 200      | 213 056        | 11 704 256    |
+| list        | studentai100000.txt   | 3          | 2 000 000    | 2 000 000      | 818 776        | 4 818 776     |
+| vector      | studentai1000000.txt  | 1          | 72 000 000   | 42 912 000     | 29 088 000     | 144 000 000   |
+| list        | studentai1000000.txt  | 1          | 42 912 000   | 42 912 000     | 16 000 000     | 101 824 000   |
+| vector      | studentai1000000.txt  | 2          | 72 000 000   | 42 912 000     | 21 318 640     | 136 230 640   |
+| list        | studentai1000000.txt  | 2          | 24 000 000   | 24 000 000     | 18 075 436     | 66 075 436    |
+| vector      | studentai1000000.txt  | 3          | 72 000 000   | 42 912 000     | 21 088 312     | 136 000 312   |
+| list        | studentai1000000.txt  | 3          | 24 000 000   | 24 000 000     | 18 171 132     | 66 171 132    |
+| vector      | studentai10000000.txt | 1          | 720 000 000  | 429 120 000    | 290 880 000    | 1 440 000 000 |
+| list        | studentai10000000.txt | 1          | 429 120 000  | 429 120 000    | 160 000 000    | 1 018 240 000 |
+| vector      | studentai10000000.txt | 2          | 720 000 000  | 429 120 000    | 1 524 600 352  | 2 673 720 352 |
+| list        | studentai10000000.txt | 2          | 240 000 000  | 240 000 000    | 181 451 136    | 661 451 136   |
+| vector      | studentai10000000.txt | 3          | 720 000 000  | 429 120 000    | 1 209 000 120  | 2 358 120 120 |
+| list        | studentai10000000.txt | 3          | 240 000 000  | 240 000 000    | 181 177 624    | 661 177 624   |
+
 
 ## Testavimo išvados: `std::vector` vs `std::list` (be STL algoritmų)
 
@@ -419,71 +461,39 @@ Pagal medianą
 
 Atminties testavimas tiek pagal vidurkį, tiek pagal medianą
 
-| Failas         | Konteineris | Balas    | Strategija | Bendras konteineris | Kietiakiai | Vargsiukai | Viso (apytiksliai) |
-|----------------|------------|---------|------------|-------------------|------------|------------|-------------------|
-| studentai_1k   | vector     | Vidurkis | 1          | 72 000            | 42 912     | 29 088     | 144 000           |
-| studentai_1k   | vector     | Vidurkis | 2          | 72 000            | 42 912     | 29 088     | 144 000           |
-| studentai_1k   | vector     | Vidurkis | 3          | 72 000            | 42 912     | 29 088     | 144 000           |
-| studentai_1k   | list       | Vidurkis | 1          | 80 000            | 47 680     | 32 320     | 160 000           |
-| studentai_1k   | list       | Vidurkis | 2          | 80 000            | 47 680     | 32 320     | 160 000           |
-| studentai_1k   | list       | Vidurkis | 3          | 80 000            | 47 680     | 32 320     | 160 000           |
-| studentai_1k   | vector     | Mediana  | 1          | 72 000            | 42 912     | 29 088     | 144 000           |
-| studentai_1k   | vector     | Mediana  | 2          | 72 000            | 42 912     | 29 088     | 144 000           |
-| studentai_1k   | vector     | Mediana  | 3          | 72 000            | 42 912     | 29 088     | 144 000           |
-| studentai_1k   | list       | Mediana  | 1          | 80 000            | 47 680     | 32 320     | 160 000           |
-| studentai_1k   | list       | Mediana  | 2          | 80 000            | 47 680     | 32 320     | 160 000           |
-| studentai_1k   | list       | Mediana  | 3          | 80 000            | 47 680     | 32 320     | 160 000           |
-| studentai_10k  | vector     | Vidurkis | 1          | 720 000           | 429 120    | 290 880    | 1 440 000         |
-| studentai_10k  | vector     | Vidurkis | 2          | 720 000           | 429 120    | 290 880    | 1 440 000         |
-| studentai_10k  | vector     | Vidurkis | 3          | 720 000           | 429 120    | 290 880    | 1 440 000         |
-| studentai_10k  | list       | Vidurkis | 1          | 800 000           | 476 800    | 323 200    | 1 600 000         |
-| studentai_10k  | list       | Vidurkis | 2          | 800 000           | 476 800    | 323 200    | 1 600 000         |
-| studentai_10k  | list       | Vidurkis | 3          | 800 000           | 476 800    | 323 200    | 1 600 000         |
-| studentai_10k  | vector     | Mediana  | 1          | 720 000           | 429 120    | 290 880    | 1 440 000         |
-| studentai_10k  | vector     | Mediana  | 2          | 720 000           | 429 120    | 290 880    | 1 440 000         |
-| studentai_10k  | vector     | Mediana  | 3          | 720 000           | 429 120    | 290 880    | 1 440 000         |
-| studentai_10k  | list       | Mediana  | 1          | 800 000           | 476 800    | 323 200    | 1 600 000         |
-| studentai_10k  | list       | Mediana  | 2          | 800 000           | 476 800    | 323 200    | 1 600 000         |
-| studentai_10k  | list       | Mediana  | 3          | 800 000           | 476 800    | 323 200    | 1 600 000         |
-| studentai_100k | vector     | Vidurkis | 1          | 7 200 000         | 4 291 200  | 2 908 800  | 14 400 000        |
-| studentai_100k | vector     | Vidurkis | 2          | 7 200 000         | 4 291 200  | 2 908 800  | 14 400 000        |
-| studentai_100k | vector     | Vidurkis | 3          | 7 200 000         | 4 291 200  | 2 908 800  | 14 400 000        |
-| studentai_100k | list       | Vidurkis | 1          | 8 000 000         | 4 768 000  | 3 232 000  | 16 000 000        |
-| studentai_100k | list       | Vidurkis | 2          | 8 000 000         | 4 768 000  | 3 232 000  | 16 000 000        |
-| studentai_100k | list       | Vidurkis | 3          | 8 000 000         | 4 768 000  | 3 232 000  | 16 000 000        |
-| studentai_100k | vector     | Mediana  | 1          | 7 200 000         | 4 291 200  | 2 908 800  | 14 400 000        |
-| studentai_100k | vector     | Mediana  | 2          | 7 200 000         | 4 291 200  | 2 908 800  | 14 400 000        |
-| studentai_100k | vector     | Mediana  | 3          | 7 200 000         | 4 291 200  | 2 908 800  | 14 400 000        |
-| studentai_100k | list       | Mediana  | 1          | 8 000 000         | 4 768 000  | 3 232 000  | 16 000 000        |
-| studentai_100k | list       | Mediana  | 2          | 8 000 000         | 4 768 000  | 3 232 000  | 16 000 000        |
-| studentai_100k | list       | Mediana  | 3          | 8 000 000         | 4 768 000  | 3 232 000  | 16 000 000        |
-| studentai_1mln | vector     | Vidurkis | 1          | 72 000 000        | 42 912 000 | 29 088 000 | 144 000 000       |
-| studentai_1mln | vector     | Vidurkis | 2          | 72 000 000        | 42 912 000 | 29 088 000 | 144 000 000       |
-| studentai_1mln | vector     | Vidurkis | 3          | 72 000 000        | 42 912 000 | 29 088 000 | 144 000 000       |
-| studentai_1mln | list       | Vidurkis | 1          | 80 000 000        | 47 680 000 | 32 320 000 | 160 000 000       |
-| studentai_1mln | list       | Vidurkis | 2          | 80 000 000        | 47 680 000 | 32 320 000 | 160 000 000       |
-| studentai_1mln | list       | Vidurkis | 3          | 80 000 000        | 47 680 000 | 32 320 000 | 160 000 000       |
-| studentai_10mln| vector     | Vidurkis | 1          | 720 000 000       | 429 120 000| 290 880 000| 1 440 000 000     |
-| studentai_10mln| vector     | Vidurkis | 2          | 720 000 000       | 429 120 000| 290 880 000| 1 440 000 000     |
-| studentai_10mln| vector     | Vidurkis | 3          | 720 000 000       | 429 120 000| 290 880 000| 1 440 000 000     |
-| studentai_10mln| list       | Vidurkis | 1          | 800 000 000       | 476 800 000| 323 200 000| 1 600 000 000     |
-| studentai_10mln| list       | Vidurkis | 2          | 800 000 000       | 476 800 000| 323 200 000| 1 600 000 000     |
-| studentai_10mln| list       | Vidurkis | 3          | 800 000 000       | 476 800 000| 323 200 000| 1 600 000 000     |
-| studentai_10mln| vector     | Mediana  | 1          | 720 000 000       | 429 120 000| 290 880 000| 1 440 000 000     |
-| studentai_10mln| vector     | Mediana  | 2          | 720 000 000       | 429 120 000| 290 880 000| 1 440 000 000     |
-| studentai_10mln| vector     | Mediana  | 3          | 720 000 000       | 429 120 000| 290 880 000| 1 440 000 000     |
-| studentai_10mln| list       | Mediana  | 1          | 800 000 000       | 476 800 000| 323 200 000| 1 600 000 000     |
-| studentai_10mln| list       | Mediana  | 2          | 800 000 000       | 476 800 000| 323 200 000| 1 600 000 000     |
-| studentai_10mln| list       | Mediana  | 3          | 800 000 000       | 476 800 000| 323 200 000| 1 600 000 000     |
+| Konteineris | Failas                | Strategija | Pradinis (B)  | Kietiakiai (B) | Vargsiukai (B) | Viso (B)       |
+| ----------- | --------------------- | ---------- | ------------- | -------------- | -------------- | -------------- |
+| vector      | studentai1000.txt     | 1          | 720 000       | 429 120        | 295 000        | 1 444 120      |
+| list        | studentai1000.txt     | 1          | 429 120       | 429 120        | 142 560        | 1 000 800      |
+| vector      | studentai1000.txt     | 2          | 700 000       | 420 000        | 246 520        | 1 366 520      |
+| list        | studentai1000.txt     | 2          | 420 000       | 420 000        | 125 560        | 965 560        |
+| vector      | studentai1000.txt     | 3          | 710 000       | 425 000        | 241 240        | 1 376 240      |
+| list        | studentai1000.txt     | 3          | 425 000       | 425 000        | 165 120        | 1 015 120      |
+| vector      | studentai10000.txt    | 1          | 7 200 000     | 4 291 200      | 2 907 240      | 14 398 440     |
+| list        | studentai10000.txt    | 1          | 4 291 200     | 4 291 200      | 1 570 560      | 10 153 296     |
+| vector      | studentai10000.txt    | 2          | 7 200 000     | 4 291 200      | 2 504 360      | 13 995 560     |
+| list        | studentai10000.txt    | 2          | 2 600 000     | 2 600 000      | 1 563 160      | 6 763 160      |
+| vector      | studentai10000.txt    | 3          | 7 200 000     | 4 291 200      | 2 383 320      | 13 874 520     |
+| list        | studentai10000.txt    | 3          | 2 400 000     | 2 400 000      | 1 758 720      | 6 558 720      |
+| vector      | studentai100000.txt   | 1          | 72 000 000    | 42 912 000     | 29 088 120     | 144 000 120    |
+| list        | studentai100000.txt   | 1          | 40 000 000    | 40 000 000     | 8 142 040      | 88 142 040     |
+| vector      | studentai100000.txt   | 2          | 72 000 000    | 42 912 000     | 2 507 720      | 117 419 720    |
+| list        | studentai100000.txt   | 2          | 20 000 000    | 20 000 000     | 18 255 960     | 58 255 960     |
+| vector      | studentai100000.txt   | 3          | 72 000 000    | 42 912 000     | 2 130 560      | 117 042 560    |
+| list        | studentai100000.txt   | 3          | 20 000 000    | 20 000 000     | 8 187 760      | 48 187 760     |
+| vector      | studentai1000000.txt  | 1          | 720 000 000   | 429 120 000    | 290 880 000    | 1 440 000 000  |
+| list        | studentai1000000.txt  | 1          | 429 120 000   | 429 120 000    | 160 000 000    | 1 018 240 000  |
+| vector      | studentai1000000.txt  | 2          | 720 000 000   | 429 120 000    | 2 131 864 000  | 3 280 984 000  |
+| list        | studentai1000000.txt  | 2          | 240 000 000   | 240 000 000    | 1 807 543 600  | 2 287 543 600  |
+| vector      | studentai1000000.txt  | 3          | 720 000 000   | 429 120 000    | 2 108 831 200  | 3 257 951 200  |
+| list        | studentai1000000.txt  | 3          | 240 000 000   | 240 000 000    | 1 817 713 200  | 2 297 713 200  |
+| vector      | studentai10000000.txt | 1          | 7 200 000 000 | 4 291 200 000  | 2 908 800 000  | 14 400 000 000 |
+| list        | studentai10000000.txt | 1          | 4 291 200 000 | 4 291 200 000  | 1 600 000 000  | 10 182 400 000 |
+| vector      | studentai10000000.txt | 2          | 7 200 000 000 | 4 291 200 000  | 15 246 003 520 | 26 673 203 520 |
+| list        | studentai10000000.txt | 2          | 2 400 000 000 | 2 400 000 000  | 1 814 511 360  | 6 614 511 360  |
+| vector      | studentai10000000.txt | 3          | 7 200 000 000 | 4 291 200 000  | 12 090 001 200 | 23 581 201 200 |
+| list        | studentai10000000.txt | 3          | 2 400 000 000 | 2 400 000 000  | 1 811 776 240  | 6 611 776 240  |
 
-
-
-
-
- 
-
-
- 
 
 ## Testų rezultatai
 
@@ -549,42 +559,5 @@ Kaip ir min4ta prieš tai, Vidurkis ir Mediana iš esmės įtakos nedaro, todėl
 - **Automatinis režimas (3)** išsprendžia šią problemą, pasirinkdamas greitesnį metodą.
 
 ---
-# Studentų pažymių valdymo programa – Įdiegimas
 
-## Reikalavimai
-
-- **CMake** ≥ 3.10  
-- Kompiliatorius: Visual Studio (Windows), GCC / Clang (Linux / Mac)  
-- Projekto failai: `main.cpp`, `funkcijos.cpp/h`, `duomenys.cpp/h`, `studentas.h`, `laikmatis.h`  
-- `CMakeLists.txt` projekte
-
----
-
-## Projekto įdiegimas
-
-1. Atidarykite terminalą ir eikite į projekto katalogą:
-```bash
-cd /path/to/project
-2. Sukurkite katalogą build ir pereikite į jį:
-mkdir build
-cd build
-3. Generuokite projektą pagal savo OS/kompiliatorių:
-Windows/Visual Studio
-cmake .. -G "Visual Studio 17 2022"
-Sugeneruotas .sln failas leis atidaryti projektą Visual Studio.
-Projekto kompiliavimas ir paleidimas atliekamas tiesiai iš Visual Studio.
-Linux / Mac
-cmake ..
-make
-Sukuriamas vykdomasis failas studentai.
-
-Paleidimas
-Windows (Visual Studio): atidarykite .sln ir paleiskite projektą.
-
-Linux / Mac: terminale:
-./studentai
-
-
-
- 
 
