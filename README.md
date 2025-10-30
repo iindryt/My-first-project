@@ -27,22 +27,27 @@
 ## 1. Atidarykite PowerShell
 
 - Atidarykite **Windows PowerShell**.
-- Eikite į savo projekto katalogą, pavyzdžiui:
+2. **Eikite į savo projekto katalogą, pavyzdžiui:**
+- cd C:\Users\aiste\Desktop\cmaketest
+- 
+3. **Paleiskite CMake projektą:**
 
-```powershell
-cd C:\Users\aiste\Desktop\cmaketest
-
--Paleiskite komandą:
 cmake .\CMakeLists.txt
 
--Vykdykite komandą:
+4. **Sukurkite projektą:**
+
 cmake --build .
 
-Pereikite į Debug katalogą
+5. **Pereikite į Debug katalogą:**
+
 cd Debug
 
--Įvykdykite .\Studentu_programa.exe
-Terminale matysite programos meniu:
+6. **Paleiskite programą:**
+
+.\Studentu_programa.exe
+
+7. **Terminale matysite programos meniu:**
+
 Pasirinkite veiksma:
 1 - Prideti studenta rankiniu budu
 2 - Nuskaityti studentus is failo
@@ -52,6 +57,7 @@ Pasirinkite veiksma:
 6 - Testuoti konteinerius (vector vs list)
 7 - Automatinis testavimas su visais failais
 Jusu pasirinkimas yra:
+
 
 
 ---
