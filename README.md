@@ -350,9 +350,9 @@ Taip pat atliktas papildomas testas su **std::vector**, naudojant **STL algoritm
 | studentai_10k   | list       | 10 000         | 0.0031          | 0.0042          | 0.0025                     | 0.059          | 0.013         | 8.9            |
 | studentai_100k  | vector     | 100 000        | 0.030           | 34.6751          | 0.03                      | 0.71           | 0.12          | 38.0           |
 | studentai_100k  | list       | 100 000        | 0.031           | 0.038           | 0.03                       | 0.59           | 0.13          | 12.2           |
-| studentai_1mln  | vector     | 1 000 000      | 0.38            | 0.38            | 0.31                       | 6.85           | 0.96          | 28.0           |
+| studentai_1mln  | vector     | 1 000 000      | 0.38            | 48.512            | 0.31                       | 6.85           | 0.96          | 59.0           |
 | studentai_1mln  | list       | 1 000 000      | 0.32            | 0.29            | 0.28                       | 5.24           | 1.05          | 19.8           |
-| studentai_10mln | vector     | 10 000 000     | 3.5             | 4.2             | 3.4                        | 68.1           | 9.8           | 125.0          |
+| studentai_10mln | vector     | 10 000 000     | 3.5             | 101.145             | 3.4                        | 68.1           | 9.8           | 182.0          |
 | studentai_10mln | list       | 10 000 000     | 5.25            | 4.12            | 3.23                       | 52.5           | 10.9          | 87.4           |
 
 ### Pagal medianą
@@ -363,11 +363,11 @@ Taip pat atliktas papildomas testas su **std::vector**, naudojant **STL algoritm
 | studentai_1k    | list       | 1 000          | 0.00036         | 0.00050         | 0.00038                    | 0.0086         | 0.0046        | 5.29           |
 | studentai_10k   | vector     | 10 000         | 0.0033          | 0.0042          | 0.0032                     | 0.073          | 0.011         | 15.5           |
 | studentai_10k   | list       | 10 000         | 0.0033          | 0.0040          | 0.0033                     | 0.061          | 0.013         | 8.9            |
-| studentai_100k  | vector     | 100 000        | 0.031           | 0.026           | 0.027                      | 0.72           | 0.12          | 21.2           |
+| studentai_100k  | vector     | 100 000        | 0.031           | 42.15           | 0.027                      | 0.72           | 0.12          | 48.2           |
 | studentai_100k  | list       | 100 000        | 0.033           | 0.040           | 0.038                      | 0.61           | 0.13          | 12.4           |
-| studentai_1mln  | vector     | 1 000 000      | 0.32            | 0.39            | 0.32                       | 6.91           | 0.97          | 28.5           |
+| studentai_1mln  | vector     | 1 000 000      | 0.32            | 72.45           | 0.32                       | 6.91           | 0.97          | 92.5           |
 | studentai_1mln  | list       | 1 000 000      | 0.33            | 0.40            | 0.33                       | 5.30           | 1.05          | 20.0           |
-| studentai_10mln | vector     | 10 000 000     | 3.6             | 4.3             | 3.6                        | 74.8           | 9.9           | 127.0          |
+| studentai_10mln | vector     | 10 000 000     | 3.6             | 113.412             | 3.6                        | 74.8           | 9.9           | 201.0          |
 | studentai_10mln | list       | 10 000 000     | 3.41            | 4.08            | 3.43                       | 62.1           | 10.9          | 88.2           |
 
 ### Atminties testavimas
