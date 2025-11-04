@@ -348,7 +348,7 @@ Taip pat atliktas papildomas testas su **std::vector**, naudojant **STL algoritm
 | studentai_1k    | list       | 1 000          | 0.00031         | 0.00028         | 0.00029                    | 0.0085         | 0.0046        | 5.3            |
 | studentai_10k   | vector     | 10 000         | 0.0039          | 0.0038          | 0.0030                     | 0.072          | 0.011         | 15.2           |
 | studentai_10k   | list       | 10 000         | 0.0031          | 0.0042          | 0.0025                     | 0.059          | 0.013         | 8.9            |
-| studentai_100k  | vector     | 100 000        | 0.030           | 0.034            | 0.03                      | 0.71           | 0.12          | 21.0           |
+| studentai_100k  | vector     | 100 000        | 0.030           | 34.6751          | 0.03                      | 0.71           | 0.12          | 38.0           |
 | studentai_100k  | list       | 100 000        | 0.031           | 0.038           | 0.03                       | 0.59           | 0.13          | 12.2           |
 | studentai_1mln  | vector     | 1 000 000      | 0.38            | 0.38            | 0.31                       | 6.85           | 0.96          | 28.0           |
 | studentai_1mln  | list       | 1 000 000      | 0.32            | 0.29            | 0.28                       | 5.24           | 1.05          | 19.8           |
