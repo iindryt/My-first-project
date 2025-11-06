@@ -14,11 +14,51 @@
 
 int random(int min, int max);
 float Mediana(const std::vector<int>& pazymiai);
+float Mediana(std::list<int> pazymiai);
 float Vidurkis(const std::vector<int>& pazymiai);
+float Vidurkis(const std::list<int>& pazymiai);
 int ivestiEgzamina();
 Studentas ivesk();
 
+
 enum class Balas { Vidurkis, Mediana };
+
+template <typename Container>
+void strategija1_paprasta(const Container& visi, Container& kietiakiai, Container& vargsiukai, Balas pagal = Balas::Vidurkis) {
+    auto kriterijus = [pagal](const Studentas& s) {
+        return (pagal == Balas::Vidurkis) ? (s.rezVid >= 5.0f) : (s.rezMed >= 5.0f);
+        };
+
+    // Rankiniu budu kopijuojame studentus
+    for (auto it = visi.begin(); it != visi.end(); ++it) {
+        if (kriterijus(*it))
+            kietiakiai.push_back(*it);
+        else
+            vargsiukai.push_back(*it);
+    }
+}
+
+template <typename Container>
+void strategija2_rankine(Container& visi, Container& kietiakiai, Container& vargsiukai, Balas pagal = Balas::Vidurkis) {
+    auto kriterijus = [pagal](const Studentas& s) {
+        return (pagal == Balas::Vidurkis) ? (s.rezVid >= 5.0f) : (s.rezMed >= 5.0f);
+        };
+
+    // Rankiniu budu pasaliname "vargsiukus" ir kopijuojame juos
+    for (auto it = visi.begin(); it != visi.end();) {
+        if (!kriterijus(*it)) {
+            vargsiukai.push_back(*it);
+            it = visi.erase(it);  // veikia tiek su vector, tiek su list
+        }
+        else {
+            ++it;
+        }
+    }
+
+    // Po trynimo „visi“ liko tik kietiakiai
+    kietiakiai = visi;
+}
+
 
 template <typename Container>
 void strategija1(const Container& visi, Container& kietiakiai, Container& vargsiukai, Balas pagal = Balas::Vidurkis) {
@@ -51,10 +91,13 @@ void strategija2(Container& visi, Container& kietiakiai, Container& vargsiukai, 
         auto it = std::partition(visi.begin(), visi.end(), kriterijus);
         kietiakiai.assign(visi.begin(), it);
         vargsiukai.assign(it, visi.end());
+        visi = kietiakiai;
+        
     }
     else {
         for (auto it = visi.begin(); it != visi.end();) {
             if (!kriterijus(*it)) {
+                //tikriname studentu, i kuri rodo iteratorius
                 vargsiukai.push_back(*it);
                 it = visi.erase(it);
             }
@@ -65,40 +108,87 @@ void strategija2(Container& visi, Container& kietiakiai, Container& vargsiukai, 
 }
 template <typename Container>
 void strategija3(Container& visi, Container& kietiakiai, Container& vargsiukai, Balas pagal, int& pasirinktaTikra) {
-    Container k1, v1, k2, v2;
-    Container visiKopija = visi;
+    bool yraVector = std::is_same_v<Container, std::vector<Studentas>>;
 
-    // Matuojame strategija 1
-    Laikmatis t1;
-    strategija1(visi, k1, v1, pagal);
-    double laikas1 = t1.praejes_laikas();
+    if (yraVector) {
+        // --- VECTOR: lyginame rankines, tada taikome STL ---
+        Container k1, v1, k2, v2;
+        Container visiKopija = visi;
 
-    // Matuojame strategija 2
-    Laikmatis t2;
-    strategija2(visi, k2, v2, pagal);
-    double laikas2 = t2.praejes_laikas();
+        std::cout << "Testuojamos rankines strategijos (vektoriui):\n";
 
-    std::cout << "Strategija 1 laikas: " << laikas1 << " s\n";
-    std::cout << "Strategija 2 laikas: " << laikas2 << " s\n";
+        // 1 strategija (rankine)
+        Laikmatis t1;
+        strategija1_paprasta(visi, k1, v1, pagal);
+        double laikas1 = t1.praejes_laikas();
 
-    // Pasirenkame greitesne strategija
-    if (laikas1 <= laikas2) {
-        std::cout << "Pasirinkta greitesne: STRATEGIJA 1\n";
-        kietiakiai = k1;
-        vargsiukai = v1;
-        pasirinktaTikra = 1;
+        // 2 strategija (rankine)
+        Laikmatis t2;
+        strategija2_rankine(visiKopija, k2, v2, pagal);
+        double laikas2 = t2.praejes_laikas();
+
+        std::cout << "Strategija 1 (rankine) laikas: " << laikas1 << " s\n";
+        std::cout << "Strategija 2 (rankine) laikas: " << laikas2 << " s\n";
+
+        // Pasirenkame greitesne rankine
+        int greitesne = (laikas1 <= laikas2) ? 1 : 2;
+        pasirinktaTikra = greitesne;
+
+        std::cout << "Pasirinkta greitesne rankine strategija: " << greitesne << "\n";
+
+        // 2. Paleidziame atitinkama STL versija
+        Laikmatis tSTL;
+        if (greitesne == 1) {
+            std::cout << "Vykdoma STL strategija 1 \n";
+            strategija1(visi, kietiakiai, vargsiukai, pagal);
+        }
+        else {
+            std::cout << "Vykdoma STL strategija 2 \n";
+            strategija2(visi, kietiakiai, vargsiukai, pagal);
+        }
+
+        double laikasSTL = tSTL.praejes_laikas();
     }
     else {
-        std::cout << "Pasirinkta greitesne: STRATEGIJA 2\n";
-        kietiakiai = k2;
-        vargsiukai = v2;
-        pasirinktaTikra = 2;
+        // --- LIST ar kitas konteineris: tik rankines ---
+        Container k1, v1, k2, v2;
+        Container visiKopija = visi;
+
+        std::cout << "Testuojamos rankines strategijos (list/kitam konteineriui):\n";
+
+        Laikmatis t1;
+        strategija1_paprasta(visi, k1, v1, pagal);
+        double laikas1 = t1.praejes_laikas();
+
+        Laikmatis t2;
+        strategija2_rankine(visiKopija, k2, v2, pagal);
+        double laikas2 = t2.praejes_laikas();
+
+        std::cout << "Strategija 1 (rankine) laikas: " << laikas1 << " s\n";
+        std::cout << "Strategija 2 (rankine) laikas: " << laikas2 << " s\n";
+
+        if (laikas1 <= laikas2) {
+            std::cout << "Pasirinkta greitesne: STRATEGIJA 1 (rankine)\n";
+            kietiakiai = std::move(k1);
+            vargsiukai = std::move(v1);
+            pasirinktaTikra = 1;
+        }
+        else {
+            std::cout << "Pasirinkta greitesne: STRATEGIJA 2 (rankine)\n";
+            kietiakiai = std::move(k2);
+            vargsiukai = std::move(v2);
+            pasirinktaTikra = 2;
+        }
+
+        std::cout << "Automatinis rezimas list'ui STL netaikytas.\n";
     }
 }
 
 
+
+
 // ======================================
-// Atminties skai?iavimas
+// Atminties skaiciavimas
 // ======================================
 template <typename Container>
 size_t skaiciuotiAtminti(const Container& konteineris) {
@@ -109,26 +199,55 @@ size_t skaiciuotiAtminti(const Container& konteineris) {
 }
 
 // ======================================
-// I?vedimas ? failus
+// ISvedimas i failus
+// ======================================
+// ======================================
+// ISvedimas i failus (surusiuota pagal balus nuo maziausio iki didziausio)
 // ======================================
 template <typename Container>
 void irasytiIFailus(const Container& kietiakiai,
     const Container& vargsiukai,
-    Balas pagal) {
+    Balas pagal)
+{
+    // Sukuriame kopijas, kad gal?tume rikiuoti
+    Container kietiakiaiR = kietiakiai;
+    Container vargsiukaiR = vargsiukai;
+
+    auto rikiuotiPagalBalus = [pagal](auto& sarasas) {
+        if constexpr (std::is_same_v<std::decay_t<decltype(sarasas)>, std::vector<Studentas>>) {
+            std::sort(sarasas.begin(), sarasas.end(), [&](const Studentas& a, const Studentas& b) {
+                float ga = (pagal == Balas::Vidurkis) ? a.rezVid : a.rezMed;
+                float gb = (pagal == Balas::Vidurkis) ? b.rezVid : b.rezMed;
+                return ga < gb;  // nuo maziausio iki didziausio
+                });
+        }
+        else if constexpr (std::is_same_v<std::decay_t<decltype(sarasas)>, std::list<Studentas>>) {
+            sarasas.sort([&](const Studentas& a, const Studentas& b) {
+                float ga = (pagal == Balas::Vidurkis) ? a.rezVid : a.rezMed;
+                float gb = (pagal == Balas::Vidurkis) ? b.rezVid : b.rezMed;
+                return ga < gb;
+                });
+        }
+        };
+
+    // Rusiuojam abu sarasus
+    rikiuotiPagalBalus(kietiakiaiR);
+    rikiuotiPagalBalus(vargsiukaiR);
+
     std::ofstream outK("kietiakiai.txt");
     std::ofstream outV("vargsiukai.txt");
 
     if (!outK || !outV) {
-        std::cerr << "Klaida: nepavyko atidaryti isvedimo failu.\n";
+        std::cerr << "Klaida: nepavyko atidaryti i?vedimo fail?.\n";
         return;
     }
 
-    for (const auto& s : kietiakiai) {
+    for (const auto& s : kietiakiaiR) {
         outK << s.vard << " " << s.pav << " "
             << ((pagal == Balas::Vidurkis) ? s.rezVid : s.rezMed) << "\n";
     }
 
-    for (const auto& s : vargsiukai) {
+    for (const auto& s : vargsiukaiR) {
         outV << s.vard << " " << s.pav << " "
             << ((pagal == Balas::Vidurkis) ? s.rezVid : s.rezMed) << "\n";
     }
@@ -142,7 +261,7 @@ void irasytiIFailus(const Container& kietiakiai,
 
 
 // ==========================================================
-// Templatin? funkcija spausdinimui ir r??iavimui
+// Templatine funkcija spausdinimui ir rusiavimui
 // ==========================================================
 template <typename Container>
 void spausdintiRezultatusIrRusiavima(Container& Grupe) {
