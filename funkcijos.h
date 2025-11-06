@@ -66,20 +66,13 @@ void strategija1(const Container& visi, Container& kietiakiai, Container& vargsi
         return (pagal == Balas::Vidurkis) ? (s.rezVid >= 5.0f) : (s.rezMed >= 5.0f);
         };
 
-    if constexpr (std::is_same_v<Container, std::vector<Studentas>>) {
-        kietiakiai.reserve(visi.size());
-        vargsiukai.reserve(visi.size());
-        std::copy_if(visi.begin(), visi.end(), std::back_inserter(kietiakiai), kriterijus);
-        std::copy_if(visi.begin(), visi.end(), std::back_inserter(vargsiukai),
-            [pagal](const Studentas& s) { return !((pagal == Balas::Vidurkis) ? (s.rezVid >= 5.0f) : (s.rezMed >= 5.0f)); });
-    }
-    else {
-        for (const auto& s : visi) {
-            if (kriterijus(s)) kietiakiai.push_back(s);
-            else vargsiukai.push_back(s);
-        }
-    }
+    std::copy_if(visi.begin(), visi.end(), std::back_inserter(kietiakiai), kriterijus);
+    std::copy_if(visi.begin(), visi.end(), std::back_inserter(vargsiukai),
+        [pagal](const Studentas& s) {
+            return !((pagal == Balas::Vidurkis) ? (s.rezVid >= 5.0f) : (s.rezMed >= 5.0f));
+        });
 }
+
 
 template <typename Container>
 void strategija2(Container& visi, Container& kietiakiai, Container& vargsiukai, Balas pagal = Balas::Vidurkis) {
@@ -87,25 +80,14 @@ void strategija2(Container& visi, Container& kietiakiai, Container& vargsiukai, 
         return (pagal == Balas::Vidurkis) ? (s.rezVid >= 5.0f) : (s.rezMed >= 5.0f);
         };
 
-    if constexpr (std::is_same_v<Container, std::vector<Studentas>>) {
-        auto it = std::partition(visi.begin(), visi.end(), kriterijus);
-        kietiakiai.assign(visi.begin(), it);
-        vargsiukai.assign(it, visi.end());
-        visi = kietiakiai;
-        
-    }
-    else {
-        for (auto it = visi.begin(); it != visi.end();) {
-            if (!kriterijus(*it)) {
-                //tikriname studentu, i kuri rodo iteratorius
-                vargsiukai.push_back(*it);
-                it = visi.erase(it);
-            }
-            else ++it;
-        }
-        kietiakiai = visi;
-    }
+    // Naudojame STL algoritmą partition visiems konteineriams
+    auto it = std::partition(visi.begin(), visi.end(), kriterijus);
+
+    kietiakiai.assign(visi.begin(), it);
+    vargsiukai.assign(it, visi.end());
+    visi = kietiakiai;
 }
+
 template <typename Container>
 void strategija3(Container& visi, Container& kietiakiai, Container& vargsiukai, Balas pagal, int& pasirinktaTikra) {
     bool yraVector = std::is_same_v<Container, std::vector<Studentas>>;
