@@ -3,6 +3,14 @@
 ## Įdiegimo instrukcija
 # CMake įdiegimas Windows naudojant `.msi` paketą
 
+Prieš pradedant 
+
+Atsisiųsti CMakeLists.txt, run.bat, .cpp ir .h failus iš GitHub.
+
+Kompiuteryje sukurti aplanką pavadintą "cmaketest". Į jį įkelti CMakeLists.txt, run.bat, cmake.exe failus.
+
+"cmaketest" aplanke sukurti du aplankus: "src", "include". Į "src" aplanką įkelti .cpp failus, o į "include" - .h failus.
+
 ## 1. Atsisiuntimas
 1. Eikite į oficialų CMake puslapį: [https://cmake.org/download/](https://cmake.org/download/)
 2. Pasirinkite **Windows x64 Installer (.msi)** versiją.
